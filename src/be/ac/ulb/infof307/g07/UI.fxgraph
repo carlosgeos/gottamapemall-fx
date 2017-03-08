@@ -1,0 +1,10 @@
+package be.ac.ulb.infof307.g07
+
+import javafx.scene.layout.BorderPane
+import be.ac.ulb.infof307.g07.UIController
+
+component UI controlledby UIController {
+	BorderPane {
+		//TODO Add Nodes
+	}
+}
