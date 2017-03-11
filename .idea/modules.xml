@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gottamapemall-fx.iml" filepath="$PROJECT_DIR$/.idea/modules/gottamapemall-fx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gottamapemall-fx_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gottamapemall-fx_main.iml" group="gottamapemall-fx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gottamapemall-fx_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gottamapemall-fx_test.iml" group="gottamapemall-fx" />
+    </modules>
+  </component>
+</project>
