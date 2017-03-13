@@ -24,7 +24,6 @@ public class MarkerView {
 	}
 	
 	public void refreshMap(){
-		
 		int current = map.getZoom();
 		map.setZoom(map.getZoom() + 1);
 		map.setZoom(current);

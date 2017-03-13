@@ -26,25 +26,23 @@ public class MarkerController {
 	}
 
 	
-    public void addMarker(){
-    	
-    	LatLong testLoc = new LatLong(47.6197, -122.3231);
+    public void addMarker(LatLong newPosMarker){
     	
     	MarkerOptions testOptions = new MarkerOptions();
-    	testOptions.position(testLoc);
+    	testOptions.position(newPosMarker);
     	//testOptions.icon("https://pldh.net/media/pokemon/gen6/xy/175.png");
     	MarkerModel markerModel = new MarkerModel(testOptions);
         markerModels.put(markerModel.getId(), markerModel);
     	
     	markerView.addMarker(markerModel);
-    	map.addUIEventHandler(markerModel, UIEventType.click, (JSObject obj) -> {onClickMarker(markerModel,null);});
+    	//map.addUIEventHandler(markerModel, UIEventType.click, (JSObject obj) -> {onClickMarker(markerModel,null);});
     	
     	
     }
     
     private void onClickMarker(MarkerModel currentMarker, LatLong newPosition){
     	
-    	markerModels.get(0).setPosition(new LatLong(55.6197, -120.3231));
+    	//markerModels.get(0).setPosition(new LatLong(55.6197, -120.3231));
     	markerView.refreshMap();
     	
     }
