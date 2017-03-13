@@ -32,10 +32,11 @@ public class MainController implements Initializable {
     private GoogleMap map;
 
     private DecimalFormat formatter = new DecimalFormat("###.00000");
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         googleMapView.addMapInializedListener(() -> configureMap());
+        
     }
 
     protected void configureMap() {
@@ -45,6 +46,12 @@ public class MainController implements Initializable {
                 .mapType(MapTypeIdEnum.ROADMAP)
                 .zoom(9);
         map = googleMapView.createMap(mapOptions, false);
+        
+        
+        MarkerController markerController = new MarkerController(map);
+        markerController.addMarker();
+   
+        
 
 //        map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
 //            LatLong latLong = event.getLatLong();
