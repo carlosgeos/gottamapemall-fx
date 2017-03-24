@@ -14,10 +14,12 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/com.lynden/GMapsFX
-    compile group: 'com.lynden', name: 'GMapsFX', version: '2.10.0'
+    compile name: 'GMapsFX-2.11.0-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
