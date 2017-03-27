@@ -1,70 +1,38 @@
 package be.ac.ulb.infof307.g07;
 
-import com.lynden.gmapsfx.GoogleMapView;
-import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
+import java.util.HashMap;
+
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import netscape.javascript.JSObject;
+public class Map {
 
-public class Map implements MapComponentInitializedListener{ 
-	
-	private GoogleMapView mapview;
-	private GoogleMap map;
-	private String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
-	
-	private MapController mapController;
-	
+	private HashMap<Integer, PokeMarker> pokeMarkers = new HashMap<Integer, PokeMarker>();
+	private final MarkerOptions defaultMarkerOptions;
 	
 	public Map(){
 		
-		mapview = new GoogleMapView(null, apikey);
-		mapview.addMapInializedListener(this);
-		
-	}
-
-
-	@Override
-	public void mapInitialized() {
-	    //Set the initial properties of the map.
-	    MapOptions mapOptions = new MapOptions();
-	
-	    mapOptions.center(new LatLong(47.6097, -122.3331))
-        		.mapType(MapTypeIdEnum.ROADMAP)
-	            .overviewMapControl(false)
-	            .panControl(false)
-	            .rotateControl(false)
-	            .scaleControl(false)
-	            .streetViewControl(false)
-	            .zoomControl(false)
-	            .zoom(12);
-	
-	    map = mapview.createMap(mapOptions);
-	    
-	    mapController = new MapController(map);
-	
-	}
-	
-	public GoogleMapView getView(){
-		
-		return mapview;
+		defaultMarkerOptions = new MarkerOptions();
 		
 	}
 	
-	public GoogleMap getMap(){
-		
-		return map;
+	public PokeMarker addPokeMarker( Coordinate position  ){
 	
+		defaultMarkerOptions.position(position);
+		PokeMarker newPMarker = new PokeMarker( defaultMarkerOptions );
+		addPokeMarker(newPMarker);
+		
+		return newPMarker;
 	}
 	
-	public void onClickButton(LatLong posMarker){
+	public void addPokeMarker( PokeMarker newPMarker  ){
 		
-		mapController.addMarker(posMarker);
+		pokeMarkers.put(newPMarker.getId(), newPMarker);
+		
+	}
+	
+	public void test(){
+		
+		System.out.println("map test");
 		
 	}
 	
