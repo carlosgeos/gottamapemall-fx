@@ -13,15 +13,66 @@ import javafx.scene.layout.BorderPane;
 
 public class MapGUI implements MapComponentInitializedListener{ 
 	
+	/**
+	 * Un objet GoogleMapView representant la vue pour afficher une carte de type google maps.
+	 * 
+	 * 
+	 * @see MapGUI#MapGUI()
+     * @see MapGUI#map
+     * @see MapGUI#mapInitialized()
+	 */
 	private GoogleMapView googleMapView;
+	
+	/**
+	 * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
+	 * 
+	 * @see MapGUI#googleMapView
+	 * @see MapGUI#mapInitialized()
+     * @see Map#Map()
+     */
 	private GoogleMap googleMap;
+	
+	/**
+	* La cle d'authentification google necessaire pour l'utilisation de la carte google maps.
+	* 
+	* @see MapGUI#MapGUI()
+	*/
 	private String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	
+	
 	private MapOptions defaultMapOptions;
+	
+	/**
+	 * L'objet qui contient la carte à afficher. Cette carte est modifiable (on peut notamment lui ajouter des épingles).
+     * 
+     * @see Map#addPokeMarker(Coordinate)
+     * @see Map#Map()
+     */
 	private Map map;
+	
+	
+	
 	private Coordinate defaultMapCenterPosition;
 	
+	
+
 	private BorderPane mapGUI;
 	
+	/**
+     * Constructeur de l'objet Map.
+	 * <p>
+     * On cree on objet GoogleMapView auquel on donne la cle apikey en parametre.
+     * Et on initialise la carte avec certaines options, grace a la methode addMapInializedListener().
+     * </p>
+     * 
+	 * 
+     * @see MapGUI#apikey
+	 * @see MapGUI#googleMapView
+	 * @see MapGUI#addMapInializedListener()
+	 * @see MapGUI#map
+	 * @see Map#Map()
+	 * 
+	 */
 	public MapGUI(){
 		
 		googleMapView = new GoogleMapView(null, apikey);
@@ -29,6 +80,7 @@ public class MapGUI implements MapComponentInitializedListener{
 		map = new Map();
 		
 	}
+	
 	
 	private void initDefaultMapOptions(){
 		
@@ -47,6 +99,18 @@ public class MapGUI implements MapComponentInitializedListener{
 	}
 	
 	@Override
+	 /**
+      * 
+      * Fait appel a la methode initDefaultMapOptions()
+      * Cree un objet goodleMap avec certaines options predefinies (zoom, pas de rotation...) et assigne ensuite le resultat de la methode createMap de l'objet googleMapView a l'objet goodleMap.
+      * Cree aussi le listener qui va gerer le double clic sur la carte.
+      * 
+      * @see MapGUI#initDefaultMapOptions()
+      * @see MapGUI#googleMapView
+      * @see MapGUI#map
+      * @see Map#Map()
+      * 
+      */
 	public void mapInitialized() {
 		
 		initDefaultMapOptions();
@@ -75,6 +139,11 @@ public class MapGUI implements MapComponentInitializedListener{
 		
 	}
 	
+	 /**
+	 * Retourne l'objet de la carte google maps.
+     * 
+     * @return L'objet map de type GoogleMap.
+     */
 	public GoogleMap getMap(){
 		
 		return googleMap;

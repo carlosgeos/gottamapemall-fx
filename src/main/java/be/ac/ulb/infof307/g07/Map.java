@@ -12,14 +12,9 @@ public class Map {
 	 /**
      * Constructeur de l'objet Map.
      * <p>
-     * On cree on objet GoogleMapView auquel on donne la cle apikey en parametre.
-     * Et on initialise la carte avec certaines options, grace a la methode mapInitialized().
+     * On cree on objet MarkerOptions (defaultMarkerOptions) de gmapsfx.
      * </p>
      *
-     *
-     * @see Map#apikey
-     * @see Map#mapview
-     * @see Map#mapInitialized()
      *
      */
 	public Map(){
