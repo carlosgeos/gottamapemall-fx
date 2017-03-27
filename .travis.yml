@@ -1,1 +1,6 @@
 language: java
+jdk:
+  - oraclejdk8
+
+notifications:
+  slack: iterativeclub:RMFS9TF6rSiSox7EtgyVDX2E
