@@ -132,7 +132,7 @@ public class Map implements MapComponentInitializedListener{
 	}
 	
 	/**
-     * Retire un Zero de la liste des amis.
+     * Effectue l'action souhaitee apres un clic sur le bouton, c'est a dire ajouter une epingle aux coordonnees indiquees.
      * 
      * @param posMarker
      *            Un objet contenant une longitude et une latitude pour une nouvelle epingle a ajouter sur la carte.
