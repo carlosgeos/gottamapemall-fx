@@ -4,37 +4,38 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import netscape.javascript.JSObject;
+import javafx.scene.layout.BorderPane;
 
-public class Map implements MapComponentInitializedListener{ 
+public class MapGUI implements MapComponentInitializedListener{ 
 	
-	private GoogleMapView mapview;
-	private GoogleMap map;
+	private GoogleMapView googleMapView;
+	private GoogleMap googleMap;
 	private String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	private MapOptions defaultMapOptions;
+	private Map map;
+	private Coordinate defaultMapCenterPosition;
 	
-	private MapController mapController;
+	private BorderPane mapGUI;
 	
-	
-	public Map(){
+	public MapGUI(){
 		
-		mapview = new GoogleMapView(null, apikey);
-		mapview.addMapInializedListener(this);
+		googleMapView = new GoogleMapView(null, apikey);
+		googleMapView.addMapInializedListener(this);
+		map = new Map();
 		
 	}
-
-
-	@Override
-	public void mapInitialized() {
-	    //Set the initial properties of the map.
-	    MapOptions mapOptions = new MapOptions();
 	
-	    mapOptions.center(new LatLong(47.6097, -122.3331))
+	private void initDefaultMapOptions(){
+		
+		defaultMapOptions= new MapOptions();
+		defaultMapCenterPosition = new Coordinate(47.6097, -122.3331);
+		
+		defaultMapOptions.center(defaultMapCenterPosition)
         		.mapType(MapTypeIdEnum.ROADMAP)
 	            .overviewMapControl(false)
 	            .panControl(false)
@@ -42,31 +43,71 @@ public class Map implements MapComponentInitializedListener{
 	            .scaleControl(false)
 	            .streetViewControl(false)
 	            .zoomControl(false)
-	            .zoom(12);
-	
-	    map = mapview.createMap(mapOptions);
-	    
-	    mapController = new MapController(map);
-	
+	            .zoom(11);
 	}
 	
-	public GoogleMapView getView(){
+	@Override
+	public void mapInitialized() {
 		
-		return mapview;
+		initDefaultMapOptions();
+		googleMap = googleMapView.createMap(defaultMapOptions);
+		googleMap.addMouseEventHandler(UIEventType.dblclick, new MapMouseDblClickHandler(this, map));
+		
+	}
+	
+	public void setWidth(double nbSize ){
+		
+		mapGUI.setMinWidth(nbSize);
+	}
+	
+	public void setHeight(double nbSize){
+			
+		mapGUI.setMinHeight(nbSize);
+		
+	}
+	
+	public BorderPane getMapGUI(double width, double height){
+		
+		mapGUI = new BorderPane();
+		mapGUI.setCenter(googleMapView);
+		mapGUI.setMinSize(width, height);
+		return mapGUI;
 		
 	}
 	
 	public GoogleMap getMap(){
 		
-		return map;
-	
-	}
-	
-	public void onClickButton(LatLong posMarker){
-		
-		mapController.addMarker(posMarker);
+		return googleMap;
 		
 	}
 	
+	public void addMarker(PokeMarker newPMarker){
+		
+		googleMap.addMarker(newPMarker);
+		InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("<h2>Marker"+Integer.toString(newPMarker.getId())+"</h2>"
+                                + "Current Location: Safeway<br>"
+                                + "ETA: 45 minutes" );
+
+        InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
+        pokeMarkerInfoWindow.open(googleMap, newPMarker);
+		googleMap.addUIEventHandler(newPMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newPMarker, pokeMarkerInfoWindow, googleMap));
+		
+		refreshMap();
+	}
 	
+	public void refreshMap(){
+		
+		int current = googleMap.getZoom()-1;
+		googleMap.setZoom(googleMap.getZoom() + 1);
+		googleMap.setZoom(current);
+		
+	}
+	
+	public void test(){
+		
+		System.out.println("MapGUI test");
+		map.test();
+	}
+
 }
