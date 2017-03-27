@@ -1,4 +1,5 @@
-package be.ac.ulb.infof307.g07; /**
+package be.ac.ulb.infof307.g07; 
+/**
  * Created by carlos on 3/11/17.
  */
 
@@ -29,12 +30,37 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import static javafx.application.Application.launch;
 
+/**
+ * <b>Main est la classe principale de l'application et démarre l'interface graphique</b>
 
+ * @see Map
+ * @see MapController
+ * @see MarkerController
+ * @see MarkerModel
+ * @see MarkerView
+ * 
+ * @author carlos
+ * @version 1.0
+ */
 public class Main extends Application{
 
+	/**
+     * L'objet qui contient la carte à afficher. Cette carte est modifiable (on peut notamment lui ajouter des épingles).
+     * 
+     * @see MarkerController#addMarker(LatLong)
+     * @see Map#Map()
+     */
 	private Map map;
 
 	@Override
+	 /**
+     * Lance l'interface graphique et affiche la carte.
+     * 
+     * @param stage
+     *            Le containeur parent.
+     * 
+     * @throws Exception si ...
+     */
 	public void start(Stage stage) throws Exception {
 
 	    //Create the JavaFX component and set this as a listener so we know when 
@@ -62,7 +88,18 @@ public class Main extends Application{
 	    btn.setOnAction(new EventHandler<ActionEvent>(){
 	    	
 	    	@Override
-	    	
+	    	/**
+	    	 * Gestion de l'action suite a un clic sur le bouton Go. 
+	    	 * Ajout (et affichage sur la carte) d'une nouvelle epingle aux coordonnees indiquees.
+	    	 * 
+	    	 * @param event 
+	    	 * 				le clic de la souris recupere.
+	    	 * 
+	    	 * @see MarkerModel
+	    	 * @see MarkerController
+	    	 * @see MarkerController#addMarker(LatLong)
+	    	 * 
+	    	 */
 	    	public void handle(ActionEvent event){
 	    		
 	    		Double Longtitude = Double.valueOf(fieldLong.getText());
