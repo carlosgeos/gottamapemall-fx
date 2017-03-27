@@ -22,6 +22,4 @@ public class MarkerModel extends Marker{
 	public int getId(){
 		return markerId;
 	}
-	
-	
 }

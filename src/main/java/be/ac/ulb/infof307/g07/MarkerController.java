@@ -46,7 +46,4 @@ public class MarkerController {
     	markerView.refreshMap();
     	
     }
-    
-   
-	
 }

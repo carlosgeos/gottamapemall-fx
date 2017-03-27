@@ -28,17 +28,11 @@ public class MapController {
 	public MapController(GoogleMap newMap){
 	
 		map = newMap;
-			
-		
+
 		markerController = new MarkerController(map);
-		
 	}
 
 	public void addMarker(LatLong posMarker) {
-		
 		markerController.addMarker(posMarker);
-		
 	}
-	
-
 }
