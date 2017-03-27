@@ -4,15 +4,12 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import netscape.javascript.JSObject;
-
-public class Map implements MapComponentInitializedListener{ 
+public class Map implements MapComponentInitializedListener{
 	
 	private GoogleMapView mapview;
 	private GoogleMap map;
@@ -34,7 +31,7 @@ public class Map implements MapComponentInitializedListener{
 	    //Set the initial properties of the map.
 	    MapOptions mapOptions = new MapOptions();
 	
-	    mapOptions.center(new LatLong(47.6097, -122.3331))
+	    mapOptions.center(new LatLong(50.839183, 4.3665867))
         		.mapType(MapTypeIdEnum.ROADMAP)
 	            .overviewMapControl(false)
 	            .panControl(false)
@@ -42,12 +39,17 @@ public class Map implements MapComponentInitializedListener{
 	            .scaleControl(false)
 	            .streetViewControl(false)
 	            .zoomControl(false)
-	            .zoom(12);
+	            .zoom(13);
 	
 	    map = mapview.createMap(mapOptions);
-	    
-	    mapController = new MapController(map);
-	
+
+		mapController = new MapController(map);
+
+		map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
+			LatLong latLong = event.getLatLong();
+			mapController.addMarker(latLong);
+		});
+
 	}
 	
 	public GoogleMapView getView(){
@@ -61,12 +63,4 @@ public class Map implements MapComponentInitializedListener{
 		return map;
 	
 	}
-	
-	public void onClickButton(LatLong posMarker){
-		
-		mapController.addMarker(posMarker);
-		
-	}
-	
-	
 }
