@@ -68,7 +68,7 @@ public class MapGUI implements MapComponentInitializedListener{
 	 * 
      * @see MapGUI#apikey
 	 * @see MapGUI#googleMapView
-	 * @see MapGUI#addMapInializedListener()
+	 * n'existe pas
 	 * @see MapGUI#map
 	 * @see Map#Map()
 	 * 

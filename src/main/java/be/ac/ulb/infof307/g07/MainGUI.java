@@ -47,7 +47,7 @@ public class MainGUI extends Application{
 		
 		primaryStage.setWidth(800);
 		primaryStage.setHeight(600);
-		primaryStage.setTitle("PokéMap");
+		primaryStage.setTitle("PokéMp");
 		
 		
 		GridPane mainGrid = new GridPane();
@@ -61,7 +61,8 @@ public class MainGUI extends Application{
 	/**
 	 * 
 	 * TBD...
-	 * 
+	 * @param args Une description ici !
+	 *
 	 */
 	public static void main(String[] args) {
         launch(args);

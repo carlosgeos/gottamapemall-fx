@@ -4,3 +4,7 @@ jdk:
 
 notifications:
   slack: iterativeclub:RMFS9TF6rSiSox7EtgyVDX2E
+
+script:
+- gradle check
+- gradle javadoc

@@ -19,7 +19,19 @@ repositories {
     }
 }
 
+configurations {
+    doc {
+        transitive false
+    }
+}
+
 dependencies {
     compile name: 'GMapsFX-2.11.0-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+javadoc {
+    classpath += configurations.compile
+    source += sourceSets.main.allJava
+    destinationDir = file("${projectDir}/doc")
 }
