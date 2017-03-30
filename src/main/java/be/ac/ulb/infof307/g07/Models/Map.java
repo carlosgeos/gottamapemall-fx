@@ -1,16 +1,14 @@
-package be.ac.ulb.infof307.g07;
+package be.ac.ulb.infof307.g07.Models;
 
 import java.util.HashMap;
-
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 public class Map {
 
 	private HashMap<Integer, PokeMarker> pokeMarkers = new HashMap<Integer, PokeMarker>();
-	private final MarkerOptions defaultMarkerOptions;
 
 	 /**
-     * Constructeur de l'objet Map.
+     * Cette classe représente le model dans la structure MVC. Ainsi pour stocker les marqueurs
+     * 
      * <p>
      * On cree on objet MarkerOptions (defaultMarkerOptions) de gmapsfx.
      * </p>
@@ -18,15 +16,20 @@ public class Map {
      *
      */
 	public Map(){
-
-		defaultMarkerOptions = new MarkerOptions();
-
+		
+	}
+	
+	public PokeMarker addPokeMarker( double x, double y){
+		
+		Coordinate position = new Coordinate(x,y);
+		
+		return addPokeMarker(position);
+		
 	}
 
 	public PokeMarker addPokeMarker( Coordinate position  ){
-
-		defaultMarkerOptions.position(position);
-		PokeMarker newPMarker = new PokeMarker( defaultMarkerOptions );
+		
+		PokeMarker newPMarker = new PokeMarker( position );
 		addPokeMarker(newPMarker);
 		return newPMarker;
 	}
@@ -36,12 +39,10 @@ public class Map {
 		pokeMarkers.put(newPMarker.getId(), newPMarker);
 
 	}
-
-	public void test(){
-
-		System.out.println("map test");
-
+	
+	public int getNumberMarker(){
+		
+		return pokeMarkers.size();
 	}
-
 
 }

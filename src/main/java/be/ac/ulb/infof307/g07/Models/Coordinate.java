@@ -1,7 +1,4 @@
-package be.ac.ulb.infof307.g07;
-
-import com.lynden.gmapsfx.javascript.object.LatLong;
-
+package be.ac.ulb.infof307.g07.Models;
 
 /**
  * <b>Coordinate est la classe représentant une coordonnée dans un plan (deux nombres réels).</b>
@@ -12,7 +9,7 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
  * @author fan
  * @version 1.0
  */
-public class Coordinate extends LatLong{
+public class Coordinate{
 
 	 /**
      * Constructeur de Coordinate.
@@ -23,8 +20,25 @@ public class Coordinate extends LatLong{
      *            La position en ordonnée (y) dans le plan, ou longitude.
      * 
      */
-	public Coordinate(double x, double y) {
-		super(x, y);
+	
+	private double x;
+	private double y;
+	
+	public Coordinate(double newX, double newY) {
+		
+		x = newX;
+		y = newY;
+	}
+	
+	public double getX(){
+		
+		return x;
+		
+	}
+	
+	public double getY(){
+		
+		return y;
 		
 	}
 }
