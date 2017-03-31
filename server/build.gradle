@@ -2,13 +2,31 @@ group 'be.ac.ulb.infof307.g07'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
 
-sourceCompatibility = 1.5
+
+sourceCompatibility = 1.8
+
+mainClassName = "be.ac.ulb.infof307.g07.Main"
 
 repositories {
     mavenCentral()
+    flatDir {
+	dirs '../lib'
+    }
+}
+
+jar {
+    manifest {
+	attributes (
+	    'Class-Path': configurations.compile,
+	    'Main-Class': 'be.ac.ulb.infof307.g07.Main'
+	)
+    }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'com.sparkjava:spark-core:2.3'
 }

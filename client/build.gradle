@@ -2,13 +2,32 @@ group 'be.ac.ulb.infof307.g07'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
 
-sourceCompatibility = 1.5
+
+sourceCompatibility = 1.8
+
+mainClassName = "be.ac.ulb.infof307.g07.MainGUI"
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs '../lib'
+    }
+}
+
+jar {
+    baseName = 'client-application'
+    manifest {
+        attributes (
+	    'Class-Path': configurations.compile,
+            'Main-Class': 'be.ac.ulb.infof307.g07.MainGUI'
+	)
+    }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile name: 'GMapsFX-2.11.0-SNAPSHOT'
 }

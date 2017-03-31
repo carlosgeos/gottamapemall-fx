@@ -3,6 +3,8 @@
 .idea/misc.xml
 
 client/
+server/
+
 # Compiled class file
 *.class
 
