@@ -5,7 +5,7 @@ import be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Views.MapView;
 
-/*
+/**
  * 
  * Here, this class is only used to bind the listener with the handler. In fact, this class could implement
  * the UIEventHandler, but because the gmapsFX isn't complete the Interface UIEventHandler has only one 
