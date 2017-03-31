@@ -26,7 +26,7 @@ public class MapView{
 	 * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
 	 * 
 	 * @see MapView#getGoogleMap()
-     * @see Map#MapView()
+     * @see MapView#MapView()
      */
 	private GoogleMap googleMap;
 

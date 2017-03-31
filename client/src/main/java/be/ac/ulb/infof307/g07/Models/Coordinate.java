@@ -18,9 +18,9 @@ public class Coordinate{
 	 /**
      * Constructeur de Coordinate.
      * 
-     * @param x
+     * @param newX
      *            La position en abscisse (x) dans le plan, ou latitude.
-     * @param y
+     * @param newY
      *            La position en ordonnée (y) dans le plan, ou longitude.
      * 
      */
