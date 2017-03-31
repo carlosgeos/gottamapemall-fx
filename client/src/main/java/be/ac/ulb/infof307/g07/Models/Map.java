@@ -18,7 +18,6 @@ public class Map {
 	private HashMap<Integer, PokeMarker> pokeMarkers = new HashMap<Integer, PokeMarker>();
 
 
-     */
 	public Map(){
 		
 	}
