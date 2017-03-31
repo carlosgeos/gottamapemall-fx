@@ -5,7 +5,7 @@ allprojects {
     repositories {
         mavenCentral()
         flatDir {
-            dirs 'lib'
+            dirs '../lib'
         }
     }
 }
@@ -13,13 +13,13 @@ allprojects {
 subprojects { }
 
 project(':client') {
-    // mainClassName = "be.ac.ulb.infof307.g07.client.MainGUI"
-
-    // sourceCompatibility = '1.8'
-
     apply plugin: 'java'
     apply plugin: 'application'
     apply plugin: 'idea'
+
+    mainClassName = "be.ac.ulb.infof307.g07.client.MainGUI"
+
+    sourceCompatibility = '1.8'
 
     configurations {
         doc {
@@ -28,8 +28,7 @@ project(':client') {
     }
 
     dependencies {
-        // compile name: 'GMapsFX-2.11.0-SNAPSHOT'
-        compile group: 'com.lynden', name: 'GMapsFX', version: '2.11.0'
+        compile name: 'GMapsFX-2.11.0-SNAPSHOT'
         testCompile group: 'junit', name: 'junit', version: '4.11'
         compile 'com.jfoenix:jfoenix:1.2.0'
     }
