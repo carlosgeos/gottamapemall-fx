@@ -19,11 +19,12 @@ repositories {
 
 jar {
     manifest {
-	attributes (
-	    'Class-Path': configurations.compile,
-	    'Main-Class': 'be.ac.ulb.infof307.g07.Main'
-	)
+        attributes 'Implementation-Title': 'Gotta Map Em All Server',
+        'Implementation-Version': 1.0,
+        'Main-Class': 'be.ac.ulb.infof307.g07.Main'
     }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 dependencies {

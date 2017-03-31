@@ -18,13 +18,13 @@ repositories {
 }
 
 jar {
-    baseName = 'client-application'
     manifest {
-        attributes (
-	    'Class-Path': configurations.compile,
-            'Main-Class': 'be.ac.ulb.infof307.g07.MainGUI'
-	)
+        attributes 'Implementation-Title': 'Gotta Map Em All Application',
+        'Implementation-Version': 1.0,
+        'Main-Class': 'be.ac.ulb.infof307.g07.MainGUI'
     }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 dependencies {
