@@ -1,2 +1,3 @@
-rootProject.name = 'gottamapemall-fx'
+include "client", "server"
 
+rootProject.name = 'gottamapemall-fx'
