@@ -7,10 +7,14 @@ package be.ac.ulb.infof307.g07.Models;
  * @see Map
  * 
  * @author fan
- * @version 1.0
+ * @version 1.1
  */
 public class Coordinate{
 
+
+	private double x;
+	private double y;
+	
 	 /**
      * Constructeur de Coordinate.
      * 
@@ -20,10 +24,6 @@ public class Coordinate{
      *            La position en ordonnée (y) dans le plan, ou longitude.
      * 
      */
-	
-	private double x;
-	private double y;
-	
 	public Coordinate(double newX, double newY) {
 		
 		x = newX;

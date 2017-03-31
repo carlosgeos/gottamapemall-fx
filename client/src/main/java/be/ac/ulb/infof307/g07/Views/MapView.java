@@ -17,51 +17,30 @@ import be.ac.ulb.infof307.g07.Models.PokeMarker;
 
 public class MapView{ 
 	
-	/**
-	 * Un objet GoogleMapView representant la vue pour afficher une carte de type google maps.
-	 * 
-	 * 
-	 * @see MapView#MapGUI()
-     * @see MapView#map
-     * @see MapView#mapInitialized()
-	 */
+
+
+	private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
+	
 	
 	/**
 	 * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
 	 * 
-	 * @see MapView#googleMapView
-	 * @see MapView#mapInitialized()
-     * @see Map#Map()
+	 * @see MapView#getGoogleMap()
+     * @see Map#MapView()
      */
-	private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
 	private GoogleMap googleMap;
-	/**
-	* La cle d'authentification google necessaire pour l'utilisation de la carte google maps.
-	* 
-	* @see MapView#MapGUI()
-	*/
-	
-	/**
-	 * L'objet qui contient la carte à afficher. Cette carte est modifiable (on peut notamment lui ajouter des épingles).
-     * 
-     * @see Map#addPokeMarker(Coordinate)
-     * @see Map#Map()
-     */
+
 
 	
 	/**
-     * Constructeur de l'objet Map.
+     * Constructeur de l'objet MapView.
 	 * <p>
-     * On cree on objet GoogleMapView auquel on donne la cle apikey en parametre.
-     * Et on initialise la carte avec certaines options, grace a la methode addMapInializedListener().
+     * On cree on objet MapOptions avec certains parametres predefinis. 
+     * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
      * </p>
      * 
 	 * 
-     * @see MapView#apikey
-	 * @see MapView#googleMapView
-	 * n'existe pas
-	 * @see MapView#map
-	 * @see Map#Map()
+	 * @see MapView#googleMap
 	 * 
 	 */
 	public MapView( GoogleMapView newGoogleMapView){
@@ -84,18 +63,6 @@ public class MapView{
 		
 	}
 	
-	/**
-     * 
-     * Fait appel a la methode initDefaultMapOptions()
-     * Cree un objet goodleMap avec certaines options predefinies (zoom, pas de rotation...) et assigne ensuite le resultat de la methode createMap de l'objet googleMapView a l'objet goodleMap.
-     * Cree aussi le listener qui va gerer le double clic sur la carte.
-     * 
-     * @see MapView#initDefaultMapOptions()
-     * @see MapView#googleMapView
-     * @see MapView#map
-     * @see Map#Map()
-     * 
-     */
 	
 	
 	 /**
@@ -103,7 +70,6 @@ public class MapView{
      * 
      * @return L'objet map de type GoogleMap.
      */
-	
 	public GoogleMap getGoogleMap(){
 		
 		return googleMap;

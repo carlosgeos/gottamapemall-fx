@@ -2,18 +2,22 @@ package be.ac.ulb.infof307.g07.Models;
 
 import java.util.HashMap;
 
+
+/**
+ * Cette classe représente le modèle dans la structure MVC. Ainsi pour stocker les marqueurs
+ * 
+ * <p>
+ * On cree on objet MarkerOptions (defaultMarkerOptions) de gmapsfx.
+ * </p>
+ *
+ * @version 1.1
+ *
+ */
 public class Map {
 
 	private HashMap<Integer, PokeMarker> pokeMarkers = new HashMap<Integer, PokeMarker>();
 
-	 /**
-     * Cette classe représente le model dans la structure MVC. Ainsi pour stocker les marqueurs
-     * 
-     * <p>
-     * On cree on objet MarkerOptions (defaultMarkerOptions) de gmapsfx.
-     * </p>
-     *
-     *
+
      */
 	public Map(){
 		
