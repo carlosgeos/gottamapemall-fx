@@ -19,7 +19,7 @@ public class Map {
 
 
 	public Map(){
-		
+		//...
 	}
 	
 	public PokeMarker addPokeMarker( double x, double y){
