@@ -7,13 +7,24 @@ import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import be.ac.ulb.infof307.g07.Controllers.MapController;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Views.MapView;
+import be.ac.ulb.infof307.g07.Views.PokedexView;
+import be.ac.ulb.infof307.g07.Views.PokemonCellView;
 import javafx.application.Application;
-
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
 
 
 /**
@@ -21,7 +32,7 @@ import javafx.stage.Stage;
  * Elle hérite de la classe Application de javafx.
  *
  * @see MapView
- *
+ * @author fan
  * @version 1.0
  */
 public class MainGUI extends Application implements MapComponentInitializedListener{
@@ -35,6 +46,8 @@ public class MainGUI extends Application implements MapComponentInitializedListe
     private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
 
     private MapView pokeMapView;
+    
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,8 +64,21 @@ public class MainGUI extends Application implements MapComponentInitializedListe
 	mapBorderPane.setCenter(googleMapView);
 	mapBorderPane.setMinSize(mainWindowWidth, mainWindowHeight);
 
+
+	PokedexView pokedexView = new PokedexView();
+	BorderPane pv = pokedexView.getView();
+
+	pv.setMaxSize(mainWindowWidth/3, mainWindowHeight);
+	pv.setMinSize(mainWindowWidth/3, mainWindowHeight);
+	pv.setStyle("-fx-background-color:#ff0000");
+	
+	StackPane stackpane = new StackPane();
+	stackpane.getChildren().add(mapBorderPane);
+	stackpane.getChildren().add(pv);
+	StackPane.setAlignment(pv, Pos.TOP_RIGHT);
+	
 	GridPane mainGrid = new GridPane();
-	mainGrid.add( mapBorderPane, 0, 0);
+	mainGrid.add(stackpane, 0, 0);
 
 	Scene mainScene = new Scene(mainGrid);
 	primaryStage.setScene(mainScene);
