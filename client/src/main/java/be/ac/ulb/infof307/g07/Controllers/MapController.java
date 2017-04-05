@@ -21,7 +21,7 @@ import be.ac.ulb.infof307.g07.Views.MapView;
  * @see be.ac.ulb.infof307.g07.MainGUI
  * @see be.ac.ulb.infof307.g07.Models.Map
  * @see be.ac.ulb.infof307.g07.Views.MapView
- * @see MapMouseDblClickHandler
+ * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
  * 
  */
 public class MapController{
@@ -31,7 +31,7 @@ public class MapController{
 	 * 
 	 * L objet modele de la carte, pour les actions a effectuer sur les donnees.
 	 * 
-	 * @see Models.Map
+	 * @see be.ac.ulb.infof307.g07.Models.Map
 	 */
 	private Map pokeMap;
 	
@@ -39,7 +39,7 @@ public class MapController{
 	/**
 	 * L'objet vue de la carte pour les actions a effectuer sur l affichage.
 	 * 
-	 * @see Views.MapView
+	 * @see be.ac.ulb.infof307.g07.Views.MapView
 	 */
 	private MapView pokeMapView;
 	
@@ -59,8 +59,8 @@ public class MapController{
      * @see MapController#pokeMap
      * @see MapController#pokeMapView
      * @see MapController#setListener()
-     * @see Models.Map
-     * @see Views.MapView
+     * @see be.ac.ulb.infof307.g07.Models.Map
+     * @see be.ac.ulb.infof307.g07.Views.MapView
      */
 	public MapController( Map newPokeMap, MapView newPokeMapView){
 		
@@ -73,11 +73,11 @@ public class MapController{
 	 * 
 	 * La methode qui lie le double clic (sur la carte) avec le handler qui s en occupe.
 	 * 
-	 * @see Controllers.Handlers.MapMouseDbblClickHandler
-	 * @see Controllers.Handlers.MapMouseDblClickHandler#handle(GMapMouseEvent)
+	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDbblClickHandler
+	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler#handle(GMapMouseEvent)
 	 * @see MapController#pokeMapView
-	 * @see Views.MapView
-	 * @see Models.Map
+	 * @see be.ac.ulb.infof307.g07.Views.MapView
+	 * @see be.ac.ulb.infof307.g07.Models.Map
 	 * 
 	 */
 	public void setListener(){

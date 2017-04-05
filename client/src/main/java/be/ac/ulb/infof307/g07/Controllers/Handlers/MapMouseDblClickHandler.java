@@ -30,7 +30,7 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	 * 
 	 * L objet modele de la carte, pour les actions a effectuer sur les donnees.
 	 * 
-	 * @see Models.Map
+	 * @see be.ac.ulb.infof307.g07.Models.Map
 	 */
 	private Map pokeMap;
 	
@@ -38,7 +38,7 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	/**
 	 * L'objet vue de la carte pour les actions a effectuer sur l affichage.
 	 * 
-	 * @see Views.MapView
+	 * @see be.ac.ulb.infof307.g07.Views.MapView
 	 */
 	private MapView pokeMapView;
 	
@@ -57,10 +57,10 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
      * 
      * @see MapMouseDblClickHandler#pokeMapView
      * @see MapMouseDblClickHandler#pokeMap
-     * @see Controllers.MapController
-     * @see Controllers.MapController#setListener()
-     * @see Models.Map
-     * @see Views.MapView
+     * @see be.ac.ulb.infof307.g07.Controllers.MapController
+     * @see be.ac.ulb.infof307.g07.Controllers.MapController#setListener()
+     * @see be.ac.ulb.infof307.g07.Models.Map
+     * @see be.ac.ulb.infof307.g07.Views.MapView
      */
 	public MapMouseDblClickHandler( MapView newPokeMapView, Map newPokeMap){
 		
@@ -75,11 +75,11 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	 * Elle cree un nouvel objet Coordinate contenant les coordonnees du clic et les transmet a un nouvel objet PokeMarker (epingle) 
 	 * lui meme transmis a pokemapview pour etre affiche au bon endroit sur la carte.
 	 * 
-	 * @see Models.Coordinate
+	 * @see be.ac.ulb.infof307.g07.Models.Coordinate
 	 * @see MapMouseDblClickHandler#pokeMapView
 	 * @see MapMouseDblClickHandler#pokeMap
-	 * @see Models.Map
-	 * @see Views.MapView
+	 * @see be.ac.ulb.infof307.g07.Models.Map
+	 * @see be.ac.ulb.infof307.g07.Views.MapView
 	 */
 	public void handle(GMapMouseEvent event) {
 		

@@ -4,7 +4,7 @@ package be.ac.ulb.infof307.g07.Models;
  * <b>Coordinate est la classe representant une coordonnee dans un plan (deux nombres reels).</b>
  * Elle herite de la classe LatLong (Latitute et Longitude) et est utilisee pour afficher une epingle à une position donnee sur la carte.
  * 
- * @see Map
+ * @see be.ac.ulb.infof307.g07.Models.Map
  * 
  * @author fan
  * @version 1.1
