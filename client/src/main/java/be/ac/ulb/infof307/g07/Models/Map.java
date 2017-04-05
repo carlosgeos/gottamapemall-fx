@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 
 /**
- * Cette classe représente le modèle dans la structure MVC. Ainsi pour stocker les marqueurs
+ * Cette classe représente le modele dans la structure MVC. Ainsi pour stocker les marqueurs
  * 
  * <p>
  * On cree on objet MarkerOptions (defaultMarkerOptions) de gmapsfx.
