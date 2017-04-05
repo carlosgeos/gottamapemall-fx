@@ -41,6 +41,8 @@ public class MapView{
      * 
 	 * 
 	 * @see MapView#googleMap
+	 * @param GoogleMapView
+	 * 						la vue pour la carte googlemaps.
 	 * 
 	 */
 	public MapView( GoogleMapView newGoogleMapView){

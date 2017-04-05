@@ -19,10 +19,10 @@ import netscape.javascript.JSObject;
  * <p>
  * 
  * @version 1.0
- * @see PokeMarker
- * @see PokeMarkerMouseClickHandler#handle(JSObject)
- * @see MapView
- * @see MapView#addMarker(PokeMarker)
+ * @see Models.PokeMarker
+ * @see Models.PokeMarkerMouseClickHandler#handle(JSObject)
+ * @see Views.MapView
+ * @see Views.MapView#addMarker(PokeMarker)
  *
  */
 public class PokeMarkerMouseClickHandler implements UIEventHandler{
@@ -36,7 +36,7 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
 	/**
 	 * Un objet modele pokeMarker qui contient les donnees relatives a une epingle (id, position...)
 	 * 
-	 * @see PokeMarker
+	 * @see Models.PokeMarker
 	 * 
 	 */
 	private PokeMarker pokeMarker;
@@ -58,10 +58,10 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
 	 * @param googleMap
 	 * 					L objet GoogleMap de la bibliotheque gmapsfx, pour l affichage de la carte.
 	 * 
-	 * @see PokeMarkerMouseClickHandler#marker
-	 * @see PokeMarkerMouseClickHandler#pokeMarker
-	 * @see PokeMarkerMouseClickHandler#googleMap
-	 * @see MapView
+	 * @see Models.PokeMarkerMouseClickHandler#marker
+	 * @see Models.PokeMarkerMouseClickHandler#pokeMarker
+	 * @see Models.PokeMarkerMouseClickHandler#googleMap
+	 * @see Views.MapView
 	 * 
 	 */
 	public PokeMarkerMouseClickHandler(Marker marker, PokeMarker pokeMarker, GoogleMap googleMap){

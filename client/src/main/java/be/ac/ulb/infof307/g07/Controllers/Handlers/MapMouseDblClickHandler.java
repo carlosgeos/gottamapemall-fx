@@ -19,9 +19,9 @@ import be.ac.ulb.infof307.g07.Views.MapView;
  * 
  * @version 1.0
  * @see MapMouseDblClickHandler#handle(GMapMouseEvent)
- * @see MapView
- * @see MapController
- * @see MapController#setListener()
+ * @see Views.MapView
+ * @see Controllers.MapController
+ * @see Controllers.MapController#setListener()
  * 
  */
 public class MapMouseDblClickHandler implements MouseEventHandler{
@@ -30,7 +30,7 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	 * 
 	 * L objet modele de la carte, pour les actions a effectuer sur les donnees.
 	 * 
-	 * @see Map
+	 * @see Models.Map
 	 */
 	private Map pokeMap;
 	
@@ -38,7 +38,7 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	/**
 	 * L'objet vue de la carte pour les actions a effectuer sur l affichage.
 	 * 
-	 * @see MapView
+	 * @see Views.MapView
 	 */
 	private MapView pokeMapView;
 	
@@ -57,10 +57,10 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
      * 
      * @see MapMouseDblClickHandler#pokeMapView
      * @see MapMouseDblClickHandler#pokeMap
-     * @see MapController
-     * @see MapController#setListener()
-     * @see Map
-     * @see MapView
+     * @see Controllers.MapController
+     * @see Controllers.MapController#setListener()
+     * @see Models.Map
+     * @see Views.MapView
      */
 	public MapMouseDblClickHandler( MapView newPokeMapView, Map newPokeMap){
 		
@@ -75,11 +75,11 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	 * Elle cree un nouvel objet Coordinate contenant les coordonnees du clic et les transmet a un nouvel objet PokeMarker (epingle) 
 	 * lui meme transmis a pokemapview pour etre affiche au bon endroit sur la carte.
 	 * 
-	 * @see Coordinate
+	 * @see Models.Coordinate
 	 * @see MapMouseDblClickHandler#pokeMapView
 	 * @see MapMouseDblClickHandler#pokeMap
-	 * @see Map
-	 * @see MapView
+	 * @see Models.Map
+	 * @see Views.MapView
 	 */
 	public void handle(GMapMouseEvent event) {
 		
