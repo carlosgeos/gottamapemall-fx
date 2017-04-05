@@ -19,8 +19,8 @@ import be.ac.ulb.infof307.g07.Views.MapView;
  * @author Fan
  * @version 1.0
  * @see be.ac.ulb.infof307.g07.MainGUI
- * @see Models.Map
- * @see Views.MapView
+ * @see be.ac.ulb.infof307.g07.Models.Map
+ * @see be.ac.ulb.infof307.g07.Views.MapView
  * @see MapMouseDblClickHandler
  * 
  */
@@ -74,7 +74,7 @@ public class MapController{
 	 * La methode qui lie le double clic (sur la carte) avec le handler qui s en occupe.
 	 * 
 	 * @see Controllers.Handlers.MapMouseDbblClickHandler
-	 * @see Controllers.Handlers.MapMouseDblClickHandler#handle()
+	 * @see Controllers.Handlers.MapMouseDblClickHandler#handle(GMapMouseEvent)
 	 * @see MapController#pokeMapView
 	 * @see Views.MapView
 	 * @see Models.Map

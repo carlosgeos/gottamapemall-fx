@@ -39,10 +39,10 @@ public class MapView{
      * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
      * </p>
      * 
-	 * 
-	 * @see MapView#googleMap
-	 * @param GoogleMapView
+     *@param newGoogleMapView
 	 * 						la vue pour la carte googlemaps.
+	 * 
+	 *@see MapView#googleMap
 	 * 
 	 */
 	public MapView( GoogleMapView newGoogleMapView){

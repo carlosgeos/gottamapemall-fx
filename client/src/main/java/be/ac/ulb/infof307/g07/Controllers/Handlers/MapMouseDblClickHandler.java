@@ -19,9 +19,9 @@ import be.ac.ulb.infof307.g07.Views.MapView;
  * 
  * @version 1.0
  * @see MapMouseDblClickHandler#handle(GMapMouseEvent)
- * @see Views.MapView
- * @see Controllers.MapController
- * @see Controllers.MapController#setListener()
+ * @see be.ac.ulb.infof307.g07.Views.MapView
+ * @see be.ac.ulb.infof307.g07.Controllers.MapController
+ * @see be.ac.ulb.infof307.g07.Controllers.MapController#setListener()
  * 
  */
 public class MapMouseDblClickHandler implements MouseEventHandler{
