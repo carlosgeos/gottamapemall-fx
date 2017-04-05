@@ -73,7 +73,7 @@ public class MapController{
 	 * 
 	 * La methode qui lie le double clic (sur la carte) avec le handler qui s en occupe.
 	 * 
-	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDbblClickHandler
+	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
 	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler#handle(GMapMouseEvent)
 	 * @see MapController#pokeMapView
 	 * @see be.ac.ulb.infof307.g07.Views.MapView

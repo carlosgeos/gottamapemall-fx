@@ -19,8 +19,8 @@ import netscape.javascript.JSObject;
  * <p>
  * 
  * @version 1.0
+ * @see PokeMarkerMouseClickHandler#handle(JSObject)
  * @see be.ac.ulb.infof307.g07.Models.PokeMarker
- * @see be.ac.ulb.infof307.g07.Models.PokeMarkerMouseClickHandler#handle(JSObject)
  * @see be.ac.ulb.infof307.g07.Views.MapView
  * @see be.ac.ulb.infof307.g07.Views.MapView#addMarker(PokeMarker)
  *
@@ -58,9 +58,9 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
 	 * @param googleMap
 	 * 					L objet GoogleMap de la bibliotheque gmapsfx, pour l affichage de la carte.
 	 * 
-	 * @see be.ac.ulb.infof307.g07.Models.PokeMarkerMouseClickHandler#marker
-	 * @see be.ac.ulb.infof307.g07.Models.PokeMarkerMouseClickHandler#pokeMarker
-	 * @see be.ac.ulb.infof307.g07.Models.PokeMarkerMouseClickHandler#googleMap
+	 * @see PokeMarkerMouseClickHandler#marker
+	 * @see PokeMarkerMouseClickHandler#pokeMarker
+	 * @see PokeMarkerMouseClickHandler#googleMap
 	 * @see be.ac.ulb.infof307.g07.Views.MapView
 	 * 
 	 */
