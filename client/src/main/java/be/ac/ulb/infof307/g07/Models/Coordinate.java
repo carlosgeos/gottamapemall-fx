@@ -11,8 +11,14 @@ package be.ac.ulb.infof307.g07.Models;
  */
 public class Coordinate{
 
-
+	/**
+	 * 
+	 */
 	private double x;
+	
+	/**
+	 * 
+	 */
 	private double y;
 	
 	 /**
