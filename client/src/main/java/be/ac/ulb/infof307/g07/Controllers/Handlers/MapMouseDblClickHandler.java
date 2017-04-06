@@ -14,7 +14,7 @@ import be.ac.ulb.infof307.g07.Views.MapView;
  * Ceci est fait via la methode handle de cette classe, qui appelle la methode addPokeMarker de la vue pokeMapView (objet MapView).
  * 
  * <p>
- * Un objet de cette classe est instancie par la classe MapController, dans sa methode setListener()..
+ * Un objet de cette classe est instancie par la classe MapController, dans sa methode setListener().
  * <p>
  * 
  * @version 1.0
