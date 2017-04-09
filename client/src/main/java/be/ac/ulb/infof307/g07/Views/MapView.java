@@ -15,53 +15,55 @@ import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.PokeMarker;
 
+/**
+ * 
+ * Cette classe represente la vue dans la structure MVC cad la classe s occupant de l affichage de la carte et de ses composantes graphiques.
+ * 
+ * <p>
+ * Un objet de cette classe est cree par les classes suivantes: MapController, MapMouseDblClickHandler et MainGUI, dans leurs constructeurs respectifs et la methode mapInitialized() de MainGUI.
+ * <p>
+ * 
+ * @version 1.0
+ *
+ * @see be.ac.ulb.infof307.g07.MainGUI
+ * @see be.ac.ulb.infof307.g07.Controllers.MapController
+ * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
+ * @see be.ac.ulb.infof307.g07.MainGUI#mapInitialized
+ *
+ */
 public class MapView{ 
 	
+
 	/**
-	 * Un objet GoogleMapView representant la vue pour afficher une carte de type google maps.
+	 * Une table de hachage contenant les markers (epingles) presents sur la carte et leurs identifiants (nombre entier servant de clef).
 	 * 
+	 * @see be.ac.ulb.infof307.g07.Models.Map#pokeMarkers
 	 * 
-	 * @see MapView#MapGUI()
-     * @see MapView#map
-     * @see MapView#mapInitialized()
 	 */
+	private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
+	
 	
 	/**
 	 * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
 	 * 
-	 * @see MapView#googleMapView
-	 * @see MapView#mapInitialized()
-     * @see Map#Map()
+	 * @see MapView#getGoogleMap()
+     * @see MapView#MapView()
      */
-	private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
 	private GoogleMap googleMap;
-	/**
-	* La cle d'authentification google necessaire pour l'utilisation de la carte google maps.
-	* 
-	* @see MapView#MapGUI()
-	*/
-	
-	/**
-	 * L'objet qui contient la carte à afficher. Cette carte est modifiable (on peut notamment lui ajouter des épingles).
-     * 
-     * @see Map#addPokeMarker(Coordinate)
-     * @see Map#Map()
-     */
+
 
 	
 	/**
-     * Constructeur de l'objet Map.
+     * Constructeur de l'objet MapView.
 	 * <p>
-     * On cree on objet GoogleMapView auquel on donne la cle apikey en parametre.
-     * Et on initialise la carte avec certaines options, grace a la methode addMapInializedListener().
+     * On cree on objet MapOptions avec certains parametres predefinis. 
+     * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
      * </p>
      * 
+     *@param newGoogleMapView
+	 * 						la vue pour la carte googlemaps.
 	 * 
-     * @see MapView#apikey
-	 * @see MapView#googleMapView
-	 * n'existe pas
-	 * @see MapView#map
-	 * @see Map#Map()
+	 *@see MapView#googleMap
 	 * 
 	 */
 	public MapView( GoogleMapView newGoogleMapView){
@@ -84,38 +86,34 @@ public class MapView{
 		
 	}
 	
+	
+	
 	/**
-     * 
-     * Fait appel a la methode initDefaultMapOptions()
-     * Cree un objet goodleMap avec certaines options predefinies (zoom, pas de rotation...) et assigne ensuite le resultat de la methode createMap de l'objet googleMapView a l'objet goodleMap.
-     * Cree aussi le listener qui va gerer le double clic sur la carte.
-     * 
-     * @see MapView#initDefaultMapOptions()
-     * @see MapView#googleMapView
-     * @see MapView#map
-     * @see Map#Map()
-     * 
-     */
-	
-	
-	 /**
 	 * Retourne l'objet de la carte google maps.
      * 
      * @return L'objet map de type GoogleMap.
      */
-	
 	public GoogleMap getGoogleMap(){
 		
 		return googleMap;
 	}
 	
+	/**
+	 * 
+	 * This method waits for the new created PokeMarker to create a Marker on Map.
+	 * PokeMarker is different than Marker. PokeMarker is stored in Map and Marker is an object of the GoogleMap.
+	 * PokeMarker is the model and Marker is the view.
+	 * 	 
+	 * @param pokeMarker
+	 * 					the custom pokemon marker object.					
+	 * 
+	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
+	 * @see MapView#googleMap
+	 * 
+	 */
 	public void addMarker(PokeMarker pokeMarker){
 		
-		/*
-		 * This method waits for the new created PokeMarker to create a Marker on Map.
-		 * PokeMarker is different than Marker. PokeMarker is stored in Map and Marker is an object of the GoogleMap.
-		 * PokeMarker is the model and Marker is the view.
-		 */
+		
 		MarkerOptions markerOption = new MarkerOptions();
 		markerOption.position(new LatLong(pokeMarker.getOnMapPosition().getX(), pokeMarker.getOnMapPosition().getY()));
 		Marker newMarker = new Marker(markerOption);
@@ -126,13 +124,15 @@ public class MapView{
 		
 	}
 	
-	
+	/**
+	 * refreshing the map by zooming in and zooming out by 1
+	 * -1 of current is because, when double clicking on map it will automatically zoom by 1, so to keep the same zoom level
+	 * -1 is necessary
+	 * 
+	 * @see MapView#googleMap
+	 */
 	public void refreshMap(){
 		
-		/* refreshing the map by zooming in and zooming out by 1
-		 * -1 of current is because, when double clicking on map it will automatically zoom by 1, so to keep the same zoom level
-		 * -1 is necessary
-		*/
 		int current = googleMap.getZoom() - 1;
 		googleMap.setZoom(googleMap.getZoom() + 1);
 		googleMap.setZoom(current);
