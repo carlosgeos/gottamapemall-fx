@@ -9,9 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 /**
@@ -27,12 +26,15 @@ public class PokedexView {
 	private ObservableList<MyClass> matchingPokemon;
 	
 	private ListView<MyClass> pokemonListView;
-	private BorderPane pokedexBorderPane;
+	private Pane pokedexBorderPane;
 	private TextField searchFieldPokemon;
 
+	private Pane stackpane;
 	
-	public PokedexView(){
-		pokedexBorderPane = new BorderPane();
+	public PokedexView(Pane newstackpane){
+		stackpane = newstackpane;
+		
+		pokedexBorderPane = new Pane();
 		
 		pokemonInPokedex = FXCollections.observableArrayList();
 		fillPokedex();
@@ -40,7 +42,7 @@ public class PokedexView {
 		
 		pokemonListView = new ListView<MyClass>();
 		updatePokedex();
-		pokedexBorderPane.setCenter(pokemonListView);
+		//pokedexBorderPane.setCenter(pokemonListView);
 		
 		createSearchField();
 		
@@ -61,7 +63,7 @@ public class PokedexView {
 					new Callback<ListView<MyClass>, ListCell<MyClass>>() {  
 					@Override
 					public ListCell<MyClass> call(ListView<MyClass> pokelv) {
-						return new PokemonCellView();
+						return new PokemonCellView(stackpane);
 					}
 					});
 
@@ -76,7 +78,7 @@ public class PokedexView {
 	
 	
 	
-	public BorderPane getView(){
+	public Pane getView(){
 		return pokedexBorderPane;
 	}
 	
@@ -97,10 +99,10 @@ public class PokedexView {
 		
 		searchFieldPokemon = new TextField();
 		searchFieldPokemon.setOnKeyReleased(new SearchFieldOnKeyReleasedHandler(this, searchFieldPokemon));
-		HBox searchFieldHBox = new HBox();
+		Pane searchFieldHBox = new Pane();
 		searchFieldHBox.setStyle("-fx-background-color:#FF0000;");
 		searchFieldHBox.getChildren().addAll(new Label("Search : "), searchFieldPokemon);
-		pokedexBorderPane.setTop(searchFieldHBox);
+		//pokedexBorderPane.setTop(searchFieldHBox);
 		
 	}
 	

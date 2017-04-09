@@ -20,7 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -63,19 +63,19 @@ public class MainGUI extends Application implements MapComponentInitializedListe
 	BorderPane mapBorderPane = new BorderPane();
 	mapBorderPane.setCenter(googleMapView);
 	mapBorderPane.setMinSize(mainWindowWidth, mainWindowHeight);
+	Pane stackpane = new Pane();
 
 
-	PokedexView pokedexView = new PokedexView();
-	BorderPane pv = pokedexView.getView();
+	PokedexView pokedexView = new PokedexView(stackpane);
+	Pane pv = pokedexView.getView();
 
 	pv.setMaxSize(mainWindowWidth/3, mainWindowHeight);
 	pv.setMinSize(mainWindowWidth/3, mainWindowHeight);
 	pv.setStyle("-fx-background-color:#ff0000");
 	
-	StackPane stackpane = new StackPane();
 	stackpane.getChildren().add(mapBorderPane);
 	stackpane.getChildren().add(pv);
-	StackPane.setAlignment(pv, Pos.TOP_RIGHT);
+	//Pane.setAlignment(pv, Pos.TOP_RIGHT);
 	
 	GridPane mainGrid = new GridPane();
 	mainGrid.add(stackpane, 0, 0);
