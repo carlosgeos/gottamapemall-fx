@@ -24,12 +24,23 @@ public class PokemonView {
 
         get("/pokemons/:id", (req, res) -> {
             res.status(200);
-            return datastore.get(PokemonModel.class, req.params("id"));//.toInt());
+            int id = 0;
+            try {
+                id = Integer.parseInt(req.params("id"));
+            } catch (Exception e) {
+                return e;
+            }
+            return datastore.find(PokemonModel.class).field("id").equal(id).get();
         }, gson::toJson);
 
-        //post("/pokemons/create", (req, res) -> {
-        //    String name = req.queryParams("name");
-        //});
+        post("/pokemons", (req, res) -> {
+            int id = req.queryMap("id").integerValue();
+            String name = req.queryMap("name").value();
+            final PokemonModel pokemon = new PokemonModel(id, name);
+            datastore.save(pokemon);
+            res.status(201);
+            return pokemon;
+        }, gson::toJson);
 
         after((req, res) -> {
             res.type("application/json");
