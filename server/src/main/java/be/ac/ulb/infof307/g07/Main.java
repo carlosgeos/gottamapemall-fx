@@ -7,7 +7,7 @@ public class Main {
     public static void main(final String[] args) {
         Database.init();
 
-        PokemonView.init();
+        PokemonView view = new PokemonView();
 
         //notFound((req, res) -> {
         //    res.type("application/json");
