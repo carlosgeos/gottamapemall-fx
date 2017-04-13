@@ -6,15 +6,16 @@ import com.google.gson.Gson;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import be.ac.ulb.infof307.g07.models.PokemonModel;
+import be.ac.ulb.infof307.g07.lib.Database;
 import java.util.List;
 
 public class PokemonView {
-    public static void init (Datastore datastore) {
+    public static void init () {
         Gson gson = new Gson();
 
         // path("/pokemons", () -> {
         get("/pokemons", (req, res) -> {
-            Query<PokemonModel> query = datastore.find(PokemonModel.class);
+            Query<PokemonModel> query = Database.get().find(PokemonModel.class);
             final List<PokemonModel> pokemons = query.asList();
 
             res.status(200);
@@ -30,14 +31,14 @@ public class PokemonView {
             } catch (Exception e) {
                 return e;
             }
-            return datastore.find(PokemonModel.class).field("id").equal(id).get();
+            return Database.get().find(PokemonModel.class).field("id").equal(id).get();
         }, gson::toJson);
 
         post("/pokemons", (req, res) -> {
             int id = req.queryMap("id").integerValue();
             String name = req.queryMap("name").value();
             final PokemonModel pokemon = new PokemonModel(id, name);
-            datastore.save(pokemon);
+            Database.get().save(pokemon);
             res.status(201);
             return pokemon;
         }, gson::toJson);
