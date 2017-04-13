@@ -63,13 +63,13 @@ public class ListView<T> {
             return pokemons;
         }, gson::toJson);
 
-        get(route+ "/:id", (req, res) -> {
+        get(route + "/:id", (req, res) -> {
             int id = (int) getParam(req, ":id", (val) -> {
                 return Integer.parseInt(val);
             });
+
             res.status(200);
-            //return Database.get().find(T.class).field("id").equal(id).get();
-            return Database.get().find(Object.class).field("id").equal(id).get();
+            return Database.get().find(clazz).field("id").equal(id).get();
         }, gson::toJson);
 
         // update(ROUTE + "/:id", (req, res))
