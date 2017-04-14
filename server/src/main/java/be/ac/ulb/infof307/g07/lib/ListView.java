@@ -2,15 +2,18 @@ package be.ac.ulb.infof307.g07.lib;
 
 import static spark.Spark.*;
 import spark.Request;
+import org.mongodb.morphia.query.Query;
 import com.google.gson.Gson;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import be.ac.ulb.infof307.g07.lib.ParamHandler;
+import be.ac.ulb.infof307.g07.lib.Message;
 import be.ac.ulb.infof307.g07.lib.Database;
+import be.ac.ulb.infof307.g07.lib.models.GenericModel;
 
-public class ListView<T> {
+public class ListView<T extends GenericModel> {
     static private Gson gson = new Gson();
 
     private List<String> required_fields = null;
@@ -72,26 +75,36 @@ public class ListView<T> {
             return Database.get().find(clazz).field("id").equal(id).get();
         }, gson::toJson);
 
-        // update(ROUTE + "/:id", (req, res))
-
         post(route, (req, res) -> {
-            if (this.fields == null) {
-                Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-                //for (Map.Entry<String, String> entry : req.queryMap().toMap().entrySet()) {
-                //    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                //}
-            } else {
-                for (String field : this.fields){
-                    req.queryMap(field).value();
-                }
-            }
+            final T model = clazz.newInstance();
+            model.set(req.queryMap().toMap());
+            Database.get().save(model);
 
-            //int id = req.queryMap("id").integerValue();
-            //String name = req.queryMap("name").value();
-            //final PokemonModel pokemon = new PokemonModel(id, name);
-            //datastore.save(pokemon);
             res.status(201);
-            return null;
+            return model;
+        }, gson::toJson);
+
+        //update(route + "/:id", (req, res) -> {
+        //    int id = (int) getParam(req, ":id", (val) -> {
+        //        return Integer.parseInt(val);
+        //    });
+
+        //    res.status(200);
+        //    T object = Database.get().find(clazz).field("id").equal(id).get();
+        //    object.update(req.queryMap().toMap());
+        //    Database.update()
+        //}, gson::toJson);
+
+        delete(route + "/:id", (req, res) -> {
+            int id = (int) getParam(req, ":id", (val) -> {
+                return Integer.parseInt(val);
+            });
+
+            res.status(200);
+            final Query<T> d = Database.get().find(clazz).field("id").equal(id);
+            Database.get().delete(d);
+
+            return new Message("deleted");
         }, gson::toJson);
 
         after((req, res) -> {
@@ -103,6 +116,4 @@ public class ListView<T> {
         //    res.body(gson::toJson(new ResponseError(e)));
         //});
     }
-
-
 }

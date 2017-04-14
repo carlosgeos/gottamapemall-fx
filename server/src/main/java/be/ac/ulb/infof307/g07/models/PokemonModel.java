@@ -5,8 +5,12 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 
+import java.util.Map;
+
+import be.ac.ulb.infof307.g07.lib.models.GenericModel;
+
 @Entity("pokemon")
-public class PokemonModel {
+public class PokemonModel implements GenericModel {
     @Id
     private ObjectId _id;
 
@@ -21,21 +25,26 @@ public class PokemonModel {
 
     public PokemonModel () {}
 
-    public PokemonModel (final int id, final String name) {
-        this.id = id;
-        this.name = name;
-        this.weight = 0;
-        this.height = 0;
-    }
+    public void set(final Map<String, String[]> map) throws Exception {
+        if (map.containsKey("id")) {
+            this.id = Integer.parseInt(map.get("id")[0]);
+        } else {
+            throw new Exception();
+        }
 
-    public PokemonModel (final int id,
-                         final String name,
-                         final int weight,
-                         final int height) {
-        this.id = id;
-        this.name = name;
-        this.weight = weight;
-        this.height = height;
+        if (map.containsKey("name")) {
+            this.name = map.get("name")[0];
+        } else {
+            throw new Exception();
+        }
+
+        if (map.containsKey("weight")) {
+            this.weight = Integer.parseInt(map.get("weight")[0]);
+        }
+
+        if (map.containsKey("height")) {
+            this.height = Integer.parseInt(map.get("height")[0]);
+        }
     }
 
     public int getId () {
