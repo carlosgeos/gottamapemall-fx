@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g07.Models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -26,6 +27,8 @@ public class Map {
 	private HashMap<Integer, PokeMarker> pokeMarkers = new HashMap<Integer, PokeMarker>();
 
 
+	private ArrayList<Integer> pokeMarkersNotOnMapView = new ArrayList<Integer>();
+	
 	/**
 	 * Constructeur de Map
 	 */
@@ -99,7 +102,35 @@ public class Map {
 	public void addPokeMarker(PokeMarker newPMarker){
 
 		pokeMarkers.put(newPMarker.getId(), newPMarker);
+		
+		this.pokeMarkersNotOnMapView.add(newPMarker.getId());
 
+	}
+	
+	public Integer getIdOfPokeMarkerNotOnMap(){
+		
+		Integer res = -1;
+		int size = this.pokeMarkersNotOnMapView.size();
+		if( size != 0 ){
+			
+			res = this.pokeMarkersNotOnMapView.get(size-1);
+			
+		}
+		
+		return res;
+		
+	}
+	
+	public final PokeMarker getPokeMarker(int idOfPokeMarker){
+		
+		return this.pokeMarkers.get(idOfPokeMarker);
+		
+	}
+	
+	public void removePokeMarkerJustAddedOnMapView(Integer idOfAddedPokeMarker){
+		
+		this.pokeMarkersNotOnMapView.remove(idOfAddedPokeMarker);
+		
 	}
 	
 	/**
@@ -111,7 +142,7 @@ public class Map {
 	 * @see Map#pokeMarkers
 	 * 
 	 */
-	public int getNumberMarker(){
+	public int getNumberOfMarker(){
 		
 		return pokeMarkers.size();
 	}
