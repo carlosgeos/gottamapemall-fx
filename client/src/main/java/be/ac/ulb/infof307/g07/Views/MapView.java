@@ -29,7 +29,6 @@ import javafx.scene.layout.BorderPane;
  * @version 1.0
  *
  * @see be.ac.ulb.infof307.g07.MainGUI
- * @see be.ac.ulb.infof307.g07.Controllers.MapController
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
  *
  */
@@ -72,8 +71,8 @@ public class MapView  implements MapComponentInitializedListener{
      * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
      * </p>
      *
-     * @param width
-     * @param height
+     * @param width the width
+     * @param height the height
      *
      *
      *@see MapView#googleMap
