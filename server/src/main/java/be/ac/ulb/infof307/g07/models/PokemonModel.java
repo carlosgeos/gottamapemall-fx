@@ -22,8 +22,7 @@ public class PokemonModel implements GenericModel {
     @Indexed(unique=true)
     private String name;
 
-    private int weight;
-    private int height;
+    private String imagePath;
 
     public PokemonModel () {}
 
@@ -44,21 +43,25 @@ public class PokemonModel implements GenericModel {
             throw new RequiredFieldException("Name is required");
         }
 
-        if (map.containsKey("weight")) {
-            try {
-                this.weight = Integer.parseInt(map.get("weight")[0]);
-            } catch (Exception e) {
-                throw new WrongTypeFieldException("weight");
-            }
+        if (map.containsKey("imagePath")) {
+            this.imagePath = map.get("imagePath")[0];
         }
 
-        if (map.containsKey("height")) {
-            try {
-                this.height = Integer.parseInt(map.get("height")[0]);
-            } catch (Exception e) {
-                throw new WrongTypeFieldException("height");
-            }
-        }
+        //if (map.containsKey("weight")) {
+        //    try {
+        //        this.weight = Integer.parseInt(map.get("weight")[0]);
+        //    } catch (Exception e) {
+        //        throw new WrongTypeFieldException("weight");
+        //    }
+        //}
+
+        //if (map.containsKey("height")) {
+        //    try {
+        //        this.height = Integer.parseInt(map.get("height")[0]);
+        //    } catch (Exception e) {
+        //        throw new WrongTypeFieldException("height");
+        //    }
+        //}
     }
 
     public int getId () {
