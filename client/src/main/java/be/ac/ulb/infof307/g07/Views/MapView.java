@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g07.Views;
 import java.util.HashMap;
 
 import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
@@ -11,9 +12,11 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
+import be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.PokeMarker;
+import javafx.scene.layout.BorderPane;
 
 /**
  *
@@ -30,7 +33,8 @@ import be.ac.ulb.infof307.g07.Models.PokeMarker;
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
  *
  */
-public class MapView{
+
+public class MapView  implements MapComponentInitializedListener{
 
 
     /**
@@ -48,9 +52,18 @@ public class MapView{
      * @see MapView#getGoogleMap()
      * @see MapView#MapView()
      */
+
+    private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+
     private GoogleMap googleMap;
+    private GoogleMapView googleMapView;
 
+    private Map pokeMap;
 
+    private double mapWidth;
+    private double mapHeight;
+
+    private BorderPane mapViewBorderPane;
 
     /**
      * Constructeur de l'objet MapView.
@@ -59,30 +72,36 @@ public class MapView{
      * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
      * </p>
      *
-     * @param newGoogleMapView la vue pour la carte googlemaps.
+     * @param width
+     * @param height
      *
      *
-     * @see MapView#googleMap
+     *@see MapView#googleMap
      *
      */
-    public MapView( GoogleMapView newGoogleMapView){
+    public MapView( double width, double height){
 
-	MapOptions defaultMapOptions = new MapOptions();
-	// here we set the default location as 47.6097, -122.3331
-	LatLong defaultMapCenterPosition = new LatLong(47.6097, -122.3331);
+	this.mapWidth = width;
+	this.mapHeight = height;
 
-	defaultMapOptions.center(defaultMapCenterPosition)
-	    .mapType(MapTypeIdEnum.ROADMAP)
-	    .overviewMapControl(false)
-	    .panControl(false)
-	    .rotateControl(false)
-	    .scaleControl(false)
-	    .streetViewControl(false)
-	    .zoomControl(false)
-	    .zoom(11);
+	this.pokeMap = new Map();
 
-	googleMap = newGoogleMapView.createMap(defaultMapOptions);
+	this.googleMapView = new GoogleMapView(null, apikey);
+	googleMapView.addMapInializedListener(this);
 
+	this.mapViewBorderPane = new BorderPane();
+	this.mapViewBorderPane .setCenter(googleMapView);
+	this.mapViewBorderPane .setMinSize(this.mapWidth, this.mapHeight);
+
+	this.mapViewBorderPane.setOpacity(0);
+
+    }
+
+    public MapView(){
+
+	this.pokeMap = new Map();
+	this.googleMap = null;
+	this.googleMapView = null;
     }
 
 
@@ -95,6 +114,25 @@ public class MapView{
     public GoogleMap getGoogleMap(){
 
 	return googleMap;
+    }
+
+    public BorderPane getView(){
+
+
+	return this.mapViewBorderPane;
+
+    }
+
+    public final int getNumberOfMarkerOnMap(){
+
+	return this.markersOnMap.size();
+    }
+
+    public Map getMap(){
+
+
+	return this.pokeMap;
+
     }
 
     /**
@@ -116,10 +154,36 @@ public class MapView{
 	MarkerOptions markerOption = new MarkerOptions();
 	markerOption.position(new LatLong(pokeMarker.getOnMapPosition().getX(), pokeMarker.getOnMapPosition().getY()));
 	Marker newMarker = new Marker(markerOption);
-	googleMap.addMarker(newMarker);
-	googleMap.addUIEventHandler(newMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newMarker, pokeMarker, googleMap));
 
-	refreshMap();
+	markersOnMap.put(pokeMarker.getId(), newMarker);
+
+	// this if is only used for the test unit
+	if(googleMap != null){
+
+	    googleMap.addMarker(newMarker);
+	    googleMap.addUIEventHandler(newMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newMarker, pokeMarker, googleMap));
+
+	    refreshMap();
+	}
+
+    }
+
+
+    public void updateMarkers(){
+
+	Integer idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
+	Integer empty = -1;
+
+	System.out.print("updateMarkers : "+idOfPokeMarker);
+
+	while(idOfPokeMarker != empty){
+
+	    addMarker(this.pokeMap.getPokeMarker(idOfPokeMarker));
+
+	    this.pokeMap.removePokeMarkerJustAddedOnMapView(idOfPokeMarker);
+
+	    idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
+	}
 
     }
 
@@ -135,6 +199,32 @@ public class MapView{
 	int current = googleMap.getZoom() - 1;
 	googleMap.setZoom(googleMap.getZoom() + 1);
 	googleMap.setZoom(current);
+
+    }
+
+
+
+    @Override
+    public void mapInitialized() {
+
+	MapOptions defaultMapOptions = new MapOptions();
+	// here we set the default location as 47.6097, -122.3331
+	LatLong defaultMapCenterPosition = new LatLong(47.6097, -122.3331);
+
+	defaultMapOptions.center(defaultMapCenterPosition)
+	    .mapType(MapTypeIdEnum.ROADMAP)
+	    .overviewMapControl(false)
+	    .panControl(false)
+	    .rotateControl(false)
+	    .scaleControl(false)
+	    .streetViewControl(false)
+	    .zoomControl(false)
+	    .zoom(11);
+
+	googleMap = this.googleMapView.createMap(defaultMapOptions);
+	googleMap.addMouseEventHandler(UIEventType.dblclick, new MapMouseDblClickHandler(this, this.pokeMap));
+
+	this.mapViewBorderPane.setOpacity(1);
 
     }
 }
