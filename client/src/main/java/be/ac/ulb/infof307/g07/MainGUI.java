@@ -35,7 +35,7 @@ public class MainGUI extends Application{
     /**
      * la hauteur de la fenetre en pixels
      */
-    private int mainWindowHeight = 600;
+    private int mainWindowHeight = 750;
 
     /**
      * La vue de la carte googleMap 
