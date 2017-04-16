@@ -3,6 +3,7 @@
 package be.ac.ulb.infof307.g07.Controllers.Handlers;
 
 import be.ac.ulb.infof307.g07.MyClass;
+import be.ac.ulb.infof307.g07.Models.Pokemon;
 import be.ac.ulb.infof307.g07.Views.PokedexView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,8 +32,8 @@ public class SearchFieldOnKeyReleasedHandler implements EventHandler<KeyEvent>{
 	@Override
 	public void handle(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		ObservableList<MyClass> pkmList = FXCollections.observableArrayList(pokedexView.getPokemonList());
-		ObservableList<MyClass> newPkmList;
+		ObservableList<Pokemon> pkmList = FXCollections.observableArrayList(pokedexView.getPokemonList());
+		ObservableList<Pokemon> newPkmList;
 		newPkmList = FXCollections.observableArrayList();
 		
 		System.out.println("pkmlist: "+pkmList.size());
@@ -53,8 +54,8 @@ public class SearchFieldOnKeyReleasedHandler implements EventHandler<KeyEvent>{
 
 	}
 	
-	private boolean matchCriteria(MyClass pkmEntry, String fieldInput){
-		if (pkmEntry.name.equals(fieldInput)){
+	private boolean matchCriteria(Pokemon pkmEntry, String fieldInput){
+		if (pkmEntry.getName().equals(fieldInput)){
 			return true;			
 		}else{
 			return false;

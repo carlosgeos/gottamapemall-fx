@@ -2,25 +2,16 @@ package be.ac.ulb.infof307.g07;
 
 
 import be.ac.ulb.infof307.g07.Views.MapView;
-//import be.ac.ulb.infof307.g07.Views.PokedexView;
-//import be.ac.ulb.infof307.g07.Views.PokemonCellView;
+import be.ac.ulb.infof307.g07.Views.PokedexView;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 
 
@@ -28,13 +19,10 @@ import javafx.util.Callback;
  * <b>MainGUI est la classe qui se charge de lancer l'interface graphique (afficher la carte dans la fenetre).</b>
  * Elle hérite de la classe Application de javafx.
  *
-<<<<<<< HEAD
  * @see be.ac.ulb.infof307.g07.Views.MapView
  *
-=======
  * @see MapView
  * @author fan
->>>>>>> Pokedex graphical view-v1
  * @version 1.0
  */
 public class MainGUI extends Application{
@@ -88,13 +76,11 @@ public class MainGUI extends Application{
 		primaryStage.setWidth(mainWindowWidth);
 		primaryStage.setHeight(mainWindowHeight);
 		primaryStage.setTitle("PokéMap");
+		
+		this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
 
-		PokedexView pokedexView = new PokedexView();
-		BorderPane pv = pokedexView.getView();
-
-		pv.setMaxSize(mainWindowWidth/3, mainWindowHeight);
-		pv.setMinSize(mainWindowWidth/3, mainWindowHeight);
-		pv.setStyle("-fx-background-color:#ff0000");
+		PokedexView pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
+		StackPane pv = pokedexView.getView();
 		
 		StackPane stackpane = new StackPane();
 		stackpane.getChildren().add(this.pokeMapView.getView());
@@ -103,6 +89,10 @@ public class MainGUI extends Application{
 	
 		GridPane mainGrid = new GridPane();
 		mainGrid.add(stackpane, 0, 0);
+		
+		Scene mainScene = new Scene(mainGrid);
+		primaryStage.setScene(mainScene);
+		primaryStage.show();
 	
     }
 
