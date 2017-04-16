@@ -4,5 +4,4 @@ import java.util.Map;
 
 public interface GenericModel {
     public void set (final Map<String, String[]> map) throws Exception;
-    // public Map<String, String> get ();
 }

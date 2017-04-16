@@ -8,6 +8,8 @@ import org.mongodb.morphia.annotations.Indexed;
 import java.util.Map;
 
 import be.ac.ulb.infof307.g07.lib.models.GenericModel;
+import be.ac.ulb.infof307.g07.lib.errors.RequiredFieldException;
+import be.ac.ulb.infof307.g07.lib.errors.WrongTypeFieldException;
 
 @Entity("pokemon")
 public class PokemonModel implements GenericModel {
@@ -27,23 +29,35 @@ public class PokemonModel implements GenericModel {
 
     public void set(final Map<String, String[]> map) throws Exception {
         if (map.containsKey("id")) {
-            this.id = Integer.parseInt(map.get("id")[0]);
+            try {
+                this.id = Integer.parseInt(map.get("id")[0]);
+            } catch (Exception e) {
+                throw new WrongTypeFieldException("id");
+            }
         } else {
-            throw new Exception("Wrong id");
+            throw new RequiredFieldException("Id is required");
         }
 
         if (map.containsKey("name")) {
             this.name = map.get("name")[0];
         } else {
-            throw new Exception("Wrong name");
+            throw new RequiredFieldException("Name is required");
         }
 
         if (map.containsKey("weight")) {
-            this.weight = Integer.parseInt(map.get("weight")[0]);
+            try {
+                this.weight = Integer.parseInt(map.get("weight")[0]);
+            } catch (Exception e) {
+                throw new WrongTypeFieldException("weight");
+            }
         }
 
         if (map.containsKey("height")) {
-            this.height = Integer.parseInt(map.get("height")[0]);
+            try {
+                this.height = Integer.parseInt(map.get("height")[0]);
+            } catch (Exception e) {
+                throw new WrongTypeFieldException("height");
+            }
         }
     }
 

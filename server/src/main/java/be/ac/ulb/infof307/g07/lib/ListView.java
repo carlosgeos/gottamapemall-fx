@@ -77,7 +77,11 @@ public class ListView<T extends GenericModel> {
 
         post(route, (req, res) -> {
             final T model = clazz.newInstance();
-            model.set(req.queryMap().toMap());
+            try {
+                model.set(req.queryMap().toMap());
+            } catch (Exception e) {
+                return new Message(e.getMessage());
+            }
             Database.get().save(model);
 
             res.status(201);
