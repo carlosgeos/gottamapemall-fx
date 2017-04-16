@@ -71,7 +71,7 @@ public class MainGUI extends Application{
 	 * 						le containeur parent.
      */
     public void start(Stage primaryStage) {
-
+ 
 
 		primaryStage.setWidth(mainWindowWidth);
 		primaryStage.setHeight(mainWindowHeight);
