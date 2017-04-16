@@ -29,13 +29,13 @@ public class PokemonModel implements GenericModel {
         if (map.containsKey("id")) {
             this.id = Integer.parseInt(map.get("id")[0]);
         } else {
-            throw new Exception();
+            throw new Exception("Wrong id");
         }
 
         if (map.containsKey("name")) {
             this.name = map.get("name")[0];
         } else {
-            throw new Exception();
+            throw new Exception("Wrong name");
         }
 
         if (map.containsKey("weight")) {
