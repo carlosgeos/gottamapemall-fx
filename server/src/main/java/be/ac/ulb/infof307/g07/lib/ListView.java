@@ -13,11 +13,27 @@ import be.ac.ulb.infof307.g07.lib.Message;
 import be.ac.ulb.infof307.g07.lib.Database;
 import be.ac.ulb.infof307.g07.lib.models.GenericModel;
 
+/**
+ * Abstraction to create API endpoint for a specific model instance.
+ *
+ * @param <T> The model instance to create the API endpoint on.
+ */
 public class ListView<T extends GenericModel> {
     static private Gson gson = new Gson();
 
-    private List<String> required_fields = null;
-    private List<String> fields = null;
+    /**
+     * Used to define the route of the API endpoint.
+     */
+    protected String getRoute () {
+        return "";
+    }
+
+    /**
+     * Used to define the model used with the endpoint.
+     */
+    protected Class<T> getModel () {
+        return null;
+    }
 
     /**
      * Get a parameter from the request, could be from the url or a form.
@@ -58,25 +74,40 @@ public class ListView<T extends GenericModel> {
         return param;
     }
 
-    public ListView (String route, Class<T> clazz) {
-        get(route, (req, res) -> {
-            final List<T> pokemons = Database.get().find(clazz).asList();
+    /**
+     * Define API endpoint to get all the object saved in the database
+     * under the model defined in this.getModel().
+     */
+    protected void viewsetRoute () {
+        get(this.getRoute(), (req, res) -> {
+            final List<T> pokemons = Database.get().find(this.getModel()).asList();
 
             res.status(200);
             return pokemons;
         }, gson::toJson);
+    }
 
-        get(route + "/:id", (req, res) -> {
+    /**
+     * Define API endpoint to get a specific object saved in the database
+     * under the model defined in this.getModel().
+     */
+    protected void detailRoute () {
+        get(this.getRoute() + "/:id", (req, res) -> {
             int id = (int) getParam(req, ":id", (val) -> {
                 return Integer.parseInt(val);
             });
 
             res.status(200);
-            return Database.get().find(clazz).field("id").equal(id).get();
+            return Database.get().find(this.getModel()).field("id").equal(id).get();
         }, gson::toJson);
+    }
 
-        post(route, (req, res) -> {
-            final T model = clazz.newInstance();
+    /**
+     * Define API endpoint to save a new data in the model defined in this.getModel().
+     */
+    protected void createRoute () {
+         post(this.getRoute(), (req, res) -> {
+            final T model = this.getModel().newInstance();
             try {
                 model.set(req.queryMap().toMap());
             } catch (Exception e) {
@@ -87,29 +118,47 @@ public class ListView<T extends GenericModel> {
             res.status(201);
             return model;
         }, gson::toJson);
+    }
 
-        //update(route + "/:id", (req, res) -> {
+    /**
+     * Define API endpoint to update a specific data in the model.
+     */
+    protected void updateRoute () {
+        //update(this.getRoute() + "/:id", (req, res) -> {
         //    int id = (int) getParam(req, ":id", (val) -> {
         //        return Integer.parseInt(val);
         //    });
 
         //    res.status(200);
-        //    T object = Database.get().find(clazz).field("id").equal(id).get();
+        //    T object = Database.get().find(this.getModel()).field("id").equal(id).get();
         //    object.update(req.queryMap().toMap());
         //    Database.update()
         //}, gson::toJson);
+    }
 
-        delete(route + "/:id", (req, res) -> {
+    /**
+     * Define API endpoint to delete a specific object in the model.
+     */
+    protected void deleteRoute () {
+        delete(this.getRoute() + "/:id", (req, res) -> {
             int id = (int) getParam(req, ":id", (val) -> {
                 return Integer.parseInt(val);
             });
 
             res.status(200);
-            final Query<T> d = Database.get().find(clazz).field("id").equal(id);
+            final Query<T> d = Database.get().find(this.getModel()).field("id").equal(id);
             Database.get().delete(d);
 
             return new Message("deleted");
         }, gson::toJson);
+    }
+
+    public ListView () {
+        this.viewsetRoute();
+        this.detailRoute();
+        this.createRoute();
+        this.updateRoute();
+        this.deleteRoute();
 
         after((req, res) -> {
             res.type("application/json");

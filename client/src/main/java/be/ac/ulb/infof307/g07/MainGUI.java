@@ -1,17 +1,11 @@
 package be.ac.ulb.infof307.g07;
 
-import com.lynden.gmapsfx.GoogleMapView;
-import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
 
-import be.ac.ulb.infof307.g07.Controllers.MapController;
-import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Views.MapView;
 import javafx.application.Application;
 
 
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -24,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @version 1.0
  */
-public class MainGUI extends Application implements MapComponentInitializedListener{
+public class MainGUI extends Application{
 
 	/**
 	 * la largeur de la fenetre en pixels
@@ -39,7 +33,6 @@ public class MainGUI extends Application implements MapComponentInitializedListe
     /**
      * La vue de la carte googleMap 
      */
-    private GoogleMapView googleMapView;
     
     /**
 	 * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
@@ -47,14 +40,12 @@ public class MainGUI extends Application implements MapComponentInitializedListe
 	 * @see be.ac.ulb.infof307.g07.Views.MapView#getGoogleMap()
      * @see be.ac.ulb.infof307.g07.Views.MapView#MapView()
      */
-    private GoogleMap googleMap;
     
    /**
     * La cle d'authentification google necessaire pour l'utilisation de la carte google maps.
     * 
     * @see MainGUI#start()
    	*/
-    private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
 
     /**
 	 * L'objet vue de la carte pokemon pour les actions a effectuer sur l affichage.
@@ -72,19 +63,13 @@ public class MainGUI extends Application implements MapComponentInitializedListe
      */
     public void start(Stage primaryStage) {
 
-		googleMapView = new GoogleMapView(null, apikey);
-		googleMapView.addMapInializedListener(this);
-	
 		primaryStage.setWidth(mainWindowWidth);
 		primaryStage.setHeight(mainWindowHeight);
 		primaryStage.setTitle("PokéMap");
-	
-		BorderPane mapBorderPane = new BorderPane();
-		mapBorderPane.setCenter(googleMapView);
-		mapBorderPane.setMinSize(mainWindowWidth, mainWindowHeight);
-	
+		
+		this.pokeMapView = new MapView(this.mainWindowWidth, this.mainWindowHeight);
 		GridPane mainGrid = new GridPane();
-		mainGrid.add( mapBorderPane, 0, 0);
+		mainGrid.add( this.pokeMapView.getView(), 0, 0);
 	
 		Scene mainScene = new Scene(mainGrid);
 		primaryStage.setScene(mainScene);
@@ -101,7 +86,6 @@ public class MainGUI extends Application implements MapComponentInitializedListe
         launch(args);
     }
 
-    @Override
     /**
      * this method is going to be called when the GoogleMap is totally loaded in GoogleMapView
 	 * So before the loading is finished we can't do anything else, because the instance GoogleMap can't be created.
@@ -111,12 +95,6 @@ public class MainGUI extends Application implements MapComponentInitializedListe
 	 * @see be.ac.ulb.infof307.g07.Controllers.MapController
 	 * 
      */
-    public void mapInitialized() {
 
-		Map pokeMap = new Map();
-		MapView pokeMapView = new MapView(googleMapView);
-		MapController mapController = new MapController(pokeMap, pokeMapView);
-
-    }
 
 }
