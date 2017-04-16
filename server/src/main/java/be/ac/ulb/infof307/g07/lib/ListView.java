@@ -35,6 +35,10 @@ public class ListView<T extends GenericModel> {
         return null;
     }
 
+    protected String getSearchField () {
+        return "name";
+    }
+
     /**
      * Get a parameter from the request, could be from the url or a form.
      *
@@ -84,6 +88,17 @@ public class ListView<T extends GenericModel> {
 
             res.status(200);
             return pokemons;
+        }, gson::toJson);
+    }
+
+    /**
+     * Define API endpoint to filter the viewset by matching with the result
+     * of a certain field.
+     */
+    protected void searchSetRoute () {
+        get(this.getRoute() + "/search/:query", (req, res) -> {
+            String param = (String) getParam(req, ":query");
+            return Database.get().find(this.getModel()).field(this.getSearchField()).contains(param).asList();
         }, gson::toJson);
     }
 
@@ -155,6 +170,7 @@ public class ListView<T extends GenericModel> {
 
     public ListView () {
         this.viewsetRoute();
+        this.searchSetRoute();
         this.detailRoute();
         this.createRoute();
         this.updateRoute();
