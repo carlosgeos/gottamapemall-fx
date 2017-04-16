@@ -1,12 +1,6 @@
-
-
 package be.ac.ulb.infof307.g07.Controllers.Handlers;
 
-import be.ac.ulb.infof307.g07.MyClass;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
 import be.ac.ulb.infof307.g07.Views.PokedexView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -31,36 +25,10 @@ public class SearchFieldOnKeyReleasedHandler implements EventHandler<KeyEvent>{
 	
 	@Override
 	public void handle(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		ObservableList<Pokemon> pkmList = FXCollections.observableArrayList(pokedexView.getPokemonList());
-		ObservableList<Pokemon> newPkmList;
-		newPkmList = FXCollections.observableArrayList();
 		
-		System.out.println("pkmlist: "+pkmList.size());
-		
-		if(!criteriaInput.getText().isEmpty()){
-			for (int i = 0 ; i<pkmList.size() ; i++){
-				if (matchCriteria(pkmList.get(i),criteriaInput.getText())){
-					newPkmList.add(pkmList.get(i));
-				}
-			}
-		}else{
-			newPkmList = pkmList;
-		}
-		pokedexView.setNewPokemonList(newPkmList);
-		pokedexView.updatePokedex();
-		
-		System.out.print(criteriaInput.getText());
 
 	}
 	
-	private boolean matchCriteria(Pokemon pkmEntry, String fieldInput){
-		if (pkmEntry.getName().equals(fieldInput)){
-			return true;			
-		}else{
-			return false;
-		}
-		
-	}
 
 }
+
