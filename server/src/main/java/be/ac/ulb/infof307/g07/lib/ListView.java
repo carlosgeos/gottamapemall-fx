@@ -24,12 +24,16 @@ public class ListView<T extends GenericModel> {
     /**
      * Used to define the route of the API endpoint.
      */
-    private String route;
+    protected String getRoute () {
+        return "";
+    }
+
     /**
      * Used to define the model used with the endpoint.
      */
-    private Class<T> model;
-
+    protected Class<T> getModel () {
+        return null;
+    }
 
     /**
      * Get a parameter from the request, could be from the url or a form.
@@ -72,11 +76,11 @@ public class ListView<T extends GenericModel> {
 
     /**
      * Define API endpoint to get all the object saved in the database
-     * under the model defined in this.model.
+     * under the model defined in this.getModel().
      */
-    private void viewsetRoute () {
-        get(this.route, (req, res) -> {
-            final List<T> pokemons = Database.get().find(this.model).asList();
+    protected void viewsetRoute () {
+        get(this.getRoute(), (req, res) -> {
+            final List<T> pokemons = Database.get().find(this.getModel()).asList();
 
             res.status(200);
             return pokemons;
@@ -85,25 +89,25 @@ public class ListView<T extends GenericModel> {
 
     /**
      * Define API endpoint to get a specific object saved in the database
-     * under the model defined in this.model.
+     * under the model defined in this.getModel().
      */
-    private void detailRoute () {
-        get(this.route + "/:id", (req, res) -> {
+    protected void detailRoute () {
+        get(this.getRoute() + "/:id", (req, res) -> {
             int id = (int) getParam(req, ":id", (val) -> {
                 return Integer.parseInt(val);
             });
 
             res.status(200);
-            return Database.get().find(this.model).field("id").equal(id).get();
+            return Database.get().find(this.getModel()).field("id").equal(id).get();
         }, gson::toJson);
     }
 
     /**
-     * Define API endpoint to save a new data in the model defined in this.model
+     * Define API endpoint to save a new data in the model defined in this.getModel().
      */
-    private void createRoute () {
-         post(this.route, (req, res) -> {
-            final T model = this.model.newInstance();
+    protected void createRoute () {
+         post(this.getRoute(), (req, res) -> {
+            final T model = this.getModel().newInstance();
             try {
                 model.set(req.queryMap().toMap());
             } catch (Exception e) {
@@ -119,14 +123,14 @@ public class ListView<T extends GenericModel> {
     /**
      * Define API endpoint to update a specific data in the model.
      */
-    private void updateRoute () {
-        //update(this.route + "/:id", (req, res) -> {
+    protected void updateRoute () {
+        //update(this.getRoute() + "/:id", (req, res) -> {
         //    int id = (int) getParam(req, ":id", (val) -> {
         //        return Integer.parseInt(val);
         //    });
 
         //    res.status(200);
-        //    T object = Database.get().find(this.model).field("id").equal(id).get();
+        //    T object = Database.get().find(this.getModel()).field("id").equal(id).get();
         //    object.update(req.queryMap().toMap());
         //    Database.update()
         //}, gson::toJson);
@@ -135,14 +139,14 @@ public class ListView<T extends GenericModel> {
     /**
      * Define API endpoint to delete a specific object in the model.
      */
-    private void deleteRoute () {
-        delete(this.route + "/:id", (req, res) -> {
+    protected void deleteRoute () {
+        delete(this.getRoute() + "/:id", (req, res) -> {
             int id = (int) getParam(req, ":id", (val) -> {
                 return Integer.parseInt(val);
             });
 
             res.status(200);
-            final Query<T> d = Database.get().find(this.model).field("id").equal(id);
+            final Query<T> d = Database.get().find(this.getModel()).field("id").equal(id);
             Database.get().delete(d);
 
             return new Message("deleted");
@@ -150,11 +154,11 @@ public class ListView<T extends GenericModel> {
     }
 
     public ListView () {
-        viewsetRoute();
-        detailRoute();
-        createRoute();
-        updateRoute();
-        deleteRoute();
+        this.viewsetRoute();
+        this.detailRoute();
+        this.createRoute();
+        this.updateRoute();
+        this.deleteRoute();
 
         after((req, res) -> {
             res.type("application/json");

@@ -7,9 +7,26 @@ import be.ac.ulb.infof307.g07.lib.Database;
 import be.ac.ulb.infof307.g07.lib.ListView;
 import java.util.List;
 
-public class PokemonView extends ListView<PokemonModel> {
-    private String route = "pokemon";
-    Class<PokemonModel> model = PokemonModel.class;
+public final class PokemonView extends ListView<PokemonModel> {
+    protected final String getRoute () {
+        return "pokemons";
+    }
+
+    protected final Class<PokemonModel> getModel () {
+        return PokemonModel.class;
+    }
+
+    /**
+     * Do not implement update route.
+     */
+    @Override
+    protected final void updateRoute () {}
+
+    /**
+     * Do not implement delete route.
+     */
+    @Override
+    protected final void deleteRoute () {}
 
     public PokemonView () {
         super();
