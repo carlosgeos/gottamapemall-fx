@@ -31,9 +31,9 @@ import javafx.scene.layout.BorderPane;
  * @see be.ac.ulb.infof307.g07.MainGUI
  * @see be.ac.ulb.infof307.g07.Controllers.MapController
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
- * @see be.ac.ulb.infof307.g07.MainGUI#mapInitialized
  *
  */
+
 public class MapView  implements MapComponentInitializedListener{
 
 
@@ -64,8 +64,6 @@ public class MapView  implements MapComponentInitializedListener{
     private double mapHeight;
 
     private BorderPane mapViewBorderPane;
-
-
 
     /**
      * Constructeur de l'objet MapView.
@@ -152,6 +150,7 @@ public class MapView  implements MapComponentInitializedListener{
      */
     public void addMarker(PokeMarker pokeMarker){
 
+
 	MarkerOptions markerOption = new MarkerOptions();
 	markerOption.position(new LatLong(pokeMarker.getOnMapPosition().getX(), pokeMarker.getOnMapPosition().getY()));
 	Marker newMarker = new Marker(markerOption);
@@ -185,7 +184,6 @@ public class MapView  implements MapComponentInitializedListener{
 
 	    idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
 	}
-
 
     }
 

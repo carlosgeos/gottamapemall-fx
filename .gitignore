@@ -2,9 +2,6 @@
 .idea/vcs.xml
 .idea/misc.xml
 
-client/
-server/
-
 # Compiled class file
 *.class
 
