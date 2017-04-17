@@ -40,4 +40,9 @@ public class Pokemon {
 		
 		return this.imagePath;
 	}
+	
+	public final String getType(){
+		return this.type;
+		
+	}
 }

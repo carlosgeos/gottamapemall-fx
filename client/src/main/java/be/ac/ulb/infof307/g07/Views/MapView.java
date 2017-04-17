@@ -12,7 +12,6 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Map;

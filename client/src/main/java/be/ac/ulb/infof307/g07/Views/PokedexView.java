@@ -5,10 +5,6 @@ import be.ac.ulb.infof307.g07.PokemonViewListener;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
-// importation problem
-//import com.google.gson.Gson;
-//import net.dongliu.requests.Requests;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -35,7 +31,7 @@ public class PokedexView{
 	private ObservableList<Pokemon> pokemonInPokedex;
 
 	private double pokedexViewWidth = 0;
-	private double pokedexViewHeight = 0;
+	
 
 	private double pokemonIconWidth = 45;
 	private double pokemonIconHeight = 45;
@@ -46,7 +42,6 @@ public class PokedexView{
 	private StackPane pokedexStackPane;
 	private ScrollPane pokedexScrollPane;
 
-	private VBox pokedexVbox;
 
 	// used for detail info window
 	private TextField pokemonNameTextField;
@@ -58,7 +53,7 @@ public class PokedexView{
 	public PokedexView( double pokedexViewWidth, double pokedexViewHeight ){
 
 		this.pokedexViewWidth = pokedexViewWidth;
-		this.pokedexViewHeight = pokedexViewHeight;
+		
 
 		pokedexBorderPane = new BorderPane();
 		pokemonDetailBorderPane = new BorderPane();
@@ -201,28 +196,11 @@ public class PokedexView{
 
 	public void closePokemonDetail(){
 
-		// juste do the opposite of showPokemonDetail
+		// just do the opposite of showPokemonDetail
 		this.pokedexBorderPane.toFront();
 		this.pokedexBorderPane.setOpacity(1);
 		this.pokemonDetailBorderPane.setOpacity(0);
 
-	}
-
-	private void createSearchField(){
-		/*
-		searchFieldPokemon = new TextField();
-		searchFieldPokemon.setOnKeyReleased(new SearchFieldOnKeyReleasedHandler(this, searchFieldPokemon));
-		HBox searchFieldHBox = new HBox();
-		searchFieldHBox.setStyle("-fx-background-color:#FF0000;");
-		searchFieldHBox.getChildren().addAll(new Label("Search : "), searchFieldPokemon);
-		pokedexBorderPane.setTop(searchFieldHBox);
-		*/
-	}
-
-	public void setNewPokemonList(ObservableList<Pokemon> newPokemonList){
-		/*
-		matchingPokemon = newPokemonList;
-		*/
 	}
 
 
