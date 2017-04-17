@@ -5,6 +5,10 @@ import be.ac.ulb.infof307.g07.PokemonViewListener;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
+// importation problem
+//import com.google.gson.Gson;
+//import net.dongliu.requests.Requests;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -20,44 +24,46 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * 
- * @author Fan && Renato
- * 
+ *
+ * @author Fan et Renato
+ *
  */
 
 public class PokedexView{
 	
 	// stock real pokemon
 	private ObservableList<Pokemon> pokemonInPokedex;
-	
+
 	private double pokedexViewWidth = 0;
 	private double pokedexViewHeight = 0;
-	
+
 	private double pokemonIconWidth = 45;
 	private double pokemonIconHeight = 45;
-	
-	
+
+
 	private BorderPane pokedexBorderPane;
 	private BorderPane pokemonDetailBorderPane;
 	private StackPane pokedexStackPane;
 	private ScrollPane pokedexScrollPane;
-	
+
+	private VBox pokedexVbox;
+
 	// used for detail info window
 	private TextField pokemonNameTextField;
 	private ImageView pokemonImageView;
 	private int pokemonImageWidth = 180;
 	private int pokemonImageHeight = 140;
 
-	
+
 	public PokedexView( double pokedexViewWidth, double pokedexViewHeight ){
-		
+
 		this.pokedexViewWidth = pokedexViewWidth;
 		this.pokedexViewHeight = pokedexViewHeight;
-		
+
 		pokedexBorderPane = new BorderPane();
 		pokemonDetailBorderPane = new BorderPane();
 		pokemonDetailBorderPane.setStyle("-fx-background-color: #FFFFFF");
-		
+
 		// Adding TextField on Detail Info Window
 		GridPane newGrid = new GridPane();
 		this.pokemonNameTextField = new TextField("Blank");
@@ -66,41 +72,41 @@ public class PokedexView{
 		Image pokemonImage = new Image("http://www.solidbackgrounds.com/images/2560x1440/2560x1440-black-solid-color-background.jpg",this.pokemonImageWidth,this.pokemonImageHeight, true, true);
 		this.pokemonImageView = new ImageView(pokemonImage);
 		newGrid.add(this.pokemonImageView, 0,0);
-		
+
 		Button newButton = new Button("Return");
 		newButton.setOnAction(new ClosePokemonDetailWindowHandler(this));
 		newButton.setPrefWidth(this.pokedexViewWidth-16);
-		
+
 		this.pokemonDetailBorderPane.setTop(newButton);
 		BorderPane.setAlignment(newButton, Pos.CENTER_LEFT);
 		this.pokemonDetailBorderPane.setCenter(newGrid);
 		BorderPane.setAlignment(newGrid, Pos.CENTER);
 		this.pokemonDetailBorderPane.setStyle("-fx-background-color:#ffffff");
-		
+
 		this.pokedexStackPane = new StackPane();
 		
 		this.pokedexStackPane.setMaxSize(pokedexViewWidth, pokedexViewHeight-38);
 		this.pokedexStackPane.setMinSize(pokedexViewWidth, pokedexViewHeight-38);
-		
+
 		pokedexStackPane.getChildren().addAll(pokemonDetailBorderPane, pokedexBorderPane);
-		
+
 		// instance the list for stocking pokemon
 		pokemonInPokedex = FXCollections.observableArrayList();
 		// used only for autofilling the pokedex
 		fillPokedex();
-		
+
 		// Vbox will be stocked in ScrollPane
 		pokedexScrollPane = new ScrollPane();
 		
 		pokedexBorderPane.setCenter(pokedexScrollPane);
-		
+
 		// it will add all pokemon in vbox
 		updatePokedex();
-		
+
 	}
-	
+
 	public void updatePokedex(){
-		
+
 		pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
 		
 	}
@@ -125,16 +131,27 @@ public class PokedexView{
 		}
 		
 		return newVBox;
-		
+	
 	}
 
 	public StackPane getView(){
 		return pokedexStackPane;
 	}
-	
+
 	private void fillPokedex(){
+
+		/*
+		String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
+		Gson gson = new Gson();
+		Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
+
+		for (int i = 0; i < pokemons.length; ++i) {
+			pokemonInPokedex.add(pokemons[i]);
+		}
+		*/
 		
 		// temporary hard coded
+		
 		pokemonInPokedex.add(new Pokemon(1,"Bulbasaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/bulbasaur.gif","Grass"));
 		pokemonInPokedex.add(new Pokemon(2,"Ivysaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ivysaur.gif","Grass"));
 		pokemonInPokedex.add(new Pokemon(3,"Venusaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/venusaur.gif","Grass"));
@@ -164,34 +181,33 @@ public class PokedexView{
 		pokemonInPokedex.add(new Pokemon(27,"Sandshrew","http://www.pkparaiso.com/imagenes/xy/sprites/animados/sandshrew.gif","Ground"));
 		pokemonInPokedex.add(new Pokemon(28,"Sandslash","http://www.pkparaiso.com/imagenes/xy/sprites/animados/sandslash.gif","Ground"));
 		
-		
 	}
-	
+
 	public void showPokemonDetail( Pokemon pokemon )
 	{
 		// prepare all info of this pokemon
 		this.pokemonNameTextField.setText(pokemon.getName());
 		Image pokemonImage = new Image(pokemon.getImagePath(), 100, 130, true, true);
 		this.pokemonImageView.setImage(pokemonImage);
-		
+
 		// send the window of detail info to the front
 		// and others to the back
 		this.pokemonDetailBorderPane.toFront();
 		// set the visibility of them too
 		this.pokemonDetailBorderPane.setOpacity(1);
 		this.pokedexBorderPane.setOpacity(0);
-		
+
 	}
-	
+
 	public void closePokemonDetail(){
-		
+
 		// juste do the opposite of showPokemonDetail
 		this.pokedexBorderPane.toFront();
 		this.pokedexBorderPane.setOpacity(1);
 		this.pokemonDetailBorderPane.setOpacity(0);
-		
+
 	}
-	
+
 	private void createSearchField(){
 		/*
 		searchFieldPokemon = new TextField();
@@ -202,12 +218,12 @@ public class PokedexView{
 		pokedexBorderPane.setTop(searchFieldHBox);
 		*/
 	}
-	
+
 	public void setNewPokemonList(ObservableList<Pokemon> newPokemonList){
 		/*
 		matchingPokemon = newPokemonList;
 		*/
 	}
-	
-	
+
+
 }
