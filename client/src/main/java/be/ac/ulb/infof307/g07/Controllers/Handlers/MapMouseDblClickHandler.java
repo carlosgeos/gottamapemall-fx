@@ -82,10 +82,7 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 	 */
 	public void handle(GMapMouseEvent event) {
 		
-		// instance the current mouse location as coordinate object
-		double x = event.getLatLong().getLatitude();
-		double y = event.getLatLong().getLongitude();
-		Coordinate newPosition = new Coordinate(x,y);
+		// maybe remove this class depend on the structure
 		
 		// add it first in the model map
 		//pokeMap.addPokeMarker(newPosition);

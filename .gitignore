@@ -2,9 +2,6 @@
 .idea/vcs.xml
 .idea/misc.xml
 
-client/
-server/
-
 # Compiled class file
 *.class
 
@@ -66,6 +63,8 @@ fabric.properties
 
 .gradle
 /build/
+/client/build
+/server/build
 
 # Ignore Gradle GUI config
 gradle-app.setting

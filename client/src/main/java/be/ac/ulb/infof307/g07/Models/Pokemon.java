@@ -5,14 +5,11 @@ public class Pokemon {
 	private final int id;
 	private final String name;
 	private final String imagePath;
-	private final String type;
 	
-	public Pokemon(int id, String name, String imagePath, String type){
-		
+	public Pokemon(int id, String name, String imagePath){
 		this.id = id;
 		this.name = name;
 		this.imagePath = imagePath;
-		this.type = type;
 	}
 	
 	public String toString(){

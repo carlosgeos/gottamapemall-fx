@@ -239,3 +239,4 @@ public class MapView  implements MapComponentInitializedListener{
 		
 	}
 }
+
