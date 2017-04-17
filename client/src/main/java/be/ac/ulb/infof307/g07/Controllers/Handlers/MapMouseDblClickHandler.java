@@ -88,9 +88,9 @@ public class MapMouseDblClickHandler implements MouseEventHandler{
 		Coordinate newPosition = new Coordinate(x,y);
 		
 		// add it first in the model map
-		pokeMap.addPokeMarker(newPosition);
+		//pokeMap.addPokeMarker(newPosition);
 		// then add it in the view map
-		pokeMapView.updateMarkers();
+		//pokeMapView.updateMarkers();
 	}
 	
 	

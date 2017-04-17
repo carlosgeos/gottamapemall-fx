@@ -39,6 +39,9 @@ public class PokeMarker{
 	 * @see be.ac.ulb.infof307.g07.Models.Coordinate
 	 */
 	private Coordinate onMapPosition;
+	private Pokemon pokemon;
+	private String date;
+	private String time;
 	
 	/**
 	 * Le constructeur de PokeMarker.
@@ -56,11 +59,13 @@ public class PokeMarker{
 	 * @see be.ac.ulb.infof307.g07.Models.Coordinate
 	 * 
 	 */
-	public PokeMarker( Coordinate newPosition) {
+	public PokeMarker( Coordinate newPosition, Pokemon pokemon, String date, String time) {
 		idIncrement += 1;
 		uniqueId = idIncrement;
 		onMapPosition = newPosition;
-		
+		this.date = date;
+		this.time = time;
+		this.pokemon = pokemon;
 	}
 	
 	/**
@@ -90,6 +95,53 @@ public class PokeMarker{
 	public Coordinate getOnMapPosition(){
 		
 		return onMapPosition;
+	}
+	
+	
+	public String getString(){
+		
+		String res = "<div><table>"
+				+ "<tr><td colspane=2 align=\"center\"><img src=\""+pokemon.getImagePath()+"\" alt=\""+pokemon.getName()+"\" style=\"\"></td></tr>"
+				+ "<tr><td>Id : </td><td>"+pokemon.getId()+"</td></tr>"
+				+ "<tr><td>Name : </td><td>"+pokemon.getName()+"</td></tr>"
+				+ "<tr><td>Creation : </td><td>"+date+" "+time+"h</td></tr>"
+				+ "</table></div>";
+		
+		return res;
+	}
+	
+	public String getIcon(){
+		
+		return pokemon.getImagePath();
+		
+	}
+	
+	public Pokemon getPokemon(){
+		
+		return this.pokemon;
+		
+	}
+	
+	public String getDate(){
+		
+		return this.date;
+		
+	}
+	
+	public String getTime(){
+		
+		return this.time;
+		
+	}
+	
+	public void setDate( String newDate){
+		
+		this.date = newDate;
+	}
+	
+	public void setTime(String newTime){
+		
+		this.time = newTime;
 	}
 	
 }

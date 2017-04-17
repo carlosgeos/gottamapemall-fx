@@ -56,11 +56,11 @@ public class Map {
 	 * @see Map#addPokeMarker(Coordinate)
 	 * @see be.ac.ulb.infof307.g07.Models.Coordinate
 	 */
-	public PokeMarker addPokeMarker( double x, double y){
+	public PokeMarker addPokeMarker( double x, double y, Pokemon pokemon, String date, String time ){
 		
 		Coordinate position = new Coordinate(x,y);
 		
-		return addPokeMarker(position);
+		return addPokeMarker(position, pokemon, date, time);
 		
 	}
 
@@ -82,9 +82,9 @@ public class Map {
 	 * @see Map#pokeMarkers
 	 * 
 	 */
-	public PokeMarker addPokeMarker(Coordinate position){
+	public PokeMarker addPokeMarker(Coordinate newPosition, Pokemon pokemon, String date, String time){
 		
-		PokeMarker newPMarker = new PokeMarker( position );
+		PokeMarker newPMarker = new PokeMarker( newPosition, pokemon, date, time);
 		addPokeMarker(newPMarker);
 		return newPMarker;
 	}
@@ -145,6 +145,12 @@ public class Map {
 	public int getNumberOfMarker(){
 		
 		return pokeMarkers.size();
+	}
+	
+	public void removePokeMarker(PokeMarker pokeMarker){
+		
+		pokeMarkers.remove(pokeMarker.getId());
+		
 	}
 
 }

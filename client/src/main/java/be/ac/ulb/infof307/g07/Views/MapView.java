@@ -14,6 +14,7 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
+import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.PokeMarker;
 import javafx.scene.layout.BorderPane;
@@ -153,6 +154,7 @@ public class MapView  implements MapComponentInitializedListener{
 		
 		MarkerOptions markerOption = new MarkerOptions();
 		markerOption.position(new LatLong(pokeMarker.getOnMapPosition().getX(), pokeMarker.getOnMapPosition().getY()));
+		markerOption.icon(pokeMarker.getIcon());
 		Marker newMarker = new Marker(markerOption);
 		
 		markersOnMap.put(pokeMarker.getId(), newMarker);
@@ -162,6 +164,7 @@ public class MapView  implements MapComponentInitializedListener{
 			
 			googleMap.addMarker(newMarker);
 			googleMap.addUIEventHandler(newMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newMarker, pokeMarker, googleMap));
+			googleMap.addUIEventHandler(newMarker, UIEventType.dblclick, new PokeMarkerMouseDblClickHandler(pokeMap, this, pokeMarker));
 		
 			refreshMap();
 		}
@@ -173,8 +176,6 @@ public class MapView  implements MapComponentInitializedListener{
 		
 		Integer idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
 		Integer empty = -1;
-		
-		System.out.print("updateMarkers : "+idOfPokeMarker); 
 		
 		while(idOfPokeMarker != empty){
 			
@@ -202,6 +203,13 @@ public class MapView  implements MapComponentInitializedListener{
 		googleMap.setZoom(current);
 		
 	}
+	
+	public void removeMarker(Integer id){
+		
+		googleMap.removeMarker(markersOnMap.get(id));
+		markersOnMap.remove(id);
+		
+	}
 
 
 
@@ -214,6 +222,8 @@ public class MapView  implements MapComponentInitializedListener{
 		
 		defaultMapOptions.center(defaultMapCenterPosition)
         		.mapType(MapTypeIdEnum.ROADMAP)
+        		
+                .mapTypeControl(false)
 	            .overviewMapControl(false)
 	            .panControl(false)
 	            .rotateControl(false)
@@ -221,7 +231,7 @@ public class MapView  implements MapComponentInitializedListener{
 	            .streetViewControl(false)
 	            .zoomControl(false)
 	            .zoom(11);
-		
+				
 		googleMap = this.googleMapView.createMap(defaultMapOptions);
 		googleMap.addMouseEventHandler(UIEventType.dblclick, new ChoosePokemonView(this, this.pokeMap));
 		

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g07.Models.Coordinate;
 import be.ac.ulb.infof307.g07.Models.Map;
+import be.ac.ulb.infof307.g07.Models.Pokemon;
 
 public class TestAddPokeMarker {
 
@@ -39,7 +40,8 @@ public class TestAddPokeMarker {
 		
 		for(int i = 0; i < this.size; ++i){
 			
-			this.pokeMap.addPokeMarker(new Coordinate(41.40338, 2.17403));
+			Pokemon newPokemon = new Pokemon(1, null, null, null);
+			this.pokeMap.addPokeMarker(new Coordinate(41.40338, 2.17403), newPokemon, null, null);
 			
 		}
 		

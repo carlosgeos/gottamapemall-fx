@@ -81,11 +81,10 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
 	 */
 	public void handle(JSObject event) {
 		
-		System.out.println("UIEventhandler : PokeMarker ID "+Integer.toString(pokeMarker.getId())+" clicked!");
 		
 		InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-        infoWindowOptions.content("<h2>Marker"+Integer.toString(pokeMarker.getId())+"</h2>");
-
+        infoWindowOptions.content(this.pokeMarker.getString());
+        
         InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
         pokeMarkerInfoWindow.open(googleMap, marker);
 		
