@@ -207,8 +207,8 @@ public class MapView  implements MapComponentInitializedListener{
     public void mapInitialized() {
 
 	MapOptions defaultMapOptions = new MapOptions();
-	// here we set the default location as 47.6097, -122.3331
-	LatLong defaultMapCenterPosition = new LatLong(47.6097, -122.3331);
+	// here we set the default location as Brussels
+	LatLong defaultMapCenterPosition = new LatLong(50.8503, 4.3517);
 
 	defaultMapOptions.center(defaultMapCenterPosition)
 	    .mapType(MapTypeIdEnum.ROADMAP)
@@ -218,7 +218,7 @@ public class MapView  implements MapComponentInitializedListener{
 	    .scaleControl(false)
 	    .streetViewControl(false)
 	    .zoomControl(false)
-	    .zoom(11);
+	    .zoom(16);
 
 	googleMap = this.googleMapView.createMap(defaultMapOptions);
 	googleMap.addMouseEventHandler(UIEventType.dblclick, new MapMouseDblClickHandler(this, this.pokeMap));
