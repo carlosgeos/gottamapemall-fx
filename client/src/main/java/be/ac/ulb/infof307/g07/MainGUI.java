@@ -4,9 +4,9 @@ package be.ac.ulb.infof307.g07;
 import be.ac.ulb.infof307.g07.Views.MapView;
 import be.ac.ulb.infof307.g07.Views.PokedexView;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -35,7 +35,7 @@ public class MainGUI extends Application{
     /**
      * la hauteur de la fenetre en pixels
      */
-    private int mainWindowHeight = 750;
+    private int mainWindowHeight = 600;
 
     /**
      * La vue de la carte googleMap 
@@ -60,7 +60,7 @@ public class MainGUI extends Application{
 	 * @see be.ac.ulb.infof307.g07.Views.MapView
 	 */
     private MapView pokeMapView;
-    
+    private PokedexView pokedexView;
 
 
     @Override
@@ -72,20 +72,21 @@ public class MainGUI extends Application{
      */
     public void start(Stage primaryStage) {
 
-
 		primaryStage.setWidth(mainWindowWidth);
 		primaryStage.setHeight(mainWindowHeight);
 		primaryStage.setTitle("PokéMap");
 		
 		this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
 
-		PokedexView pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
-		StackPane pv = pokedexView.getView();
+		this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
+		StackPane pokedexViewStackPane = pokedexView.getView();
 		
 		StackPane stackpane = new StackPane();
 		stackpane.getChildren().add(this.pokeMapView.getView());
-		stackpane.getChildren().add(pv);
-		StackPane.setAlignment(pv, Pos.TOP_RIGHT);
+		stackpane.getChildren().add(pokedexViewStackPane);
+		StackPane.setAlignment(pokedexViewStackPane, Pos.TOP_RIGHT);
+		
+		StackPane.setMargin(pokedexViewStackPane, new Insets(0, 15, 0, 0));
 	
 		GridPane mainGrid = new GridPane();
 		mainGrid.add(stackpane, 0, 0);

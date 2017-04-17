@@ -1,15 +1,15 @@
 package be.ac.ulb.infof307.g07.Views;
 
 
+import be.ac.ulb.infof307.g07.PokemonViewListener;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
-import be.ac.ulb.infof307.g07.Controllers.Handlers.PokedexDblClickPokemonInfoHandler;
+import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -26,10 +26,9 @@ import javafx.scene.layout.VBox;
  */
 
 public class PokedexView{
-
+	
 	// stock real pokemon
 	private ObservableList<Pokemon> pokemonInPokedex;
-	//private ObservableList<Pokemon> matchingPokemon;
 	
 	private double pokedexViewWidth = 0;
 	private double pokedexViewHeight = 0;
@@ -42,7 +41,6 @@ public class PokedexView{
 	private BorderPane pokemonDetailBorderPane;
 	private StackPane pokedexStackPane;
 	private ScrollPane pokedexScrollPane;
-	private VBox pokedexVbox;
 	
 	// used for detail info window
 	private TextField pokemonNameTextField;
@@ -81,8 +79,8 @@ public class PokedexView{
 		
 		this.pokedexStackPane = new StackPane();
 		
-		this.pokedexStackPane.setMaxSize(pokedexViewWidth, pokedexViewHeight);
-		this.pokedexStackPane.setMinSize(pokedexViewWidth, pokedexViewHeight);
+		this.pokedexStackPane.setMaxSize(pokedexViewWidth, pokedexViewHeight-38);
+		this.pokedexStackPane.setMinSize(pokedexViewWidth, pokedexViewHeight-38);
 		
 		pokedexStackPane.getChildren().addAll(pokemonDetailBorderPane, pokedexBorderPane);
 		
@@ -93,9 +91,7 @@ public class PokedexView{
 		
 		// Vbox will be stocked in ScrollPane
 		pokedexScrollPane = new ScrollPane();
-		// pokemon will be stored in this Vbox
-		pokedexVbox = new VBox();
-		pokedexScrollPane.setContent(pokedexVbox);
+		
 		pokedexBorderPane.setCenter(pokedexScrollPane);
 		
 		// it will add all pokemon in vbox
@@ -105,32 +101,30 @@ public class PokedexView{
 	
 	public void updatePokedex(){
 		
-		this.pokedexVbox.getChildren().clear();
+		pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
+		
+	}
+	
+	public VBox getPokedexViewWithDefaultStyle(){
+		
+		PokemonViewDblClickHandler newHandler = new PokemonViewDblClickHandler();
+		return getPokedexView( newHandler, this.pokedexViewWidth-15, 50, new Insets(5,5,5,5), this.pokemonIconWidth, this.pokemonIconHeight, 5, 10 );
+		
+	}
+	
+	public VBox getPokedexView(PokemonViewListener handler, double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap){
+		
+		VBox newVBox = new VBox();
 		
 		for(int i = 0; i < this.pokemonInPokedex.size(); ++i){
 			
-			GridPane pokemonGrid = new GridPane();
-			pokemonGrid.setPrefWidth(pokedexViewWidth);
-			pokemonGrid.setPrefHeight(50);
-			pokemonGrid.setStyle("-fx-border: 1px;-fx-border-color:#EBEBEB; -fx-border-style:solid;");
+			PokemonView newPokemonView = new PokemonView(this.pokemonInPokedex.get(i), this);
+			newPokemonView.registerListener(handler);
 			
-			pokemonGrid.setVgap(5);
-			pokemonGrid.setHgap(20);
-			pokemonGrid.setPadding(new Insets(5,5,5,5));
-			
-			Image pokemonImage = new Image(this.pokemonInPokedex.get(i).getImagePath(), pokemonIconWidth, pokemonIconHeight, true, true);
-			ImageView pokemonImageView = new ImageView(pokemonImage);
-						
-			pokemonGrid.add(pokemonImageView, 0, 0);
-			pokemonGrid.add(new Label(Integer.toString(this.pokemonInPokedex.get(i).getId())), 1, 0);
-			pokemonGrid.add(new Label(this.pokemonInPokedex.get(i).getName()), 2, 0);
-			
-			pokemonGrid.setOnMouseClicked(new PokedexDblClickPokemonInfoHandler(this, this.pokemonInPokedex.get(i)));
-			pokemonGrid.setOnMouseEntered(mouseEvent -> { pokemonGrid.setStyle("-fx-border: 1px;-fx-border-color:#75B1FF; -fx-border-style:solid;"); });
-			pokemonGrid.setOnMouseExited(mouseEvent -> { pokemonGrid.setStyle("-fx-border: 1px;-fx-border-color:#EBEBEB; -fx-border-style:solid;"); });
-			
-			this.pokedexVbox.getChildren().add(pokemonGrid);
+			newVBox.getChildren().add(newPokemonView.createView( pokemonViewWidth, pokemonViewHeight, pokemonPadding, iconWidth, iconHeight, VGap, HGap ));
 		}
+		
+		return newVBox;
 		
 	}
 

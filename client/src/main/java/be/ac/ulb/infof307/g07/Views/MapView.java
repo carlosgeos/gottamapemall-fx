@@ -223,7 +223,7 @@ public class MapView  implements MapComponentInitializedListener{
 	            .zoom(11);
 		
 		googleMap = this.googleMapView.createMap(defaultMapOptions);
-		googleMap.addMouseEventHandler(UIEventType.dblclick, new MapMouseDblClickHandler(this, this.pokeMap));
+		googleMap.addMouseEventHandler(UIEventType.dblclick, new ChoosePokemonView(this, this.pokeMap));
 		
 		this.mapViewBorderPane.setOpacity(1);
 		
