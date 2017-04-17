@@ -50,16 +50,16 @@ public class ClusterMarkers {
     		
     		/* Compare against all markers which are left. */
     		ArrayList<Marker> tempMarkerList = new ArrayList<Marker>();
-    		for (int j = i+1; j < ListMarker.size();){
+    		for (int j = i+1; j < ListMarkerCopy.size();){
     			// change getLatitude ...
-    			int pixelDistance = PixelDistance(ListMarker.get(i).getLatitude(), ListMarker.get(i).getLongitude(), ListMarker.get(j).getLatitude(), ListMarker.get(j).getLongitude(), zoom);
+    			int pixelDistance = PixelDistance(ListMarkerCopy.get(i).getLatitude(), ListMarkerCopy.get(i).getLongitude(), ListMarkerCopy.get(j).getLatitude(), ListMarkerCopy.get(j).getLongitude(), zoom);
     		
 	    		if (pixelDistance < distance){
 	    			
-	    			tempMarkerList.add(ListMarker.get(i));
-	    			tempMarkerList.add(ListMarker.get(j));
+	    			tempMarkerList.add(ListMarkerCopy.get(i));
+	    			tempMarkerList.add(ListMarkerCopy.get(j));
 	    			
-	    			ListMarker.remove(j);
+	    			//ListMarker.remove(j);
 	    			ListMarkerCopy.remove(j);
 	    			j = i+1;
 	    		}
@@ -71,10 +71,10 @@ public class ClusterMarkers {
     		/* If a marker has been added to cluster, add also the one  */
             /* we were comparing to and remove the original from array. */
     		if (tempMarkerList.size() > 0){
-    			ClusterMarkers cluster = new ClusterMarkers(ListCluster.size(), tempMarkerList,tempMarkerList.size()+1, ListMarkerCopy.get(i).getLatitude(), ListMarkerCopy.get(i).getLongitude());
+    			Cluster cluster = new Cluster( tempMarkerList,tempMarkerList.size()+1, ListMarkerCopy.get(i).getLatitude(), ListMarkerCopy.get(i).getLongitude());
     			ListCluster.add(cluster);
     			ListMarkerCopy.remove(i);
-    			ListMarker.remove(i);
+    			//ListMarker.remove(i);
     			i = 0;
     		}
     		else{
