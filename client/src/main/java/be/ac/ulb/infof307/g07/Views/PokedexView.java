@@ -4,6 +4,9 @@ package be.ac.ulb.infof307.g07.Views;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokedexDblClickPokemonInfoHandler;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
+import com.google.gson.Gson;
+import net.dongliu.requests.Requests;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -139,37 +142,13 @@ public class PokedexView{
 	}
 
 	private void fillPokedex(){
+		String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
+		Gson gson = new Gson();
+		Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
 
-		pokemonInPokedex.add(new Pokemon(1,"Bulbasaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/bulbasaur.gif","Grass"));
-		pokemonInPokedex.add(new Pokemon(2,"Ivysaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ivysaur.gif","Grass"));
-		pokemonInPokedex.add(new Pokemon(3,"Venusaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/venusaur.gif","Grass"));
-		pokemonInPokedex.add(new Pokemon(4,"Charmander","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmander.gif","Fire"));
-		pokemonInPokedex.add(new Pokemon(5,"Charmeleon","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmeleon.gif","Fire"));
-		pokemonInPokedex.add(new Pokemon(6,"Charizard","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charizard.gif","Fire"));
-		pokemonInPokedex.add(new Pokemon(7,"Squirtle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/squirtle.gif","Water"));
-		pokemonInPokedex.add(new Pokemon(8,"Wartortle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/wartortle.gif","Water"));
-		pokemonInPokedex.add(new Pokemon(9,"Blastoise","http://www.pkparaiso.com/imagenes/xy/sprites/animados/blastoise.gif","Water"));
-		pokemonInPokedex.add(new Pokemon(10,"Caterpie","http://www.pkparaiso.com/imagenes/xy/sprites/animados/caterpie.gif","Bug"));
-		pokemonInPokedex.add(new Pokemon(11,"Metapod","http://www.pkparaiso.com/imagenes/xy/sprites/animados/metapod.gif","Bug"));
-		pokemonInPokedex.add(new Pokemon(12,"Butterfree","http://www.pkparaiso.com/imagenes/xy/sprites/animados/butterfree.gif","Bug"));
-		pokemonInPokedex.add(new Pokemon(13,"Weedle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/weedle.gif","Bug"));
-		pokemonInPokedex.add(new Pokemon(14,"Kakuna","http://www.pkparaiso.com/imagenes/xy/sprites/animados/kakuna.gif","Bug"));
-		pokemonInPokedex.add(new Pokemon(15,"Beedrill","http://www.pkparaiso.com/imagenes/xy/sprites/animados/beedrill.gif","Bug"));
-		pokemonInPokedex.add(new Pokemon(16,"Pidgey","http://www.pkparaiso.com/imagenes/xy/sprites/animados/pidgey.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(17,"Pidgeotto","http://www.pkparaiso.com/imagenes/xy/sprites/animados/pidgeotto.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(18,"Pidgeot","http://www.pkparaiso.com/imagenes/xy/sprites/animados/pidgeot.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(19,"Rattata","http://www.pkparaiso.com/imagenes/xy/sprites/animados/rattata.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(20,"Raticate","http://www.pkparaiso.com/imagenes/xy/sprites/animados/raticate.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(21,"Spearow","http://www.pkparaiso.com/imagenes/xy/sprites/animados/spearow.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(22,"Fearow","http://www.pkparaiso.com/imagenes/xy/sprites/animados/fearow.gif","Normal"));
-		pokemonInPokedex.add(new Pokemon(23,"Ekans","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ekans.gif","Poison"));
-		pokemonInPokedex.add(new Pokemon(24,"Arbok","http://www.pkparaiso.com/imagenes/xy/sprites/animados/arbok.gif","Poison"));
-		pokemonInPokedex.add(new Pokemon(25,"Pikachu","http://www.pkparaiso.com/imagenes/xy/sprites/animados/pikachu.gif","Electric"));
-		pokemonInPokedex.add(new Pokemon(26,"Raichu","http://www.pkparaiso.com/imagenes/xy/sprites/animados/raichu.gif","Electric"));
-		pokemonInPokedex.add(new Pokemon(27,"Sandshrew","http://www.pkparaiso.com/imagenes/xy/sprites/animados/sandshrew.gif","Ground"));
-		pokemonInPokedex.add(new Pokemon(28,"Sandslash","http://www.pkparaiso.com/imagenes/xy/sprites/animados/sandslash.gif","Ground"));
-
-
+		for (int i = 0; i < pokemons.length; ++i) {
+			pokemonInPokedex.add(pokemons[i]);
+		}
 	}
 
 	public void showPokemonDetail( Pokemon pokemon )
