@@ -32,7 +32,6 @@ public class PokedexView{
 
 	private double pokedexViewWidth = 0;
 	
-
 	private double pokemonIconWidth = 45;
 	private double pokemonIconHeight = 45;
 

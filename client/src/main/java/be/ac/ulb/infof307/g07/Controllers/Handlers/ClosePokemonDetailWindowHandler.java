@@ -16,7 +16,7 @@ public class ClosePokemonDetailWindowHandler implements EventHandler<ActionEvent
 	
 	@Override
 	public void handle(ActionEvent event) {
-		
+		// close the window
 		this.pokedex.closePokemonDetail();
 		
 	}

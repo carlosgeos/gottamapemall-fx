@@ -71,23 +71,24 @@ public class MainGUI extends Application{
 	 * 						le containeur parent.
      */
     public void start(Stage primaryStage) {
-
+    	
+    	// configure the main window
 		primaryStage.setWidth(mainWindowWidth);
 		primaryStage.setHeight(mainWindowHeight);
 		primaryStage.setTitle("PokéMap");
 		
 		this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
-
 		this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
-		StackPane pokedexViewStackPane = pokedexView.getView();
 		
+		// configure map view and pokedex view
+		StackPane pokedexViewStackPane = pokedexView.getView();
 		StackPane stackpane = new StackPane();
 		stackpane.getChildren().add(this.pokeMapView.getView());
 		stackpane.getChildren().add(pokedexViewStackPane);
 		StackPane.setAlignment(pokedexViewStackPane, Pos.TOP_RIGHT);
 		
 		StackPane.setMargin(pokedexViewStackPane, new Insets(0, 15, 0, 0));
-	
+		
 		GridPane mainGrid = new GridPane();
 		mainGrid.add(stackpane, 0, 0);
 		
