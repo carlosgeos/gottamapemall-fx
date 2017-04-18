@@ -69,7 +69,7 @@ public class ListView<T extends GenericModel> {
         Object param = getParam(req, key);
         // Just a string but parsed as an object to be returned.
 
-        try{
+        try {
             param = handler.handle((String) param);
         } catch (Exception e) {
             halt(400, "Parameter " + param + " is not accepted.");
@@ -84,7 +84,7 @@ public class ListView<T extends GenericModel> {
      */
     protected void viewsetRoute () {
         get(this.getRoute(), (req, res) -> {
-            final List<T> pokemons = Database.get().find(this.getModel()).asList();
+            final List<T> pokemons = Database.get().find(this.getModel()).order("id").asList();
 
             res.status(200);
             return pokemons;
