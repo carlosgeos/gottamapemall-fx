@@ -1,6 +1,8 @@
 .DS_Store
 .idea/vcs.xml
 .idea/misc.xml
+.idea/modules/client
+.idea/modules/server
 
 # Compiled class file
 *.class
