@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -45,6 +46,8 @@ public class PokedexView{
     // used for detail info window
     private TextField pokemonNameTextField;
     private TextField pokemonTypeTextField;
+    private Label pokemonHeightField;
+    private Label pokemonWeightField;
     private ImageView pokemonImageView;
     private int pokemonImageWidth = 180;
     private int pokemonImageHeight = 140;
@@ -63,8 +66,16 @@ public class PokedexView{
 	GridPane newGrid = new GridPane();
 	this.pokemonNameTextField = new TextField("Blank");
 	this.pokemonTypeTextField = new TextField("Blank");
-	newGrid.add(this.pokemonNameTextField, 0, 1);
-	newGrid.add(this.pokemonTypeTextField, 0, 2);
+	this.pokemonHeightField = new Label("Blank");
+	this.pokemonWeightField = new Label("Blak");
+	newGrid.add(new Label("Name: "), 0, 1);
+	newGrid.add(new Label("Type: "), 0, 2);
+	newGrid.add(new Label("Weight (kg): "), 0, 3);
+	newGrid.add(new Label("Height (m): "), 0, 4);
+	newGrid.add(this.pokemonNameTextField, 1, 1);
+	newGrid.add(this.pokemonTypeTextField, 1, 2);
+	newGrid.add(this.pokemonHeightField, 1, 3);
+	newGrid.add(this.pokemonWeightField, 1, 4);
 	// any image only for the purpose of instanciation
 	Image pokemonImage = new Image("http://www.solidbackgrounds.com/images/2560x1440/2560x1440-black-solid-color-background.jpg",this.pokemonImageWidth,this.pokemonImageHeight, true, true);
 	this.pokemonImageView = new ImageView(pokemonImage);
@@ -149,11 +160,11 @@ public class PokedexView{
 
 	// temporary hard coded
 
-	pokemonInPokedex.add(new Pokemon(1,"Bulbasaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/bulbasaur.gif","Grass"));
-	pokemonInPokedex.add(new Pokemon(2,"Ivysaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ivysaur.gif","Grass"));
-	pokemonInPokedex.add(new Pokemon(3,"Venusaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/venusaur.gif","Grass"));
-	pokemonInPokedex.add(new Pokemon(4,"Charmander","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmander.gif","Fire"));
-	pokemonInPokedex.add(new Pokemon(5,"Charmeleon","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmeleon.gif","Fire"));
+	pokemonInPokedex.add(new Pokemon(1,"Bulbasaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/bulbasaur.gif","Grass", 0.71, 6.9));
+	pokemonInPokedex.add(new Pokemon(2,"Ivysaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ivysaur.gif","Grass", 0.99, 13.0));
+	pokemonInPokedex.add(new Pokemon(3,"Venusaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/venusaur.gif","Grass", 2.01, 100.0));
+	pokemonInPokedex.add(new Pokemon(4,"Charmander","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmander.gif","Fire", 0.61, 8.5));
+	pokemonInPokedex.add(new Pokemon(5,"Charmeleon","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmeleon.gif","Fire", 1.09, 19.9));
 	pokemonInPokedex.add(new Pokemon(6,"Charizard","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charizard.gif","Fire"));
 	pokemonInPokedex.add(new Pokemon(7,"Squirtle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/squirtle.gif","Water"));
 	pokemonInPokedex.add(new Pokemon(8,"Wartortle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/wartortle.gif","Water"));
@@ -185,6 +196,8 @@ public class PokedexView{
 	    // prepare all info of this pokemon
 	    this.pokemonNameTextField.setText(pokemon.getName());
 	    this.pokemonTypeTextField.setText(pokemon.getType());
+	    this.pokemonHeightField.setText(Double.toString(pokemon.getHeight()));
+	    this.pokemonWeightField.setText(Double.toString(pokemon.getWeight()));
 	    Image pokemonImage = new Image(pokemon.getImagePath(), 100, 130, true, true);
 	    this.pokemonImageView.setImage(pokemonImage);
 
