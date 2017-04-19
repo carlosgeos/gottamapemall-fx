@@ -13,9 +13,9 @@ import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
  * @version 1.0
  * 
  * @see be.ac.ulb.infof307.g07.Models.Map
- * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(Coordinate)
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler#handle(GMapMouseEvent)
+ * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(Coordinate, Pokemon, String, String)
+ * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
+ * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
  * @see be.ac.ulb.infof307.g07.Models.Coordinate
@@ -45,18 +45,18 @@ public class PokeMarker{
 	
 	/**
 	 * Le constructeur de PokeMarker.
-	 * Il est appele par les classes Map, MapMouseDblClickHandler, et PokeMarkerMouseClickHandler.
+	 * Il est appele par les classes Map, PokeMarkerMouseDblClickHandler, PokeMarkerMouseClickHandler et PokeMarkerRemoveFromMapHandler.
 	 * 
 	 * @param newPosition
 	 * 					  La position de l epingle pokemon sur la carte.
 	 * 
 	 * @see be.ac.ulb.infof307.g07.Models.Map
-	 * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(Coordinate)
-	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
-	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler#handle(GMapMouseEvent)
+	 * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(Coordinate, Pokemon, String, String)
 	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
 	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
 	 * @see be.ac.ulb.infof307.g07.Models.Coordinate
+	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
+	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
 	 * 
 	 */
 	public PokeMarker( Coordinate newPosition, Pokemon pokemon, String date, String time) {
