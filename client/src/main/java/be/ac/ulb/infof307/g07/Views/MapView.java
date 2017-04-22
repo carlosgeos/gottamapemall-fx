@@ -14,6 +14,8 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler;
+import be.ac.ulb.infof307.g07.Controllers.Handlers.onMapDblClickHandler;
+import be.ac.ulb.infof307.g07.Models.Coordinate;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.PokeMarker;
 import javafx.scene.layout.BorderPane;
@@ -53,6 +55,7 @@ public class MapView  implements MapComponentInitializedListener{
      */
 	
 	private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	public static Coordinate position;
 	
 	private GoogleMap googleMap;
 	private GoogleMapView googleMapView;
@@ -64,6 +67,7 @@ public class MapView  implements MapComponentInitializedListener{
 	
 	private BorderPane mapViewBorderPane;
 
+	
 
 	
 	/**
@@ -211,8 +215,6 @@ public class MapView  implements MapComponentInitializedListener{
 		
 	}
 
-
-
 	@Override
 	public void mapInitialized() {
 		
@@ -233,7 +235,7 @@ public class MapView  implements MapComponentInitializedListener{
 	            .zoom(11);
 				
 		googleMap = this.googleMapView.createMap(defaultMapOptions);
-		googleMap.addMouseEventHandler(UIEventType.dblclick, new ChoosePokemonView(this, this.pokeMap));
+		googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
 		
 		this.mapViewBorderPane.setOpacity(1);
 		

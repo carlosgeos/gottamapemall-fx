@@ -1,7 +1,7 @@
 package be.ac.ulb.infof307.g07.Views;
 
 
-import be.ac.ulb.infof307.g07.PokemonViewListener;
+import be.ac.ulb.infof307.g07.Controllers.PokemonViewListener;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
@@ -121,7 +121,7 @@ public class PokedexView{
 
     public VBox getPokedexViewWithDefaultStyle(){
 
-	PokemonViewDblClickHandler newHandler = new PokemonViewDblClickHandler();
+	PokemonViewDblClickHandler newHandler = new PokemonViewDblClickHandler(this);
 	return getPokedexView( newHandler, this.pokedexViewWidth-15, 50, new Insets(5,5,5,5), this.pokemonIconWidth, this.pokemonIconHeight, 5, 10 );
 
     }

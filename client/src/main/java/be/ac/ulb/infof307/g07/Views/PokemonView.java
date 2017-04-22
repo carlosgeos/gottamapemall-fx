@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g07.Views;
 
 import java.util.ArrayList;
 
-import be.ac.ulb.infof307.g07.PokemonViewListener;
+import be.ac.ulb.infof307.g07.Controllers.PokemonViewListener;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -120,7 +120,7 @@ public class PokemonView implements EventHandler<MouseEvent>{
 
 	    for(PokemonViewListener pkListener : this.listeners){
 
-		pkListener.handle(this.pokemon, this.pokedexView);
+		pkListener.onDoubleClick(this.pokemon);
 
 	    }
 	}else if(event.getClickCount() == 1 ){
