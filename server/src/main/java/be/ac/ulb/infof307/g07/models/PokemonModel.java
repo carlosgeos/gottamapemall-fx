@@ -6,6 +6,7 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 
 import java.util.Map;
+import java.util.List;
 
 import be.ac.ulb.infof307.g07.lib.models.GenericModel;
 import be.ac.ulb.infof307.g07.lib.errors.RequiredFieldException;
@@ -15,14 +16,15 @@ import be.ac.ulb.infof307.g07.lib.errors.WrongTypeFieldException;
 public class PokemonModel implements GenericModel {
     @Id
     private ObjectId _id;
-
     @Indexed(unique=true)
     private int id;
-
     @Indexed(unique=true)
     private String name;
-
     private String imagePath;
+    private int base_experience;
+    private int height;
+    private int weight;
+    private String[] types;
 
     public PokemonModel () {}
 
@@ -47,21 +49,33 @@ public class PokemonModel implements GenericModel {
             this.imagePath = map.get("imagePath")[0];
         }
 
-        //if (map.containsKey("weight")) {
-        //    try {
-        //        this.weight = Integer.parseInt(map.get("weight")[0]);
-        //    } catch (Exception e) {
-        //        throw new WrongTypeFieldException("weight");
-        //    }
-        //}
+        if (map.containsKey("weight")) {
+            try {
+                this.weight = Integer.parseInt(map.get("weight")[0]);
+            } catch (Exception e) {
+                throw new WrongTypeFieldException("weight");
+            }
+        }
 
-        //if (map.containsKey("height")) {
-        //    try {
-        //        this.height = Integer.parseInt(map.get("height")[0]);
-        //    } catch (Exception e) {
-        //        throw new WrongTypeFieldException("height");
-        //    }
-        //}
+        if (map.containsKey("height")) {
+            try {
+                this.height = Integer.parseInt(map.get("height")[0]);
+            } catch (Exception e) {
+                throw new WrongTypeFieldException("height");
+            }
+        }
+
+        if (map.containsKey("base_experience")) {
+            try {
+                this.base_experience = Integer.parseInt(map.get("base_experience")[0]);
+            } catch (Exception e) {
+                throw new WrongTypeFieldException("base_experience");
+            }
+        }
+
+        if (map.containsKey("types")) {
+            this.types = map.get("types");
+        }
     }
 
     public int getId () {
