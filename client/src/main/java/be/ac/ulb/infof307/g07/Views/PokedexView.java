@@ -58,7 +58,6 @@ public class PokedexView{
 
         this.pokedexViewWidth = pokedexViewWidth;
 
-
         pokedexBorderPane = new BorderPane();
         pokemonDetailBorderPane = new BorderPane();
         pokemonDetailBorderPane.setStyle("-fx-background-color: #FFFFFF");
@@ -146,14 +145,19 @@ public class PokedexView{
         return newVBox;
     }
 
-    public StackPane getView(){
+    public StackPane getView() {
         return pokedexStackPane;
     }
 
     public void showPokemonDetail( Pokemon pokemon ) {
         // prepare all info of this pokemon
         this.pokemonNameTextField.setText(pokemon.getName());
-        this.pokemonTypeTextField.setText(pokemon.getType());
+        String typesText = "";
+        String[] types = pokemon.getTypes();
+        for (int i = 0; i < types.length; ++i) {
+            typesText += types[i] + ", ";
+        }
+        this.pokemonTypeTextField.setText(typesText);
         this.pokemonHeightField.setText(Double.toString(pokemon.getHeight()));
         this.pokemonWeightField.setText(Double.toString(pokemon.getWeight()));
         Image pokemonImage = new Image(pokemon.getImagePath(), 100, 130, true, true);
@@ -165,7 +169,6 @@ public class PokedexView{
         // set the visibility of them too
         this.pokemonDetailBorderPane.setOpacity(1);
         this.pokedexBorderPane.setOpacity(0);
-
     }
 
     public void closePokemonDetail(){
