@@ -14,6 +14,8 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler;
+import be.ac.ulb.infof307.g07.Controllers.Handlers.onMapDblClickHandler;
+import be.ac.ulb.infof307.g07.Models.Coordinate;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.PokeMarker;
 import javafx.scene.layout.BorderPane;
@@ -29,9 +31,8 @@ import javafx.scene.layout.BorderPane;
  * @version 1.0
  *
  * @see be.ac.ulb.infof307.g07.MainGUI
- * @see be.ac.ulb.infof307.g07.Controllers.MapController
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
- * @see be.ac.ulb.infof307.g07.MainGUI#mapInitialized
+ * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
+ * @see MapView#mapInitialized()
  *
  */
 public class MapView  implements MapComponentInitializedListener{ 
@@ -54,6 +55,7 @@ public class MapView  implements MapComponentInitializedListener{
      */
 	
 	private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	public static Coordinate position;
 	
 	private GoogleMap googleMap;
 	private GoogleMapView googleMapView;
@@ -65,6 +67,7 @@ public class MapView  implements MapComponentInitializedListener{
 	
 	private BorderPane mapViewBorderPane;
 
+	
 
 	
 	/**
@@ -74,8 +77,10 @@ public class MapView  implements MapComponentInitializedListener{
      * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
      * </p>
      * 
-     *@param newGoogleMapView
-	 * 						la vue pour la carte googlemaps.
+     *@param width
+	 * 						la largeur de la carte a afficher.
+     *@param height
+	 * 						la hauteur de la carte a afficher.
 	 * 
 	 *@see MapView#googleMap
 	 * 
@@ -210,8 +215,6 @@ public class MapView  implements MapComponentInitializedListener{
 		
 	}
 
-
-
 	@Override
 	public void mapInitialized() {
 		
@@ -232,7 +235,7 @@ public class MapView  implements MapComponentInitializedListener{
 	            .zoom(11);
 				
 		googleMap = this.googleMapView.createMap(defaultMapOptions);
-		googleMap.addMouseEventHandler(UIEventType.dblclick, new ChoosePokemonView(this, this.pokeMap));
+		googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
 		
 		this.mapViewBorderPane.setOpacity(1);
 		

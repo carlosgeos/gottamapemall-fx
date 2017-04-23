@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g07.lib;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.Datastore;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 public class Database {
     private static Datastore datastore = null;
@@ -18,8 +19,8 @@ public class Database {
         morphia.mapPackage("be.ac.ulb.infof307.g07");
 
         try {
-            // connect to the database running on localhost with the default port
-            datastore = morphia.createDatastore(new MongoClient(), db);
+            // connect to the database on mLab
+            datastore = morphia.createDatastore(new MongoClient(new MongoClientURI("mongodb://gmta:bonjourmdp@ds163010.mlab.com:63010/gmta")), "gmta");
             datastore.ensureIndexes();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

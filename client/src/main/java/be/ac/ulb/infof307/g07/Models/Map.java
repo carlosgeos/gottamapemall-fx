@@ -42,18 +42,24 @@ public class Map {
 	 * addPokeMarker(Coordinate position) pour renvoyer l epingle pokemon finale.
 	 * 
 	 * <p>
-	 * La methode est appelee par la classe MapMouseDblClickHandler dans sa methode handle() pour la gestion du double clic sur la carte.
+	 * TBD...
 	 * <p>
 	 * 
 	 * @param x
 	 * 			La position en abscisse (x) dans le plan, ou latitude sur une carte.
 	 * @param y
 	 * 			La position en ordonnee (y) dans le plan, ou longitude sur une carte.
+	 * @param pokemon
+	 * 				  le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
+	 * @param date
+	 * 				la date a laquelle le pokemon a ete vu.
+	 * @param time
+	 * 				l heure a laquelle le pokemon a ete vu.
+	 * 
 	 * @return 
 	 * 			Le resultat de la methode addPokeMarker sur l objet Coordinate cree.
 	 * 
-	 * @see be.ac.ulb.infof307.g07.Controllers.Handlers.MapMouseDblClickHandler
-	 * @see Map#addPokeMarker(Coordinate)
+	 * @see Map#addPokeMarker(Coordinate, Pokemon, String, String)
 	 * @see be.ac.ulb.infof307.g07.Models.Coordinate
 	 */
 	public PokeMarker addPokeMarker( double x, double y, Pokemon pokemon, String date, String time ){
@@ -65,15 +71,22 @@ public class Map {
 	}
 
 	/**
-	 * Cette methode cree un objet PokeMarker grace a l objet Coordinate renvoye (passe en parametre) par la methode addPokeMarker(double x, double y).
+	 * Cette methode cree un objet PokeMarker grace a l objet Coordinate renvoye (passe en parametre) par la methode addPokeMarker(double x, double y, Pokemon pokemon, String date, String time).
+	 * et aux autres parametres de cette meme methode.
 	 * 
 	 * <p>
 	 * La methode cree un objet PokeMarker et fait appel a la methode addPokeMarker(PokeMarker newPMarker) qui ajoute 
 	 * le pokemarker dans la table de hachage (pokeMarkers.put(newPMarker.getId(), newPMarker) avec son id unique.
 	 * <p>
 	 * 
-	 * @param position
+	 * @param newPosition
 	 * 					La position de l epingle pokemon sur la carte.
+	 * @param pokemon
+	 * 				  le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
+	 * @param date
+	 * 				la date a laquelle le pokemon a ete vu.
+	 * @param time
+	 * 				l heure a laquelle le pokemon a ete vu.
 	 * @return
 	 * 			une nouvelle epingle pokemon (avec un identifiant unique) sous la forme d un objet PokeMarker, contenant sa position sur la carte.
 	 *
@@ -93,11 +106,12 @@ public class Map {
 	 * Cette methode ajoute l'objet PokeMarker cree par la methode addPokeMarker(Coordinate position) dans la table de hachage pokeMarkers grace a sa methode put().
 	 * 
 	 * @param newPMarker
-	 * 					L epingle pokemon (pokemarker) creee par la methode addPokeMarker(Coordinate position).
+	 * 					L epingle pokemon (pokemarker) creee par la methode addPokeMarker(Coordinate position, Pokemon pokemon, String date, String time).
 	 * 
-	 * @see Map#addPokeMarker(Coordinate)
+	 * @see Map#addPokeMarker(Coordinate, Pokemon, String, String)
 	 * @see be.ac.ulb.infof307.g07.Models.PokeMarker
 	 * @see be.ac.ulb.infof307.g07.Models.PokeMarker#getId() 
+	 * @see Map#pokeMarkersNotOnMapView
 	 */
 	public void addPokeMarker(PokeMarker newPMarker){
 
