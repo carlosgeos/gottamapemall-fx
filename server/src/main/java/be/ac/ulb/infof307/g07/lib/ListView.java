@@ -19,7 +19,7 @@ import be.ac.ulb.infof307.g07.lib.models.GenericModel;
  * @param <T> The model instance to create the API endpoint on.
  */
 public class ListView<T extends GenericModel> {
-    static private Gson gson = new Gson();
+    static protected Gson gson = new Gson();
 
     /**
      * Used to define the route of the API endpoint.
