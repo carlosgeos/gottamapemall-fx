@@ -4,71 +4,31 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.annotations.IndexOptions;
 
 import java.util.Map;
+import java.util.List;
 
 import be.ac.ulb.infof307.g07.lib.models.GenericModel;
 import be.ac.ulb.infof307.g07.lib.errors.RequiredFieldException;
 import be.ac.ulb.infof307.g07.lib.errors.WrongTypeFieldException;
 
+// @Indexes({
+//     @Index(fields = @Field("name", options = @IndexOptions(unique=true)))
+// })
 @Entity("pokemon")
 public class PokemonModel implements GenericModel {
     @Id
     private ObjectId _id;
-
-    @Indexed(unique=true)
+    @Indexed(options=@IndexOptions(unique=true))
     private int id;
-
-    @Indexed(unique=true)
+    @Indexed(options=@IndexOptions(unique=true))
     private String name;
-
     private String imagePath;
+    private int base_experience;
+    private int height;
+    private int weight;
+    private List<String> types;
 
     public PokemonModel () {}
-
-    public void set(final Map<String, String[]> map) throws Exception {
-        if (map.containsKey("id")) {
-            try {
-                this.id = Integer.parseInt(map.get("id")[0]);
-            } catch (Exception e) {
-                throw new WrongTypeFieldException("id");
-            }
-        } else {
-            throw new RequiredFieldException("Id is required");
-        }
-
-        if (map.containsKey("name")) {
-            this.name = map.get("name")[0];
-        } else {
-            throw new RequiredFieldException("Name is required");
-        }
-
-        if (map.containsKey("imagePath")) {
-            this.imagePath = map.get("imagePath")[0];
-        }
-
-        //if (map.containsKey("weight")) {
-        //    try {
-        //        this.weight = Integer.parseInt(map.get("weight")[0]);
-        //    } catch (Exception e) {
-        //        throw new WrongTypeFieldException("weight");
-        //    }
-        //}
-
-        //if (map.containsKey("height")) {
-        //    try {
-        //        this.height = Integer.parseInt(map.get("height")[0]);
-        //    } catch (Exception e) {
-        //        throw new WrongTypeFieldException("height");
-        //    }
-        //}
-    }
-
-    public int getId () {
-        return this.id;
-    }
-
-    public String getName () {
-        return this.name;
-    }
 }

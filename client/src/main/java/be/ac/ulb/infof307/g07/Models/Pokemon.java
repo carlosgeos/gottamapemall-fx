@@ -1,68 +1,69 @@
 package be.ac.ulb.infof307.g07.Models;
 
-public class Pokemon {
+import java.util.List;
 
+public class Pokemon {
     private final int id;
     private final String name;
     private final String imagePath;
-    private final String type;
-    private double height;
-    private double weight;
-
-
-    public Pokemon(int id, String name, String imagePath, String type){
-	this.id = id;
-	this.name = name;
-	this.imagePath = imagePath;
-	this.type = type;
+    private final int base_experience;
+    private final int height;
+    private final int weight;
+    private final String[] types;
+    
+    public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types) {
+        this.id = id;
+        this.name = name;
+        this.imagePath = imagePath;
+        this.base_experience = base_experience;
+        this.height = height;
+        this.weight = weight;
+        this.types = types;
     }
-
-    public Pokemon(int id, String name, String imagePath, String type, double height, double weight) {
-	this.id = id;
-	this.name = name;
-	this.imagePath = imagePath;
-	this.type = type;
-	this.height = height;
-	this.weight = weight;
-    }
-
+    
     public String toString(){
-
-	String res = "";
-
-	res += this.id +" : "+ this.name;
-
-	return res;
-
+        
+        String res = "";
+        
+        res += this.id +" : "+ this.name;
+        
+        return res;
+        
     }
-
+    
     public final int getId(){
-
-	return this.id;
-
+        
+        return this.id;
+        
     }
-
+    
     public final String getName(){
-
-	return this.name;
-
+        
+        return this.name;
+        
     }
-
+    
     public final String getImagePath(){
-
-	return this.imagePath;
-    }
-
-    public final String getType(){
-	return this.type;
+        
+        return this.imagePath;
 
     }
-    public final double getHeight(){
-	return this.height;
+    
+    public final String[] getTypes(){
+
+        return this.types;
 
     }
-    public final double getWeight(){
-	return this.weight;
 
+    public final int getWeight () {
+
+        return this.weight;
+    
+    }
+
+    public final int getHeight () {
+
+        return this.height;
+    
     }
 }

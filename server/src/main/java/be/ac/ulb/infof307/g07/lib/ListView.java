@@ -19,7 +19,7 @@ import be.ac.ulb.infof307.g07.lib.models.GenericModel;
  * @param <T> The model instance to create the API endpoint on.
  */
 public class ListView<T extends GenericModel> {
-    static private Gson gson = new Gson();
+    static protected Gson gson = new Gson();
 
     /**
      * Used to define the route of the API endpoint.
@@ -121,17 +121,16 @@ public class ListView<T extends GenericModel> {
      * Define API endpoint to save a new data in the model defined in this.getModel().
      */
     protected void createRoute () {
-         post(this.getRoute(), (req, res) -> {
-            final T model = this.getModel().newInstance();
+        post(this.getRoute(), (req, res) -> {
             try {
-                model.set(req.queryMap().toMap());
+                System.out.println(req.body());
+                T creation = gson.fromJson(req.body(), this.getModel());
+                Database.get().save(creation);
+                res.status(201);
+                return creation;
             } catch (Exception e) {
                 return new Message(e.getMessage());
             }
-            Database.get().save(model);
-
-            res.status(201);
-            return model;
         }, gson::toJson);
     }
 
