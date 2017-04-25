@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class ChoosePokemonView implements PokemonViewListener, EventHandler<ActionEvent>{
 
-	private ArrayList<ChoosePokemonViewListener> listeners= new ArrayList<ChoosePokemonViewListener>();
+	private ArrayList<ChoosePokemonViewListener> listeners = new ArrayList<ChoosePokemonViewListener>();
 	
 	public final static int defaultWindowWidth = 300;
 	public final static int defaultWindowHeight = 350;

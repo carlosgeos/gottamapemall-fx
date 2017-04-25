@@ -19,6 +19,7 @@ public class Pokemon {
         this.height = height;
         this.weight = weight;
         this.types = types;
+        
     }
     
     public String toString(){

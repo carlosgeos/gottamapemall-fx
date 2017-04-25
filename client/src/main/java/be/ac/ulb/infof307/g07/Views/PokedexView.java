@@ -5,6 +5,9 @@ import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandl
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
 import net.dongliu.requests.Requests;
+
+import java.util.HashMap;
+
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,6 +55,8 @@ public class PokedexView{
     private ImageView pokemonImageView;
     private int pokemonImageWidth = 180;
     private int pokemonImageHeight = 140;
+    
+    public static HashMap<Integer, Integer> markedPokemonCounting = new HashMap<Integer, Integer>();
 
 
     public PokedexView( double pokedexViewWidth, double pokedexViewHeight ){
@@ -112,11 +117,38 @@ public class PokedexView{
         updatePokedex();
 }
 
+    public PokedexView(){
+    	//This constructor is only used for tests
+    }
+    
     public void updatePokedex(){
         pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
     }
 
+    public static void increasePokemonCounting(Integer pokemonId){
+    	if (markedPokemonCounting.containsKey(pokemonId)){
+    		int currentCount = markedPokemonCounting.get(pokemonId);
+    		markedPokemonCounting.replace(pokemonId, currentCount + 1);
+    		
+    	}else{
+    		markedPokemonCounting.put(pokemonId, 1);
+    	}
+    	System.out.println(markedPokemonCounting);
+    	
+    }
+    
     private void fillPokedex(){
+    	
+    	//hardcoded pokemons for TESTS while problem with database isn't solved.
+    	pokemonInPokedex.add(new Pokemon(1,"Bulbasaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/bulbasaur.gif",33,2,3,null));
+    	pokemonInPokedex.add(new Pokemon(2,"Ivysaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ivysaur.gif",33,2,3,null));
+    	pokemonInPokedex.add(new Pokemon(3,"Venusaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/venusaur.gif",33,2,3,null));
+    	pokemonInPokedex.add(new Pokemon(4,"Charmander","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmander.gif",33,2,3,null));
+    	pokemonInPokedex.add(new Pokemon(5,"Charmeleon","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmeleon.gif",33,2,3,null));
+    	pokemonInPokedex.add(new Pokemon(6,"Charizard","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charizard.gif",33,2,3,null));
+    	pokemonInPokedex.add(new Pokemon(7,"Squirtle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/squirtle.gif",33,2,3,null));
+    	    	
+    	/*
         String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
         Gson gson = new Gson();
         Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
@@ -124,6 +156,7 @@ public class PokedexView{
         for (int i = 0; i < pokemons.length; ++i) {
             pokemonInPokedex.add(pokemons[i]);
         }
+   		*/
     }
 
     public VBox getPokedexViewWithDefaultStyle(){

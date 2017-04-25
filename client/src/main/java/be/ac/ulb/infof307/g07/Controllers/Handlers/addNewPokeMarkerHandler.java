@@ -5,6 +5,7 @@ import be.ac.ulb.infof307.g07.Models.Coordinate;
 import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
 import be.ac.ulb.infof307.g07.Views.MapView;
+import be.ac.ulb.infof307.g07.Views.PokedexView;
 
 public class addNewPokeMarkerHandler implements ChoosePokemonViewListener{
 
@@ -22,6 +23,7 @@ public class addNewPokeMarkerHandler implements ChoosePokemonViewListener{
 	
 	@Override
 	public void onConfirm(Pokemon pokemon, String date, String time) {
+		PokedexView.increasePokemonCounting(pokemon.getId());
 		
 		this.pokeMap.addPokeMarker( this.position, pokemon, date, time);
 		// then add it in the map view

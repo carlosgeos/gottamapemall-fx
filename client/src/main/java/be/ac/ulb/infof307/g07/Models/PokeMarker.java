@@ -134,7 +134,7 @@ public class PokeMarker{
 		
 	}
 	
-	public void setDate( String newDate){
+	public void setDate(String newDate){
 		
 		this.date = newDate;
 	}
