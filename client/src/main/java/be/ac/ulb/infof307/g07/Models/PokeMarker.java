@@ -110,6 +110,7 @@ public class PokeMarker{
 		return res;
 	}
 	
+
 	public String getIcon(){
 		
 		return pokemon.getImagePath();
@@ -143,5 +144,6 @@ public class PokeMarker{
 		
 		this.time = newTime;
 	}
+	
 	
 }

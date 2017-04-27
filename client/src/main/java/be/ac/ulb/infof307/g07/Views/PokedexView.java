@@ -3,9 +3,12 @@ package be.ac.ulb.infof307.g07.Views;
 import be.ac.ulb.infof307.g07.Controllers.PokemonViewListener;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
+import be.ac.ulb.infof307.g07.Controllers.Handlers.onPokemonGlobalCountChangeHandler;
+import be.ac.ulb.infof307.g07.Models.Pokedex;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
 import net.dongliu.requests.Requests;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
@@ -33,7 +36,8 @@ import javafx.scene.layout.VBox;
 public class PokedexView{
 
     // stock real pokemon
-    private ObservableList<Pokemon> pokemonInPokedex;
+    private ObservableList<PokemonView> pokemonViewInPokedex;
+    private Pokedex pokedex;
 
     private double pokedexViewWidth = 0;
 
@@ -61,6 +65,8 @@ public class PokedexView{
 
     public PokedexView( double pokedexViewWidth, double pokedexViewHeight ){
 
+    	this.pokedex = new Pokedex();
+    	
         this.pokedexViewWidth = pokedexViewWidth;
 
         pokedexBorderPane = new BorderPane();
@@ -103,10 +109,7 @@ public class PokedexView{
 
         pokedexStackPane.getChildren().addAll(pokemonDetailBorderPane, pokedexBorderPane);
 
-        // instance the list for stocking pokemon
-        pokemonInPokedex = FXCollections.observableArrayList();
-        // used only for autofilling the pokedex
-        fillPokedex();
+        this.pokemonViewInPokedex = FXCollections.observableArrayList();
 
         // Vbox will be stocked in ScrollPane
         pokedexScrollPane = new ScrollPane();
@@ -121,42 +124,18 @@ public class PokedexView{
     	//This constructor is only used for tests
     }
     
-    public void updatePokedex(){
-        pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
-    }
-
-    public static void increasePokemonCounting(Integer pokemonId){
-    	if (markedPokemonCounting.containsKey(pokemonId)){
-    		int currentCount = markedPokemonCounting.get(pokemonId);
-    		markedPokemonCounting.replace(pokemonId, currentCount + 1);
+    public void refreshCounts(){
+    	
+    	for(int i = 0; i < this.pokemonViewInPokedex.size(); ++i){
     		
-    	}else{
-    		markedPokemonCounting.put(pokemonId, 1);
+    		this.pokemonViewInPokedex.get(i).refreshCount();
+    		
     	}
-    	System.out.println(markedPokemonCounting);
     	
     }
     
-    private void fillPokedex(){
-    	
-    	//hardcoded pokemons for TESTS while problem with database isn't solved.
-    	pokemonInPokedex.add(new Pokemon(1,"Bulbasaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/bulbasaur.gif",33,2,3,null));
-    	pokemonInPokedex.add(new Pokemon(2,"Ivysaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/ivysaur.gif",33,2,3,null));
-    	pokemonInPokedex.add(new Pokemon(3,"Venusaur","http://www.pkparaiso.com/imagenes/xy/sprites/animados/venusaur.gif",33,2,3,null));
-    	pokemonInPokedex.add(new Pokemon(4,"Charmander","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmander.gif",33,2,3,null));
-    	pokemonInPokedex.add(new Pokemon(5,"Charmeleon","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charmeleon.gif",33,2,3,null));
-    	pokemonInPokedex.add(new Pokemon(6,"Charizard","http://www.pkparaiso.com/imagenes/xy/sprites/animados/charizard.gif",33,2,3,null));
-    	pokemonInPokedex.add(new Pokemon(7,"Squirtle","http://www.pkparaiso.com/imagenes/xy/sprites/animados/squirtle.gif",33,2,3,null));
-    	    	
-    	/*
-        String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
-        Gson gson = new Gson();
-        Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
-
-        for (int i = 0; i < pokemons.length; ++i) {
-            pokemonInPokedex.add(pokemons[i]);
-        }
-   		*/
+    public void updatePokedex(){
+        pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
     }
 
     public VBox getPokedexViewWithDefaultStyle(){
@@ -168,8 +147,13 @@ public class PokedexView{
 
         VBox newVBox = new VBox();
 
-        for(int i = 0; i < this.pokemonInPokedex.size(); ++i) {
-            PokemonView newPokemonView = new PokemonView(this.pokemonInPokedex.get(i), this);
+        for(int i = 0; i < this.pokedex.getSize(); ++i) {
+            PokemonView newPokemonView = new PokemonView(this.pokedex.getPokemon(i), this);
+            onPokemonGlobalCountChangeHandler tmphandler = new onPokemonGlobalCountChangeHandler(newPokemonView);
+            
+            this.pokedex.getPokemon(i).addListener(tmphandler);
+            
+            this.pokemonViewInPokedex.add(newPokemonView);
             newPokemonView.registerListener(handler);
 
             newVBox.getChildren().add(newPokemonView.createView( pokemonViewWidth, pokemonViewHeight, pokemonPadding, iconWidth, iconHeight, VGap, HGap ));
@@ -186,10 +170,14 @@ public class PokedexView{
         // prepare all info of this pokemon
         this.pokemonNameTextField.setText(pokemon.getName());
         String typesText = "";
-        String[] types = pokemon.getTypes();
-        for (int i = 0; i < types.length; ++i) {
-            typesText += types[i] + ", ";
-        }
+        if( pokemon.getTypes() != null ){
+        	
+        	String[] types = pokemon.getTypes();
+        	for (int i = 0; i < types.length; ++i) {
+                typesText += types[i] + ", ";
+            }
+    	}
+        
         this.pokemonTypeTextField.setText(typesText);
         this.pokemonHeightField.setText(Double.toString(pokemon.getHeight()));
         this.pokemonWeightField.setText(Double.toString(pokemon.getWeight()));
@@ -210,4 +198,11 @@ public class PokedexView{
         this.pokedexBorderPane.setOpacity(1);
         this.pokemonDetailBorderPane.setOpacity(0);
     }
+    
+    public Pokedex getPokedex(){
+    	
+    	return this.pokedex;
+    	
+    }
+    
 }

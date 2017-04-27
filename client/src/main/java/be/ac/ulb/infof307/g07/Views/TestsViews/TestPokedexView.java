@@ -28,32 +28,5 @@ public class TestPokedexView {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testIncreasePokemonCounting() {
-		PokedexView pokedexView = new PokedexView();
-		PokedexView.increasePokemonCounting(25);
-		assertEquals(PokedexView.markedPokemonCounting.size(),1);
-		
-		PokedexView.increasePokemonCounting(33);
-		assertEquals(PokedexView.markedPokemonCounting.size(),2);
-		
-		PokedexView.increasePokemonCounting(25);
-		assertEquals(PokedexView.markedPokemonCounting.size(),2);
-		
-		int currentValue25 = PokedexView.markedPokemonCounting.get(25);
-		assertEquals(currentValue25, 2);
-		
-		int currentValue33 = PokedexView.markedPokemonCounting.get(33);
-		assertEquals(currentValue33, 1);
-
-
-		
-
-
-		
-		
-		
-		
-	}
 
 }

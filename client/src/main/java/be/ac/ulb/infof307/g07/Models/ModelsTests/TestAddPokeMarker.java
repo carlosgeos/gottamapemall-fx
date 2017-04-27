@@ -41,7 +41,7 @@ public class TestAddPokeMarker {
 		for(int i = 0; i < this.size; ++i){
 			
 			Pokemon newPokemon = new Pokemon(1, null, null, 0, 0, 0, null);
-			this.pokeMap.addPokeMarker(new Coordinate(41.40338, 2.17403), newPokemon, null, null);
+			this.pokeMap.addPokeMarker(new Coordinate(41.40338, 2.17403), newPokemon.getId(), null, null);
 			
 		}
 		

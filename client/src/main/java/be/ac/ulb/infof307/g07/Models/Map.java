@@ -28,12 +28,14 @@ public class Map {
 
 
 	private ArrayList<Integer> pokeMarkersNotOnMapView = new ArrayList<Integer>();
+	private Pokedex pokedex;
 	
 	/**
 	 * Constructeur de Map
 	 */
-	public Map(){
-		//...
+	public Map(Pokedex pokedex){
+		
+		this.pokedex = pokedex;
 	}
 	
 	/**
@@ -66,7 +68,7 @@ public class Map {
 		
 		Coordinate position = new Coordinate(x,y);
 		
-		return addPokeMarker(position, pokemon, date, time);
+		return addPokeMarker(position, pokemon.getId(), date, time);
 		
 	}
 
@@ -95,10 +97,14 @@ public class Map {
 	 * @see Map#pokeMarkers
 	 * 
 	 */
-	public PokeMarker addPokeMarker(Coordinate newPosition, Pokemon pokemon, String date, String time){
+	public PokeMarker addPokeMarker(Coordinate newPosition, int id, String date, String time){
 		
-		PokeMarker newPMarker = new PokeMarker( newPosition, pokemon, date, time);
+		Pokemon pokemonInMainPokedex = this.pokedex.getPokemonWithId(id);
+		pokemonInMainPokedex.increaseGlobalCounting();
+		PokeMarker newPMarker = new PokeMarker( newPosition, pokemonInMainPokedex, date, time);
 		addPokeMarker(newPMarker);
+		
+		
 		return newPMarker;
 	}
 
@@ -115,6 +121,7 @@ public class Map {
 	 */
 	public void addPokeMarker(PokeMarker newPMarker){
 
+		
 		pokeMarkers.put(newPMarker.getId(), newPMarker);
 		
 		this.pokeMarkersNotOnMapView.add(newPMarker.getId());
@@ -144,7 +151,6 @@ public class Map {
 	public void removePokeMarkerJustAddedOnMapView(Integer idOfAddedPokeMarker){
 		
 		this.pokeMarkersNotOnMapView.remove(idOfAddedPokeMarker);
-		
 	}
 	
 	/**
@@ -162,7 +168,7 @@ public class Map {
 	}
 	
 	public void removePokeMarker(PokeMarker pokeMarker){
-		
+		pokeMarker.getPokemon().decreaseGlobalCounting();
 		pokeMarkers.remove(pokeMarker.getId());
 		
 	}

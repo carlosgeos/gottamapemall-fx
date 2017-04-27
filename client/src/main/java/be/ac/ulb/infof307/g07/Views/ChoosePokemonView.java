@@ -123,7 +123,7 @@ public class ChoosePokemonView implements PokemonViewListener, EventHandler<Acti
     	
     	for(ChoosePokemonViewListener listener : this.listeners){
 
-    		listener.onConfirm(this.selectedPokemon, this.date.getText(), this.time.getText());
+    		listener.onConfirm(this.selectedPokemon.getId(), this.date.getText(), this.time.getText());
 
     	}
     	

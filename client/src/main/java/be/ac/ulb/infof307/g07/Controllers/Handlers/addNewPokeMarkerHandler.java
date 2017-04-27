@@ -22,10 +22,9 @@ public class addNewPokeMarkerHandler implements ChoosePokemonViewListener{
 	}
 	
 	@Override
-	public void onConfirm(Pokemon pokemon, String date, String time) {
-		PokedexView.increasePokemonCounting(pokemon.getId());
-		
-		this.pokeMap.addPokeMarker( this.position, pokemon, date, time);
+	public void onConfirm(int id, String date, String time) {
+	
+		this.pokeMap.addPokeMarker( this.position, id, date, time);
 		// then add it in the map view
 		this.pokeMapView.updateMarkers();
 		

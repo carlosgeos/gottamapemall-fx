@@ -1,8 +1,15 @@
 package be.ac.ulb.infof307.g07.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import be.ac.ulb.infof307.g07.Controllers.ChoosePokemonViewListener;
+import be.ac.ulb.infof307.g07.Controllers.PokemonListener;
+
 public class Pokemon {
+	
+	private ArrayList<PokemonListener> listeners = new ArrayList<PokemonListener>();
+	
     private final int id;
     private final String name;
     private final String imagePath;
@@ -10,6 +17,7 @@ public class Pokemon {
     private final int height;
     private final int weight;
     private final String[] types;
+    private int globalCounting = 0;
     
     public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types) {
         this.id = id;
@@ -19,8 +27,43 @@ public class Pokemon {
         this.height = height;
         this.weight = weight;
         this.types = types;
+  
         
     }
+    
+    public void increaseGlobalCounting(){
+    	
+    	this.globalCounting += 1;
+    	for(PokemonListener listener : this.listeners){
+
+    		listener.onChangeGlobalCount();
+
+    	}
+    	
+    }
+    
+    public void decreaseGlobalCounting(){
+    	if (this.globalCounting > 0){
+    		this.globalCounting -= 1;
+	    	for(PokemonListener listener : this.listeners){
+	
+	    		listener.onChangeGlobalCount();
+	
+	    	}
+    	}
+    }
+    
+    public final int getGlobalCounting(){
+    	return this.globalCounting;
+    }
+    
+    public void addListener( PokemonListener newListener){
+    	
+    	this.listeners.add(newListener);
+    	
+    }
+    
+    
     
     public String toString(){
         

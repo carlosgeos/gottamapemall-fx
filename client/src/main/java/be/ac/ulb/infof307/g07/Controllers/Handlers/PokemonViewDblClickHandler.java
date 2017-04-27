@@ -17,7 +17,7 @@ public class PokemonViewDblClickHandler implements PokemonViewListener{
 	
 	@Override
 	public void onDoubleClick(Pokemon pokemon) {
-		
+		System.out.println(pokemon.getName());
 		pokedexView.showPokemonDetail(pokemon);
 		
 	}

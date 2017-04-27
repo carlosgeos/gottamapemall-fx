@@ -17,11 +17,13 @@ public class PokemonView implements EventHandler<MouseEvent>{
     private Pokemon pokemon;
     private PokedexView pokedexView;
     private GridPane pokemonGridPane;
+    private Label globalCountLabel;
     private String holdGridStyle;
     private String defaultGridStyle;
     private String hoverGridStyle;
     private String selectGridStyle;
     private String dblClickGridStyle;
+    
 
     private ArrayList<PokemonViewListener> listeners= new ArrayList<PokemonViewListener>();
 
@@ -57,7 +59,11 @@ public class PokemonView implements EventHandler<MouseEvent>{
 	this.pokemonGridPane.add(pokemonImageView, 0, 0);
 	this.pokemonGridPane.add(new Label(Integer.toString(this.pokemon.getId())), 1, 0);
 	this.pokemonGridPane.add(new Label(this.pokemon.getName()), 2, 0);
-
+	
+	this.globalCountLabel = new Label(Integer.toString(this.pokemon.getGlobalCounting()));
+	
+	this.pokemonGridPane.add(this.globalCountLabel, 3, 0);
+	
 	this.pokemonGridPane.setOnMouseClicked(this);
 	this.pokemonGridPane.setOnMouseEntered(mouseEvent -> {
 		this.holdGridStyle = this.pokemonGridPane.getStyle();
@@ -109,6 +115,12 @@ public class PokemonView implements EventHandler<MouseEvent>{
 	this.holdGridStyle = this.dblClickGridStyle;
 	PokemonView.dblClickPokemonView = this;
 
+    }
+    
+    public void refreshCount(){
+    	
+    	this.globalCountLabel.setText(Integer.toString(this.pokemon.getGlobalCounting()));
+    	
     }
 
     @Override
