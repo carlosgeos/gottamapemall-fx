@@ -14,19 +14,18 @@ package be.ac.ulb.infof307.g07.Models;
  * @author fan
  * @version 1.2
  */
-public class Coordinate{
-
-	/**
-	 * La position en abscisse (x) dans le plan, ou latitude sur une carte.
-	 */
-	private double x;
-	
-	/**
-	 * La position en ordonnee (y) dans le plan, ou longitude sur une carte.
-	 */
-	private double y;
-	
-	 /**
+public class Coordinate {
+    /**
+     * La position en abscisse (x) dans le plan, ou latitude sur une carte.
+     */
+    private double x;
+    
+    /**
+     * La position en ordonnee (y) dans le plan, ou longitude sur une carte.
+     */
+    private double y;
+    
+     /**
      * Constructeur de Coordinate.
      * 
      * @param newX
@@ -35,31 +34,26 @@ public class Coordinate{
      *            La position en ordonnee (y) dans le plan, ou longitude.
      * 
      */
-	public Coordinate(double newX, double newY) {
-		
-		x = newX;
-		y = newY;
-	}
-	
-	/**
+    public Coordinate(double newX, double newY) {
+        x = newX;
+        y = newY;
+    }
+    
+    /**
      * Retourne la position en abscisse (x), ou latitude.
      * 
      * @return La coordonnee en abscisse, sous forme d'un nombre reel (double).
      */
-	public double getX(){
-		
-		return x;
-		
-	}
-	
-	/**
+    public double getX() {
+        return x;
+    }
+    
+    /**
      * Retourne la position en ordonnee (y), ou longitude.
      * 
      * @return La coordonnee en ordonnee, sous forme d'un nombre reel (double).
      */
-	public double getY(){
-		
-		return y;
-		
-	}
+    public double getY() {
+        return y;
+    }
 }

@@ -26,9 +26,7 @@ import javafx.scene.layout.VBox;
  * @author Fan et Renato
  *
  */
-
-public class PokedexView{
-
+public class PokedexView {
     // stock real pokemon
     private ObservableList<Pokemon> pokemonInPokedex;
 
@@ -54,8 +52,7 @@ public class PokedexView{
     private int pokemonImageHeight = 140;
 
 
-    public PokedexView( double pokedexViewWidth, double pokedexViewHeight ){
-
+    public PokedexView(double pokedexViewWidth, double pokedexViewHeight) {
         this.pokedexViewWidth = pokedexViewWidth;
 
         pokedexBorderPane = new BorderPane();
@@ -110,13 +107,13 @@ public class PokedexView{
 
         // it will add all pokemon in vbox
         updatePokedex();
-}
+    }
 
-    public void updatePokedex(){
+    public void updatePokedex() {
         pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
     }
 
-    private void fillPokedex(){
+    private void fillPokedex() {
         String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
         Gson gson = new Gson();
         Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
@@ -126,13 +123,12 @@ public class PokedexView{
         }
     }
 
-    public VBox getPokedexViewWithDefaultStyle(){
+    public VBox getPokedexViewWithDefaultStyle() {
         PokemonViewDblClickHandler newHandler = new PokemonViewDblClickHandler(this);
         return getPokedexView( newHandler, this.pokedexViewWidth-15, 50, new Insets(5,5,5,5), this.pokemonIconWidth, this.pokemonIconHeight, 5, 10 );
     }
 
-    public VBox getPokedexView(PokemonViewListener handler, double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap){
-
+    public VBox getPokedexView(PokemonViewListener handler, double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap) {
         VBox newVBox = new VBox();
 
         for(int i = 0; i < this.pokemonInPokedex.size(); ++i) {
@@ -171,7 +167,7 @@ public class PokedexView{
         this.pokedexBorderPane.setOpacity(0);
     }
 
-    public void closePokemonDetail(){
+    public void closePokemonDetail() {
         // just do the opposite of showPokemonDetail
         this.pokedexBorderPane.toFront();
         this.pokedexBorderPane.setOpacity(1);
