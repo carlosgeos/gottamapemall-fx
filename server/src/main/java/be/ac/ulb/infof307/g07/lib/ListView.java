@@ -35,6 +35,9 @@ public class ListView<T extends GenericModel> {
         return null;
     }
 
+    /**
+     * Used to define the field to search in the database.
+     */
     protected String getSearchField () {
         return "name";
     }
@@ -46,7 +49,7 @@ public class ListView<T extends GenericModel> {
      * @param key Key of the parameter to retrieve.
      * @return Parameter value as a String.
      */
-    static private String getParam(Request req, String key) {
+    static protected String getParam(Request req, String key) {
         String param = "";
         try{
             param = req.params(key);
@@ -63,9 +66,9 @@ public class ListView<T extends GenericModel> {
      * @param req The request object providing information about the HTTP request
      * @param key Key of the parameter to retrieve.
      * @param handler Function to modify the value of the parameter.
-     * @return Parameter value as a String.
+     * @return Parameter value parsed.
      */
-    static private Object getParam(Request req, String key, ParamHandler handler) {
+    static protected Object getParam(Request req, String key, ParamHandler handler) {
         Object param = getParam(req, key);
         // Just a string but parsed as an object to be returned.
 
@@ -84,10 +87,10 @@ public class ListView<T extends GenericModel> {
      */
     protected void viewsetRoute () {
         get(this.getRoute(), (req, res) -> {
-            final List<T> pokemons = Database.get().find(this.getModel()).order("id").asList();
+            final List<T> sets = Database.get().find(this.getModel()).order("id").asList();
 
             res.status(200);
-            return pokemons;
+            return sets;
         }, gson::toJson);
     }
 
@@ -107,13 +110,13 @@ public class ListView<T extends GenericModel> {
      * under the model defined in this.getModel().
      */
     protected void detailRoute () {
-        get(this.getRoute() + "/:id", (req, res) -> {
-            int id = (int) getParam(req, ":id", (val) -> {
+        get(this.getRoute() + "/:detail", (req, res) -> {
+            int detail = (int) getParam(req, ":detail", (val) -> {
                 return Integer.parseInt(val);
             });
 
             res.status(200);
-            return Database.get().find(this.getModel()).field("id").equal(id).get();
+            return Database.get().find(this.getModel()).field("id").equal(detail).get();
         }, gson::toJson);
     }
 
