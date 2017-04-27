@@ -110,20 +110,20 @@ public class PokedexView{
 
         // it will add all pokemon in vbox
         updatePokedex();
-}
+    }
 
     public void updatePokedex(){
         pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
     }
 
     private void fillPokedex(){
-        String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
-        Gson gson = new Gson();
-        Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
+	String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
+	Gson gson = new Gson();
+	Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
 
-        for (int i = 0; i < pokemons.length; ++i) {
-            pokemonInPokedex.add(pokemons[i]);
-        }
+	for (int i = 0; i < pokemons.length; ++i) {
+	    pokemonInPokedex.add(pokemons[i]);
+	}
     }
 
     public VBox getPokedexViewWithDefaultStyle(){

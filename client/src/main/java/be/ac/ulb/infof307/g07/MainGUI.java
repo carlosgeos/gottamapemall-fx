@@ -76,7 +76,7 @@ public class MainGUI extends Application{
 	primaryStage.setWidth(mainWindowWidth);
 	primaryStage.setHeight(mainWindowHeight);
 	primaryStage.setTitle("PokéMap");
-	primaryStage.getIcons().add(new Image("https://pro-rankedboost.netdna-ssl.com/wp-content/uploads/2016/08/Togepi-Pokemon-Go.png"));
+	primaryStage.getIcons().add(new Image("http://pro-rankedboost.netdna-ssl.com/wp-content/uploads/2016/08/Togepi-Pokemon-Go.png"));
 
 	this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
 	this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
