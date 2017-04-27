@@ -12,14 +12,13 @@ import be.ac.ulb.infof307.g07.lib.CustomGson;
 import be.ac.ulb.infof307.g07.lib.ParamHandler;
 import be.ac.ulb.infof307.g07.lib.Message;
 import be.ac.ulb.infof307.g07.lib.Database;
-import be.ac.ulb.infof307.g07.lib.models.GenericModel;
 
 /**
  * Abstraction to create API endpoint for a specific model instance.
  *
  * @param <T> The model instance to create the API endpoint on.
  */
-public class ListView<T extends GenericModel> {
+public class ListView<T> {
     static protected Gson gson = CustomGson.get();
 
     /**
