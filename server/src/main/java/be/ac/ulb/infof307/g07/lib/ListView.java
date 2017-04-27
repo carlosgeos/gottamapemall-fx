@@ -12,6 +12,7 @@ import be.ac.ulb.infof307.g07.lib.CustomGson;
 import be.ac.ulb.infof307.g07.lib.ParamHandler;
 import be.ac.ulb.infof307.g07.lib.Message;
 import be.ac.ulb.infof307.g07.lib.Database;
+import be.ac.ulb.infof307.g07.lib.Error;
 
 /**
  * Abstraction to create API endpoint for a specific model instance.
@@ -106,17 +107,32 @@ public class ListView<T> {
     }
 
     /**
+     * Define how to retrieve the data passed in the URL of the request.
+     * 
+     * @param req The request object providing information about the HTTP request
+     * @return Detail object given in the url.
+     */
+    protected Object getDetail (Request req) {
+        return getParam(req, ":detail", (val) -> {
+            return Integer.parseInt(val);
+        });
+    }
+
+    /**
      * Define API endpoint to get a specific object saved in the database
      * under the model defined in this.getModel().
      */
     protected void detailRoute () {
         get(this.getRoute() + "/:detail", (req, res) -> {
-            int detail = (int) getParam(req, ":detail", (val) -> {
-                return Integer.parseInt(val);
-            });
+            T m = Database.get().find(this.getModel()).field("id").equal(getDetail(req)).get();
+
+            if (m == null) {
+                res.status(404);
+                return new Error("Not found");
+            }
 
             res.status(200);
-            return Database.get().find(this.getModel()).field("id").equal(detail).get();
+            return m;
         }, gson::toJson);
     }
 
@@ -126,13 +142,13 @@ public class ListView<T> {
     protected void createRoute () {
         post(this.getRoute(), (req, res) -> {
             try {
-                System.out.println(req.body());
                 T creation = gson.fromJson(req.body(), this.getModel());
                 Database.get().save(creation);
                 res.status(201);
                 return creation;
             } catch (Exception e) {
-                return new Message(e.getMessage());
+                res.status(400);
+                return new Error(e.getMessage());
             }
         }, gson::toJson);
     }
@@ -157,15 +173,16 @@ public class ListView<T> {
      * Define API endpoint to delete a specific object in the model.
      */
     protected void deleteRoute () {
-        delete(this.getRoute() + "/:id", (req, res) -> {
-            int id = (int) getParam(req, ":id", (val) -> {
-                return Integer.parseInt(val);
-            });
+        delete(this.getRoute() + "/:detail", (req, res) -> {
+            final Query<T> d = Database.get().find(this.getModel()).field("id").equal(getDetail(req));
+            if (d == null) {
+                res.status(404);
+                return new Error("Not found");
+            }
 
-            res.status(200);
-            final Query<T> d = Database.get().find(this.getModel()).field("id").equal(id);
             Database.get().delete(d);
 
+            res.status(200);
             return new Message("deleted");
         }, gson::toJson);
     }
