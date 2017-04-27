@@ -7,11 +7,10 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.IndexOptions;
 
-import be.ac.ulb.infof307.g07.lib.models.GenericModel;
 import be.ac.ulb.infof307.g07.models.PokemonModel;
 
 @Entity("location")
-public class LocationModel implements GenericModel {
+public class LocationModel {
     @Id
     private ObjectId id;
     // @Indexed(options=@IndexOptions(unique=true))
@@ -21,6 +20,4 @@ public class LocationModel implements GenericModel {
     // @Reference
     // private PokemonModel pokemon;
     private int pokemon;
-
-    public LocationModel () {}
 }

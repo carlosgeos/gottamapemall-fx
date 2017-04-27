@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07.views;
 
 import static spark.Spark.*;
+import spark.Request;
 
 import org.bson.types.ObjectId;
 
@@ -27,30 +28,16 @@ public final class LocationView extends ListView<LocationModel> {
     protected final void updateRoute () {}
 
     /**
-     * Detail route use ID from the mongodb.
      */
-    protected void detailRoute () {
-        get(this.getRoute() + "/:detail", (req, res) -> {
-            String detail = getParam(req, ":detail");
-
-            if (!ObjectId.isValid(detail)) {
-                return new Error("Not found");
+    @Override
+    protected final Object getDetail (Request req) throws Exception {
+         return getParam(req, ":detail", (val) -> {
+            if (!ObjectId.isValid(val)) {
+                throw new Exception("Invalid id");
             }
-
-            ObjectId oid = new ObjectId(detail);
-
-            LocationModel m = Database.get().find(this.getModel()).field("id").equal(oid).get();
-
-            if (m == null) {
-                return new Error("Not found");
-            }
-
-            res.status(200);
-            return m;
-        }, gson::toJson);
+            return new ObjectId(val);
+        });
     }
-
-
 
     public LocationView () {
         super();
