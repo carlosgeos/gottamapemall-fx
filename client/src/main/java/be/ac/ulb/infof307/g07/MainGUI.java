@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  * <b>MainGUI est la classe qui se charge de lancer l'interface graphique (afficher la carte dans la fenetre).</b>
- * Elle h√©rite de la classe Application de javafx.
+ * Elle hÈrite de la classe Application de javafx.
  *
  * @see be.ac.ulb.infof307.g07.Views.MapView
  *
@@ -65,7 +65,7 @@ public class MainGUI extends Application{
 
     @Override
     /**
-     * La m√©thode qui lance l'interface graphique et l'affiche.
+     * La mÈthode qui lance l'interface graphique et l'affiche.
      *
      * @param primaryStage
      * 						le containeur parent.
@@ -75,7 +75,7 @@ public class MainGUI extends Application{
     	// configure the main window
 	primaryStage.setWidth(mainWindowWidth);
 	primaryStage.setHeight(mainWindowHeight);
-	primaryStage.setTitle("Pok√©Map");
+	primaryStage.setTitle("PokÈMap");
 	primaryStage.getIcons().add(new Image("http://pro-rankedboost.netdna-ssl.com/wp-content/uploads/2016/08/Togepi-Pokemon-Go.png"));
 
 	this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
