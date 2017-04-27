@@ -112,7 +112,7 @@ public class ListView<T> {
      * @param req The request object providing information about the HTTP request
      * @return Detail object given in the url.
      */
-    protected Object getDetail (Request req) {
+    protected Object getDetail (Request req) throws Exception {
         return getParam(req, ":detail", (val) -> {
             return Integer.parseInt(val);
         });
@@ -124,7 +124,14 @@ public class ListView<T> {
      */
     protected void detailRoute () {
         get(this.getRoute() + "/:detail", (req, res) -> {
-            T m = Database.get().find(this.getModel()).field("id").equal(getDetail(req)).get();
+            Object det = null;
+            try {
+                det = getDetail(req);
+            } catch (Exception e) {
+                return new Error(e.getMessage());
+            }
+
+            T m = Database.get().find(this.getModel()).field("id").equal(det).get();
 
             if (m == null) {
                 res.status(404);

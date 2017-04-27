@@ -30,11 +30,11 @@ public final class LocationView extends ListView<LocationModel> {
     /**
      */
     @Override
-    protected final Object getDetail (Request req) {
+    protected final Object getDetail (Request req) throws Exception {
          return getParam(req, ":detail", (val) -> {
-            // if (!ObjectId.isValid(val)) {
-            //     return new Error("Not found");
-            // }
+            if (!ObjectId.isValid(val)) {
+                throw new Exception("Invalid id");
+            }
             return new ObjectId(val);
         });
     }
