@@ -17,20 +17,23 @@ public class TestPokemonsAroundMe {
 	private HashMap<Integer, PokeMarker> listPokeMarker; 
 	private PokeMarker marker1;
 	private PokeMarker marker2;
+	private PokeMarker marker3;
 	private ArrayList<Integer> PokemonsAroundMe;
 	@Before
 	public void setUp() throws Exception {
 		listPokeMarker = new HashMap<Integer, PokeMarker> ();
-		marker1 = new PokeMarker(new Coordinate(41.40338, 2.17403), null, null, null) ;
-		marker2 = new PokeMarker(new Coordinate(41.40398, 2.17403), null, null, null) ;
-		//listPokeMarker.put(1, marker1);
+		marker1 = new PokeMarker(new Coordinate(41.40338, 2.17403), null, null, null) ;// my position 
+		marker2 = new PokeMarker(new Coordinate(41.40345, 2.17402), null, null, null) ;
+		marker3 = new PokeMarker(new Coordinate(41.40344, 2.17402), null, null, null) ;
+		
 		listPokeMarker.put(2, marker2);
+		listPokeMarker.put(3, marker3);
 	}
 
 	@Test
 	public void test() {
-		PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 0.0009, marker1);
-		assertEquals(PokemonsAroundMe.size(), 1);
+		PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 100, marker1);
+		assertEquals(PokemonsAroundMe.size(), 2);
 	}
 
 }
