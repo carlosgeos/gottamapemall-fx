@@ -24,16 +24,21 @@ public class TestPokemonsAroundMe {
 		listPokeMarker = new HashMap<Integer, PokeMarker> ();
 		marker1 = new PokeMarker(new Coordinate(41.40338, 2.17403), null, null, null) ;// my position 
 		marker2 = new PokeMarker(new Coordinate(41.40345, 2.17402), null, null, null) ;
-		marker3 = new PokeMarker(new Coordinate(41.40344, 2.17402), null, null, null) ;
+		marker3 = new PokeMarker(new Coordinate(51.40344, 2.17402), null, null, null) ;
 		
-		listPokeMarker.put(2, marker2);
+		
 		listPokeMarker.put(3, marker3);
 	}
 
 	@Test
 	public void test() {
+		listPokeMarker.put(2, marker2);
 		PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 100, marker1);
-		assertEquals(PokemonsAroundMe.size(), 2);
+		assertEquals(PokemonsAroundMe.size(), 1);
+		// ajouter un marker mais il est plus loin aue le rayon de recherche   
+		listPokeMarker.put(3, marker3);
+		PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 100, marker1);
+		assertEquals(PokemonsAroundMe.size(), 1);
 	}
 
 }
