@@ -12,8 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-public class PokemonView implements EventHandler<MouseEvent>{
-
+public class PokemonView implements EventHandler<MouseEvent> {
     private Pokemon pokemon;
     private PokedexView pokedexView;
     private GridPane pokemonGridPane;
@@ -28,106 +27,86 @@ public class PokemonView implements EventHandler<MouseEvent>{
     public static PokemonView selectedPokemonView = null;
     public static PokemonView dblClickPokemonView = null;
 
-    public PokemonView(Pokemon pokemon, PokedexView pokedexView){
+    public PokemonView(Pokemon pokemon, PokedexView pokedexView) {
+        this.pokemon = pokemon;
+        this.pokedexView = pokedexView;
 
-	this.pokemon = pokemon;
-	this.pokedexView = pokedexView;
-
-	this.defaultGridStyle = "-fx-border: 1px;-fx-border-color:#EBEBEB; -fx-border-style:solid;";
-	this.hoverGridStyle = "-fx-border: 1px;-fx-border-color:#75B1FF; -fx-border-style:solid;";
-	this.selectGridStyle = "-fx-border: 1px;-fx-border-color:#FFC05C; -fx-border-style:solid;";
-	this.dblClickGridStyle = "-fx-border: 1px;-fx-border-color:#00ff00; -fx-border-style:solid;";
+        this.defaultGridStyle = "-fx-border: 1px;-fx-border-color:#EBEBEB; -fx-border-style:solid;";
+        this.hoverGridStyle = "-fx-border: 1px;-fx-border-color:#75B1FF; -fx-border-style:solid;";
+        this.selectGridStyle = "-fx-border: 1px;-fx-border-color:#FFC05C; -fx-border-style:solid;";
+        this.dblClickGridStyle = "-fx-border: 1px;-fx-border-color:#00ff00; -fx-border-style:solid;";
     }
 
-    public GridPane createView(double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap){
+    public GridPane createView(double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap) {
+        this.pokemonGridPane = new GridPane();
+        this.pokemonGridPane.setPrefWidth(pokemonViewWidth);
+        this.pokemonGridPane.setPrefHeight(pokemonViewHeight);
+        this.pokemonGridPane.setStyle(this.defaultGridStyle);
 
-	this.pokemonGridPane = new GridPane();
-	this.pokemonGridPane.setPrefWidth(pokemonViewWidth);
-	this.pokemonGridPane.setPrefHeight(pokemonViewHeight);
-	this.pokemonGridPane.setStyle(this.defaultGridStyle);
-
-	this.pokemonGridPane.setHgap(HGap);
-	this.pokemonGridPane.setVgap(VGap);
-	this.pokemonGridPane.setPadding(pokemonPadding);
+        this.pokemonGridPane.setHgap(HGap);
+        this.pokemonGridPane.setVgap(VGap);
+        this.pokemonGridPane.setPadding(pokemonPadding);
 
 
-	Image pokemonImage = new Image(this.pokemon.getImagePath(), iconWidth, iconHeight, true, true);
-	ImageView pokemonImageView = new ImageView(pokemonImage);
+        Image pokemonImage = new Image(this.pokemon.getImagePath(), iconWidth, iconHeight, true, true);
+        ImageView pokemonImageView = new ImageView(pokemonImage);
 
-	this.pokemonGridPane.add(pokemonImageView, 0, 0);
-	this.pokemonGridPane.add(new Label(Integer.toString(this.pokemon.getId())), 1, 0);
-	this.pokemonGridPane.add(new Label(this.pokemon.getName()), 2, 0);
+        this.pokemonGridPane.add(pokemonImageView, 0, 0);
+        this.pokemonGridPane.add(new Label(Integer.toString(this.pokemon.getId())), 1, 0);
+        this.pokemonGridPane.add(new Label(this.pokemon.getName()), 2, 0);
 
-	this.pokemonGridPane.setOnMouseClicked(this);
-	this.pokemonGridPane.setOnMouseEntered(mouseEvent -> {
-		this.holdGridStyle = this.pokemonGridPane.getStyle();
-		this.pokemonGridPane.setStyle(this.hoverGridStyle); });
-	this.pokemonGridPane.setOnMouseExited(mouseEvent -> { this.pokemonGridPane.setStyle(this.holdGridStyle); });
+        this.pokemonGridPane.setOnMouseClicked(this);
+        this.pokemonGridPane.setOnMouseEntered(mouseEvent -> {
+            this.holdGridStyle = this.pokemonGridPane.getStyle();
+            this.pokemonGridPane.setStyle(this.hoverGridStyle); });
+        this.pokemonGridPane.setOnMouseExited(mouseEvent -> { this.pokemonGridPane.setStyle(this.holdGridStyle); });
 
-	return this.pokemonGridPane;
+        return this.pokemonGridPane;
     }
 
-    public GridPane getView(){
-
-	return this.pokemonGridPane;
-
+    public GridPane getView() {
+        return this.pokemonGridPane;
     }
 
-    public void registerListener(PokemonViewListener newListener){
-
-	this.listeners.add(newListener);
-
+    public void registerListener(PokemonViewListener newListener) {
+        this.listeners.add(newListener);
     }
 
-    public void resetStyle(){
-
-	this.pokemonGridPane.setStyle(this.defaultGridStyle);
+    public void resetStyle() {
+        this.pokemonGridPane.setStyle(this.defaultGridStyle);
     }
 
-    public void setSelectStyle(){
+    public void setSelectStyle() {
+        if(PokemonView.selectedPokemonView != null){
+            PokemonView.selectedPokemonView.resetStyle();
+        }
 
-	if(PokemonView.selectedPokemonView != null){
-
-	    PokemonView.selectedPokemonView.resetStyle();
-
-	}
-
-	this.pokemonGridPane.setStyle(this.selectGridStyle);
-	this.holdGridStyle = this.selectGridStyle;
-	PokemonView.selectedPokemonView = this;
+        this.pokemonGridPane.setStyle(this.selectGridStyle);
+        this.holdGridStyle = this.selectGridStyle;
+        PokemonView.selectedPokemonView = this;
     }
 
-    public void setDblClickStyle(){
+    public void setDblClickStyle() {
+        if( PokemonView.dblClickPokemonView!=null) {
+            PokemonView.dblClickPokemonView.resetStyle();
+        }
 
-
-	if( PokemonView.dblClickPokemonView!=null ){
-
-	    PokemonView.dblClickPokemonView.resetStyle();
-	}
-
-	this.pokemonGridPane.setStyle(this.dblClickGridStyle);
-	this.holdGridStyle = this.dblClickGridStyle;
-	PokemonView.dblClickPokemonView = this;
-
+        this.pokemonGridPane.setStyle(this.dblClickGridStyle);
+        this.holdGridStyle = this.dblClickGridStyle;
+        PokemonView.dblClickPokemonView = this;
     }
 
     @Override
     public void handle(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            setDblClickStyle();
 
-	if (event.getClickCount() == 2) {
+            for(PokemonViewListener pkListener : this.listeners) {
+                pkListener.onDoubleClick(this.pokemon);
 
-	    setDblClickStyle();
-
-	    for(PokemonViewListener pkListener : this.listeners){
-
-		pkListener.onDoubleClick(this.pokemon);
-
-	    }
-	}else if(event.getClickCount() == 1 ){
-
-	    setSelectStyle();
-
-	}
+            }
+        } else if(event.getClickCount() == 1) {
+            setSelectStyle();
+        }
     }
-
 }

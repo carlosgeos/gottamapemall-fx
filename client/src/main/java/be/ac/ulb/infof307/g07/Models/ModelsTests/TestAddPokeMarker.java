@@ -13,40 +13,35 @@ import be.ac.ulb.infof307.g07.Models.Map;
 import be.ac.ulb.infof307.g07.Models.Pokemon;
 
 public class TestAddPokeMarker {
+    private Map pokeMap;
+    private int size = 10;
+    
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
 
-	private Map pokeMap;
-	private int size = 10;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+        this.pokeMap = new Map();
+    }
 
-	@Before
-	public void setUp() throws Exception {
-	
-		this.pokeMap = new Map();
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void test_addPokeMarker() {
-		
-		for(int i = 0; i < this.size; ++i){
-			
-			Pokemon newPokemon = new Pokemon(1, null, null, 0, 0, 0, null);
-			this.pokeMap.addPokeMarker(new Coordinate(41.40338, 2.17403), newPokemon, null, null);
-			
-		}
-		
-		assertEquals(this.pokeMap.getNumberOfMarker(), this.size);
-		
-	}
-
+    @Test
+    public void test_addPokeMarker() {
+        for(int i = 0; i < this.size; ++i){
+            
+            Pokemon newPokemon = new Pokemon(1, null, null, 0, 0, 0, null);
+            this.pokeMap.addPokeMarker(new Coordinate(41.40338, 2.17403), newPokemon, null, null);
+            
+        }
+        
+        assertEquals(this.pokeMap.getNumberOfMarker(), this.size);
+    }
 }

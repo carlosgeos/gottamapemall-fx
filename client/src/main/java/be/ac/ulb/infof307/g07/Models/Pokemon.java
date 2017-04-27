@@ -21,49 +21,35 @@ public class Pokemon {
         this.types = types;
     }
     
-    public String toString(){
-        
+    public String toString() {
         String res = "";
         
         res += this.id +" : "+ this.name;
         
         return res;
-        
     }
     
-    public final int getId(){
-        
+    public final int getId() {
         return this.id;
-        
     }
     
-    public final String getName(){
-        
+    public final String getName() {
         return this.name;
-        
     }
     
-    public final String getImagePath(){
-        
+    public final String getImagePath() {
         return this.imagePath;
-
     }
     
-    public final String[] getTypes(){
-
+    public final String[] getTypes() {
         return this.types;
-
     }
 
     public final int getWeight () {
-
         return this.weight;
-    
     }
 
     public final int getHeight () {
-
         return this.height;
-    
     }
 }
