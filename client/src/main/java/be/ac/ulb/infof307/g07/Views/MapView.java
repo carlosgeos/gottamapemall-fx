@@ -2,10 +2,11 @@ package be.ac.ulb.infof307.g07.Views;
 
 import java.util.HashMap;
 
-import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.ClusteredGoogleMapView;
+import com.lynden.gmapsfx.ClusteredMainApp;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
@@ -35,7 +36,7 @@ import javafx.scene.layout.BorderPane;
  * @see MapView#mapInitialized()
  *
  */
-public class MapView  implements MapComponentInitializedListener{
+public class MapView extends ClusteredMainApp {
 
 
     /**
@@ -45,7 +46,6 @@ public class MapView  implements MapComponentInitializedListener{
      *
      */
     private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
-
 
     /**
      * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
@@ -57,8 +57,8 @@ public class MapView  implements MapComponentInitializedListener{
     private static String apikey = "AIzaSyB6ltjonBKp0Hq737I--1cmUGtbroiXr70";
     public static Coordinate position;
 
-    private GoogleMap googleMap;
-    private GoogleMapView googleMapView;
+    private ClusteredGoogleMap googleMap;
+    private ClusteredGoogleMapView googleMapView;
 
     private Map pokeMap;
 
@@ -92,7 +92,7 @@ public class MapView  implements MapComponentInitializedListener{
 
 	this.pokeMap = new Map();
 
-	this.googleMapView = new GoogleMapView(null, apikey);
+	this.googleMapView = new ClusteredGoogleMapView(null, apikey);
 	googleMapView.addMapInializedListener(this);
 
 	this.mapViewBorderPane = new BorderPane();
@@ -117,7 +117,7 @@ public class MapView  implements MapComponentInitializedListener{
      *
      * @return L'objet map de type GoogleMap.
      */
-    public GoogleMap getGoogleMap(){
+    public ClusteredGoogleMap getGoogleMap(){
 
 	return googleMap;
     }
@@ -166,7 +166,7 @@ public class MapView  implements MapComponentInitializedListener{
 	// this if is only used for the test unit
 	if(googleMap != null){
 
-	    googleMap.addMarker(newMarker);
+	    googleMap.addClusterableMarker(newMarker);
 	    googleMap.addUIEventHandler(newMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newMarker, pokeMarker, googleMap));
 	    googleMap.addUIEventHandler(newMarker, UIEventType.dblclick, new PokeMarkerMouseDblClickHandler(pokeMap, this, pokeMarker));
 
@@ -236,8 +236,8 @@ public class MapView  implements MapComponentInitializedListener{
 
 	googleMap = this.googleMapView.createMap(defaultMapOptions);
 	googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
-
 	this.mapViewBorderPane.setOpacity(1);
+
 
     }
 }
