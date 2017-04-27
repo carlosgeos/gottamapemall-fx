@@ -12,13 +12,11 @@ import be.ac.ulb.infof307.g07.lib.CustomGson;
 
 public class TestCustomGson {
     @Test
-    public void testGet () {
-        assertNull(CustomGson.get(), null);
-    }
-
-    @Test
     public void testCreation () {
-        CustomGson.create();
-        assertNotEquals(CustomGson.get(), null);
+        try {
+            CustomGson.create();
+        } catch (Exception e) {
+            Assert.fail("Creation failed");
+        }
     }
 }
