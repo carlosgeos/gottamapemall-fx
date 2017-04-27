@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g07.lib;
 
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.Datastore;
+import com.mongodb.MongoException;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
@@ -25,8 +26,9 @@ public class Database {
 	    String db_uri = (db.equals("gmta-test")) ? test_db : prod_db;
             datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(db_uri)), db);
             datastore.ensureIndexes();
-        } catch (Exception e) {
+        } catch (MongoException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(1);
         }
     }
 
