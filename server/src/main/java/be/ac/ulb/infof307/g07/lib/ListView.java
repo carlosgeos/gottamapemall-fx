@@ -2,12 +2,13 @@ package be.ac.ulb.infof307.g07.lib;
 
 import static spark.Spark.*;
 import spark.Request;
-import org.mongodb.morphia.query.Query;
 import com.google.gson.Gson;
+import org.mongodb.morphia.query.Query;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import be.ac.ulb.infof307.g07.lib.CustomGson;
 import be.ac.ulb.infof307.g07.lib.ParamHandler;
 import be.ac.ulb.infof307.g07.lib.Message;
 import be.ac.ulb.infof307.g07.lib.Database;
@@ -19,7 +20,7 @@ import be.ac.ulb.infof307.g07.lib.models.GenericModel;
  * @param <T> The model instance to create the API endpoint on.
  */
 public class ListView<T extends GenericModel> {
-    static protected Gson gson = new Gson();
+    static protected Gson gson = CustomGson.get();
 
     /**
      * Used to define the route of the API endpoint.
@@ -171,6 +172,9 @@ public class ListView<T extends GenericModel> {
     }
 
     public ListView () {
+        // If the gson is not created exit.
+        assert gson != null;
+
         this.viewsetRoute();
         this.searchSetRoute();
         this.detailRoute();
@@ -181,10 +185,5 @@ public class ListView<T extends GenericModel> {
         after((req, res) -> {
             res.type("application/json");
         });
-
-        //exception(IllegalArgumentException.class, (e, req, res) -> {
-        //    res.status(400);
-        //    res.body(gson::toJson(new ResponseError(e)));
-        //});
     }
 }
