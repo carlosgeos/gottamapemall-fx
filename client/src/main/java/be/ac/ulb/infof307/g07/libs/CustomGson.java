@@ -22,6 +22,8 @@ public class CustomGson {
 
     /**
      * Récupère l'instance `gson`.
+     *
+     * @return L'instance `gson` partagée.
      */
     static public Gson get () {
         return gson;

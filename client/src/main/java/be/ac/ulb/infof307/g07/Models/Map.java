@@ -23,21 +23,8 @@ import java.util.HashMap;
  */
 public class Map {
     /**
-     * Constructeur de Map
-     */
-    public Map() {
-        //...
-    }
-    
-    /**
-     * Cette methode cree un objet PokeMarker grace a l objet Coordinate renvoye (passe en parametre) par la methode addPokeMarker(double x, double y, Pokemon pokemon, String date, String time).
-     * et aux autres parametres de cette meme methode.
-     * 
-     * <p>
-     * La methode cree un objet PokeMarker et fait appel a la methode addPokeMarker(PokeMarker newPMarker) qui ajoute 
-     * le pokemarker dans la table de hachage (pokeMarkers.put(newPMarker.getId(), newPMarker) avec son id unique.
-     * <p>
-     * 
+     * Sauvegarde et crée un PokeMarker.
+     *
      * @param lat La latitude de l'épingle pokemon sur la carte.
      * @param lon La longitude de l'épingle pokemon sur la carte.
      * @param pokemon le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
@@ -45,9 +32,7 @@ public class Map {
      * @param time L'heure a laquelle le pokemon a ete vu.
      * @return une nouvelle epingle pokemon (avec un identifiant unique) sous la forme d un objet PokeMarker, contenant sa position sur la carte.
      *
-     * @see Map#addPokeMarker(PokeMarker)
      * @see be.ac.ulb.infof307.g07.Models.PokeMarker
-     * @see Map#pokeMarkers
      */
     public PokeMarker addPokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
         PokeMarker marker = new PokeMarker(lat, lon, pokemon, date, time);
@@ -56,11 +41,11 @@ public class Map {
     }
 
     /**
-     * Cette methode ajoute l'objet PokeMarker cree par la methode addPokeMarker(Coordinate position) dans la table de hachage pokeMarkers grace a sa methode put().
+     * Sauvegarde une instance de PokeMarker.
      * 
-     * @param newPMarker L epingle pokemon (pokemarker) creee par la methode addPokeMarker(Coordinate position, Pokemon pokemon, String date, String time).
+     * @param marker Un PokeMarker qui doit être sauvegardé.
      * 
-     * @see Map#addPokeMarker(Coordinate, Pokemon, String, String)
+     * @see Map#addPokeMarker(double, double, Pokemon, String, String)
      * @see be.ac.ulb.infof307.g07.Models.PokeMarker
      * @see be.ac.ulb.infof307.g07.Models.PokeMarker#getId() 
      */
@@ -73,6 +58,12 @@ public class Map {
         return created;
     }
     
+    /**
+     * Récupère les détails d'un PokeMarker en particulier.
+     *
+     * @param id Reference vers ce marker.
+     * @return Détail du PokeMarker.
+     */
     public final PokeMarker getPokeMarker(ObjectId id) {
         String response = Requests.get("http://127.0.0.1:4567/locations/" + id.toHexString()).send().readToText();
         Gson gson = CustomGson.get();
@@ -81,13 +72,9 @@ public class Map {
     }
     
     /**
-     * Retourne le nombre d epingle contenues dans la table de hachage (et donc le nombre d epingles presentes sur la carte) grace a sa methode size().
+     * Retourne le nombre de markers contenu sur la carte.
      * 
-     * @return
-     *             la taille de pokeMarkers (table de hachage des epingles), sous forme d un entier.
-     * 
-     * @see Map#pokeMarkers
-     * 
+     * @return Nombew de markers sous forme d'un entier.
      */
     public int getNumberOfMarker() {
         String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
@@ -96,7 +83,9 @@ public class Map {
         return markers.length;
     }
     
+    /**
+     * TODO
+     */
     public void removePokeMarker(PokeMarker pokeMarker) {
-        // pokeMarkers.remove(pokeMarker.getId());
     }
 }
