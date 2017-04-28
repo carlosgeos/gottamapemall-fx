@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bson.types.ObjectId;
 
-import be.ac.ulb.infof307.g07.lib.serializers.ObjectIdSerializer;
-
 /**
  * Handle the gson creation globally with custom serializers for each objects.
  */
