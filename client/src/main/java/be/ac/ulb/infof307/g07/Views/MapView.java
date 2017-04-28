@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07.Views;
 
 import java.util.HashMap;
+import org.bson.types.ObjectId;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
@@ -42,7 +43,7 @@ public class MapView  implements MapComponentInitializedListener {
      * @see be.ac.ulb.infof307.g07.Models.Map#pokeMarkers
      * 
      */
-    private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
+    private HashMap<ObjectId, Marker> markersOnMap = new HashMap<ObjectId, Marker>();
     
     /**
      * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
@@ -78,7 +79,7 @@ public class MapView  implements MapComponentInitializedListener {
      *@see MapView#googleMap
      * 
      */
-    public MapView( double width, double height) {
+    public MapView(double width, double height) {
         this.mapWidth = width;
         this.mapHeight = height;
         
@@ -138,6 +139,7 @@ public class MapView  implements MapComponentInitializedListener {
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.position(new LatLong(pokeMarker.getOnMapPosition().getX(), pokeMarker.getOnMapPosition().getY()));
         markerOption.icon(pokeMarker.getIcon());
+
         Marker newMarker = new Marker(markerOption);
         
         markersOnMap.put(pokeMarker.getId(), newMarker);
@@ -149,20 +151,6 @@ public class MapView  implements MapComponentInitializedListener {
             googleMap.addUIEventHandler(newMarker, UIEventType.dblclick, new PokeMarkerMouseDblClickHandler(pokeMap, this, pokeMarker));
         
             refreshMap();
-        }
-    }
-    
-    public void updateMarkers() {
-        Integer idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
-        Integer empty = -1;
-        
-        while(idOfPokeMarker != empty){
-            
-            addMarker(this.pokeMap.getPokeMarker(idOfPokeMarker));
-            
-            this.pokeMap.removePokeMarkerJustAddedOnMapView(idOfPokeMarker);
-            
-            idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
         }
     }
     
@@ -179,7 +167,7 @@ public class MapView  implements MapComponentInitializedListener {
         googleMap.setZoom(current);
     }
     
-    public void removeMarker(Integer id) {
+    public void removeMarker(ObjectId id) {
         googleMap.removeMarker(markersOnMap.get(id));
         markersOnMap.remove(id);
     }

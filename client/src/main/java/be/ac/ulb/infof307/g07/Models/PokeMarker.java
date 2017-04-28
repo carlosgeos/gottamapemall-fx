@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07.Models;
 
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
+import org.bson.types.ObjectId;
 
 /**
  * 
@@ -21,25 +22,27 @@ import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
  * @see be.ac.ulb.infof307.g07.Models.Coordinate
  */
 public class PokeMarker {
-    /**
-     * Cet attribut statique sert de compteur pour connaitre le nombre d epingles pokemon creees
-     * Il s incremente a chaque instanciation d un objet PokeMarker.
-     */
-    private static int idIncrement = 0;
+    private ObjectId id;
     
     /**
-     * L identifiant unique de l objet PokeMarker, sous forme d un entier constant.
+     * La latitude sur la carte de l'épingle.
      */
-    private final int uniqueId;
-    
+    double lat;
     /**
-     * La position sur la carte de l epingle.
-     * 
-     * @see be.ac.ulb.infof307.g07.Models.Coordinate
+     * La longitude sur la carte de l'épingle.
      */
-    private Coordinate onMapPosition;
+    double lon;
+    /**
+     * Réfèrence vers le pokémon sauvegardé.
+     */
     private Pokemon pokemon;
+    /**
+     * Date de la sauvegarde
+     */
     private String date;
+    /**
+     * Heure de la sauvegarde
+     */
     private String time;
     
     /**
@@ -58,10 +61,9 @@ public class PokeMarker {
      * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
      * 
      */
-    public PokeMarker(Coordinate newPosition, Pokemon pokemon, String date, String time) {
-        idIncrement += 1;
-        uniqueId = idIncrement;
-        onMapPosition = newPosition;
+    public PokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
+        this.lat = lat;
+        this.lon = lon;
         this.date = date;
         this.time = time;
         this.pokemon = pokemon;
@@ -70,14 +72,11 @@ public class PokeMarker {
     /**
      * Retourne l identifiant unique de l epingle pokemon.
      * 
-     * @return
-     *             l identifiant unique de l epingle pokemon, sous forme d un entier constant.
-     * 
-     * @see PokeMarker#uniqueId
+     * @return L'identifiant unique de l epingle pokemon, sous forme d un entier constant.
      * 
      */
-    public final int getId() {
-        return uniqueId;
+    public final ObjectId getId() {
+        return this.id;
     }
     
     /**
@@ -90,9 +89,8 @@ public class PokeMarker {
      * 
      */
     public Coordinate getOnMapPosition() {
-        return onMapPosition;
+        return new Coordinate(this.lat, this.lon);
     }
-    
     
     public String getString() {
         String res = "<div><table>"

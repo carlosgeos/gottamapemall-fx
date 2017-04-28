@@ -17,7 +17,7 @@ public class LocationModel {
     // private int id;
     private float lat;
     private float lon;
-    // @Reference
-    // private PokemonModel pokemon;
     private int pokemon;
+    private String date;
+    private String time;
 }
