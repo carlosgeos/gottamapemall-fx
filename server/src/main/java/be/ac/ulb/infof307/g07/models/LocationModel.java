@@ -17,7 +17,7 @@ public class LocationModel {
     // private int id;
     private float lat;
     private float lon;
-    private int pokemon;
+    private PokemonModel pokemon;
     private String date;
     private String time;
 }

@@ -17,7 +17,7 @@ public class CustomGson {
      */
     static public void create () {
         GsonBuilder gsonBuild = new GsonBuilder();
-        gsonBuild.registerTypeAdapter(ObjectId.class, new ObjectIdSerializer());
+        // gsonBuild.registerTypeAdapter(ObjectId.class, new ObjectIdSerializer());
         gson = gsonBuild.create();
     }
 

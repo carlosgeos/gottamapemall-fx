@@ -66,6 +66,7 @@ public class Map {
      */
     public PokeMarker addPokeMarker(PokeMarker marker) {
         Gson gson = CustomGson.get();
+        System.out.println(gson.toJson(marker));
         String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
         System.out.println(response);
         PokeMarker created = gson.fromJson(response, PokeMarker.class);
