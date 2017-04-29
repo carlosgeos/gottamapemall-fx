@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.lib;
+package be.ac.ulb.infof307.g07.libs;
 
 import static spark.Spark.*;
 import spark.Request;
@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import be.ac.ulb.infof307.g07.lib.CustomGson;
-import be.ac.ulb.infof307.g07.lib.ParamHandler;
-import be.ac.ulb.infof307.g07.lib.Message;
-import be.ac.ulb.infof307.g07.lib.Database;
-import be.ac.ulb.infof307.g07.lib.Error;
+import be.ac.ulb.infof307.g07.libs.CustomGson;
+import be.ac.ulb.infof307.g07.libs.ParamHandler;
+import be.ac.ulb.infof307.g07.libs.Message;
+import be.ac.ulb.infof307.g07.libs.Database;
+import be.ac.ulb.infof307.g07.libs.Error;
 
 /**
  * Abstraction to create API endpoint for a specific model instance.

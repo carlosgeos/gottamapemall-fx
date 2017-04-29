@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.lib;
+package be.ac.ulb.infof307.g07.libs;
 
 @FunctionalInterface
 public interface ParamHandler {

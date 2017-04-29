@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.lib;
+package be.ac.ulb.infof307.g07.libs;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNull;
 
 import org.bson.types.ObjectId;
 import com.google.gson.Gson;
-import be.ac.ulb.infof307.g07.lib.CustomGson;
+import be.ac.ulb.infof307.g07.libs.CustomGson;
 
 public class TestCustomGson {
     @Test

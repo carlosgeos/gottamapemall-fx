@@ -14,9 +14,9 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import be.ac.ulb.infof307.g07.models.PokemonModel;
-import be.ac.ulb.infof307.g07.lib.Database;
-import be.ac.ulb.infof307.g07.lib.errors.RequiredFieldException;
-import be.ac.ulb.infof307.g07.lib.errors.WrongTypeFieldException;
+import be.ac.ulb.infof307.g07.libs.Database;
+import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
+import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
 
 public class TestPokemonModel {
     private static final Gson gson = new Gson();
