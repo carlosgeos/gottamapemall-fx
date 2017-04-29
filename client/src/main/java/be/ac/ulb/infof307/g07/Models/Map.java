@@ -1,5 +1,9 @@
 package be.ac.ulb.infof307.g07.Models;
 
+import net.dongliu.requests.Requests;
+import org.bson.types.ObjectId;
+import com.google.gson.Gson;
+import be.ac.ulb.infof307.g07.libs.CustomGson;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,133 +23,69 @@ import java.util.HashMap;
  */
 public class Map {
     /**
-     * Une table de hachage contenant les PokeMarkers et leurs identifiants (nombre entier servant de clef) 
-     * 
-     */
-    private HashMap<Integer, PokeMarker> pokeMarkers = new HashMap<Integer, PokeMarker>();
-
-
-    private ArrayList<Integer> pokeMarkersNotOnMapView = new ArrayList<Integer>();
-    
-    /**
-     * Constructeur de Map
-     */
-    public Map() {
-        //...
-    }
-    
-    /**
-     * 
-     * Cette methode cree un objet Coordinate grace aux coordonnees passees en parametre et fait ensuite appel a
-     * addPokeMarker(Coordinate position) pour renvoyer l epingle pokemon finale.
-     * 
-     * <p>
-     * TBD...
-     * <p>
-     * 
-     * @param x
-     *             La position en abscisse (x) dans le plan, ou latitude sur une carte.
-     * @param y
-     *             La position en ordonnee (y) dans le plan, ou longitude sur une carte.
-     * @param pokemon
-     *                   le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
-     * @param date
-     *                 la date a laquelle le pokemon a ete vu.
-     * @param time
-     *                 l heure a laquelle le pokemon a ete vu.
-     * 
-     * @return 
-     *             Le resultat de la methode addPokeMarker sur l objet Coordinate cree.
-     * 
-     * @see Map#addPokeMarker(Coordinate, Pokemon, String, String)
-     * @see be.ac.ulb.infof307.g07.Models.Coordinate
-     */
-    public PokeMarker addPokeMarker(double x, double y, Pokemon pokemon, String date, String time) {
-        Coordinate position = new Coordinate(x,y);
-        
-        return addPokeMarker(position, pokemon, date, time);
-    }
-
-    /**
-     * Cette methode cree un objet PokeMarker grace a l objet Coordinate renvoye (passe en parametre) par la methode addPokeMarker(double x, double y, Pokemon pokemon, String date, String time).
-     * et aux autres parametres de cette meme methode.
-     * 
-     * <p>
-     * La methode cree un objet PokeMarker et fait appel a la methode addPokeMarker(PokeMarker newPMarker) qui ajoute 
-     * le pokemarker dans la table de hachage (pokeMarkers.put(newPMarker.getId(), newPMarker) avec son id unique.
-     * <p>
-     * 
-     * @param newPosition
-     *                     La position de l epingle pokemon sur la carte.
-     * @param pokemon
-     *                   le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
-     * @param date
-     *                 la date a laquelle le pokemon a ete vu.
-     * @param time
-     *                 l heure a laquelle le pokemon a ete vu.
-     * @return
-     *             une nouvelle epingle pokemon (avec un identifiant unique) sous la forme d un objet PokeMarker, contenant sa position sur la carte.
+     * Sauvegarde et crée un PokeMarker.
      *
-     * @see Map#addPokeMarker(PokeMarker)
+     * @param lat La latitude de l'épingle pokemon sur la carte.
+     * @param lon La longitude de l'épingle pokemon sur la carte.
+     * @param pokemon le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
+     * @param date La date a laquelle le pokemon a ete vu.
+     * @param time L'heure a laquelle le pokemon a ete vu.
+     * @return une nouvelle epingle pokemon (avec un identifiant unique) sous la forme d un objet PokeMarker, contenant sa position sur la carte.
+     *
      * @see be.ac.ulb.infof307.g07.Models.PokeMarker
-     * @see Map#pokeMarkers
-     * 
      */
-    public PokeMarker addPokeMarker(Coordinate newPosition, Pokemon pokemon, String date, String time) {
-        PokeMarker newPMarker = new PokeMarker( newPosition, pokemon, date, time);
-        addPokeMarker(newPMarker);
-        return newPMarker;
+    public PokeMarker addPokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
+        PokeMarker marker = new PokeMarker(lat, lon, pokemon, date, time);
+        addPokeMarker(marker);
+        return marker;
     }
 
     /**
-     * Cette methode ajoute l'objet PokeMarker cree par la methode addPokeMarker(Coordinate position) dans la table de hachage pokeMarkers grace a sa methode put().
+     * Sauvegarde une instance de PokeMarker.
      * 
-     * @param newPMarker
-     *                     L epingle pokemon (pokemarker) creee par la methode addPokeMarker(Coordinate position, Pokemon pokemon, String date, String time).
+     * @param marker Un PokeMarker qui doit être sauvegardé.
      * 
-     * @see Map#addPokeMarker(Coordinate, Pokemon, String, String)
+     * @see Map#addPokeMarker(double, double, Pokemon, String, String)
      * @see be.ac.ulb.infof307.g07.Models.PokeMarker
      * @see be.ac.ulb.infof307.g07.Models.PokeMarker#getId() 
-     * @see Map#pokeMarkersNotOnMapView
      */
-    public void addPokeMarker(PokeMarker newPMarker) {
-        pokeMarkers.put(newPMarker.getId(), newPMarker);
-        
-        this.pokeMarkersNotOnMapView.add(newPMarker.getId());
-    }
-    
-    public Integer getIdOfPokeMarkerNotOnMap() {
-        Integer res = -1;
-        int size = this.pokeMarkersNotOnMapView.size();
-        if( size != 0 ){
-            res = this.pokeMarkersNotOnMapView.get(size-1);
-        }
-        
-        return res;
-    }
-    
-    public final PokeMarker getPokeMarker(int idOfPokeMarker) {
-        return this.pokeMarkers.get(idOfPokeMarker);
-    }
-    
-    public void removePokeMarkerJustAddedOnMapView(Integer idOfAddedPokeMarker) {
-        this.pokeMarkersNotOnMapView.remove(idOfAddedPokeMarker);
+    public PokeMarker addPokeMarker(PokeMarker marker) {
+        Gson gson = CustomGson.get();
+        System.out.println(gson.toJson(marker));
+        String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
+        System.out.println(response);
+        PokeMarker created = gson.fromJson(response, PokeMarker.class);
+        return created;
     }
     
     /**
-     * Retourne le nombre d epingle contenues dans la table de hachage (et donc le nombre d epingles presentes sur la carte) grace a sa methode size().
-     * 
-     * @return
-     *             la taille de pokeMarkers (table de hachage des epingles), sous forme d un entier.
-     * 
-     * @see Map#pokeMarkers
-     * 
+     * Récupère les détails d'un PokeMarker en particulier.
+     *
+     * @param id Reference vers ce marker.
+     * @return Détail du PokeMarker.
      */
-    public int getNumberOfMarker() {
-        return pokeMarkers.size();
+    public final PokeMarker getPokeMarker(ObjectId id) {
+        String response = Requests.get("http://127.0.0.1:4567/locations/" + id.toHexString()).send().readToText();
+        Gson gson = CustomGson.get();
+        PokeMarker marker = gson.fromJson(response, PokeMarker.class);
+        return marker;
     }
     
+    /**
+     * Retourne le nombre de markers contenu sur la carte.
+     * 
+     * @return Nombew de markers sous forme d'un entier.
+     */
+    public int getNumberOfMarker() {
+        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
+        Gson gson = CustomGson.get();
+        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
+        return markers.length;
+    }
+    
+    /**
+     * TODO
+     */
     public void removePokeMarker(PokeMarker pokeMarker) {
-        pokeMarkers.remove(pokeMarker.getId());
     }
 }

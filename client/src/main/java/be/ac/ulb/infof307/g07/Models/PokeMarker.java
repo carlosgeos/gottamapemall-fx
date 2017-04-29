@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07.Models;
 
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
+import org.bson.types.ObjectId;
 
 /**
  * 
@@ -13,7 +14,7 @@ import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
  * @version 1.0
  * 
  * @see be.ac.ulb.infof307.g07.Models.Map
- * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(Coordinate, Pokemon, String, String)
+ * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(double, double, Pokemon, String, String)
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
  * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
@@ -22,46 +23,51 @@ import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
  */
 public class PokeMarker {
     /**
-     * Cet attribut statique sert de compteur pour connaitre le nombre d epingles pokemon creees
-     * Il s incremente a chaque instanciation d un objet PokeMarker.
+     * Identifiant unique du PokeMarker.
      */
-    private static int idIncrement = 0;
-    
+    private ObjectId id;
     /**
-     * L identifiant unique de l objet PokeMarker, sous forme d un entier constant.
+     * La latitude sur la carte de l'épingle.
      */
-    private final int uniqueId;
-    
+    double lat;
     /**
-     * La position sur la carte de l epingle.
-     * 
-     * @see be.ac.ulb.infof307.g07.Models.Coordinate
+     * La longitude sur la carte de l'épingle.
      */
-    private Coordinate onMapPosition;
+    double lon;
+    /**
+     * Réfèrence vers le pokémon sauvegardé.
+     */
     private Pokemon pokemon;
+    /**
+     * Date de la sauvegarde
+     */
     private String date;
+    /**
+     * Heure de la sauvegarde
+     */
     private String time;
     
     /**
      * Le constructeur de PokeMarker.
      * Il est appele par les classes Map, PokeMarkerMouseDblClickHandler, PokeMarkerMouseClickHandler et PokeMarkerRemoveFromMapHandler.
      * 
-     * @param newPosition
-     *                       La position de l epingle pokemon sur la carte.
+     * @param lat Latitude de l'épingle pokemon sur la carte.
+     * @param lon Longitude de l'épingle pokemon sur la carte.
+     * @param pokemon Pokemon réfèrencé par le marker sur la carte.
+     * @param date Date où le pokémon a été repéré.
+     * @param time Heures à laquelle le pokemon a été repéré.
      * 
      * @see be.ac.ulb.infof307.g07.Models.Map
-     * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(Coordinate, Pokemon, String, String)
+     * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(double, double, Pokemon, String, String)
      * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
      * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
      * @see be.ac.ulb.infof307.g07.Models.Coordinate
      * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
      * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
-     * 
      */
-    public PokeMarker(Coordinate newPosition, Pokemon pokemon, String date, String time) {
-        idIncrement += 1;
-        uniqueId = idIncrement;
-        onMapPosition = newPosition;
+    public PokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
+        this.lat = lat;
+        this.lon = lon;
         this.date = date;
         this.time = time;
         this.pokemon = pokemon;
@@ -70,29 +76,23 @@ public class PokeMarker {
     /**
      * Retourne l identifiant unique de l epingle pokemon.
      * 
-     * @return
-     *             l identifiant unique de l epingle pokemon, sous forme d un entier constant.
-     * 
-     * @see PokeMarker#uniqueId
-     * 
+     * @return L'identifiant unique de l epingle pokemon, sous forme d un entier constant.
      */
-    public final int getId() {
-        return uniqueId;
+    public final ObjectId getId() {
+        return this.id;
     }
     
     /**
      * Renvoie la position sur la carte de l epingle.
      * 
-     * @return
-     *             la position sur la carte de l epingle, sous forme d un objet Coordinate.
+     * @return La position sur la carte de l epingle, sous forme d un objet Coordinate.
      * 
      * @see be.ac.ulb.infof307.g07.Models.Coordinate
      * 
      */
     public Coordinate getOnMapPosition() {
-        return onMapPosition;
+        return new Coordinate(this.lat, this.lon);
     }
-    
     
     public String getString() {
         String res = "<div><table>"
@@ -104,26 +104,56 @@ public class PokeMarker {
         return res;
     }
     
+    /**
+     * Renvoie l'icone du pokémon reférencé par le marker.
+     *
+     * @return Chemin pour récupérer l'icone.
+     */
     public String getIcon() {
         return pokemon.getImagePath();
     }
     
+    /**
+     * Renvoie le pokémon reférencé par le marker.
+     *
+     * @return Le pokemon reférencé.
+     */
     public Pokemon getPokemon() {
         return this.pokemon;
     }
     
+    /**
+     * Renvoie la date à laquelle le pokémon reférencé par le marker a été aperçu.
+     *
+     * @return La date.
+     */
     public String getDate() {
         return this.date;
     }
     
+    /**
+     * Renvoie l'heure à laquelle le pokémon reférencé par le marker a été aperçu.
+     *
+     * @return L'heure.
+     */
     public String getTime() {
         return this.time;
     }
     
+    /**
+     * Modifie la date où le pokémon a été aperçu.
+     *
+     * @param newDate La nouvelle date.
+     */
     public void setDate(String newDate) {
         this.date = newDate;
     }
     
+    /**
+     * Modifie l'heure où le pokémon a été aperçu.
+     *
+     * @param newTime La nouvelle heure.
+     */
     public void setTime(String newTime) {
         this.time = newTime;
     }

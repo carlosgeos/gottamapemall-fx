@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g07;
 
+import be.ac.ulb.infof307.g07.libs.CustomGson;
 import be.ac.ulb.infof307.g07.Views.MapView;
 import be.ac.ulb.infof307.g07.Views.PokedexView;
 import javafx.application.Application;
@@ -50,10 +51,12 @@ public class MainGUI extends Application {
      *                         le containeur parent.
      */
     public void start(Stage primaryStage) {
+        CustomGson.create();
+
         // configure the main window
         primaryStage.setWidth(mainWindowWidth);
         primaryStage.setHeight(mainWindowHeight);
-        primaryStage.setTitle("PokÃ©Map");
+        primaryStage.setTitle("PokéMap");
         primaryStage.getIcons().add(new Image("https://pro-rankedboost.netdna-ssl.com/wp-content/uploads/2016/08/Togepi-Pokemon-Go.png"));
 
         this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
