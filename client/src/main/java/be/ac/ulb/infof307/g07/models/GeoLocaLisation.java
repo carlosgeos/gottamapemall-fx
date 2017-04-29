@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models;
+package be.ac.ulb.infof307.g07.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.HashMap;
  * epingle (pokemon).
  * finalement on aura une liste qui contient les id des epingles a afficher 
  * 
- * @see be.ac.ulb.infof307.g07.Models.PokeMarker 
+ * @see be.ac.ulb.infof307.g07.models.PokeMarker 
  * @author Pieer Lahdo
  * @version 1.0 
  */
@@ -53,7 +53,7 @@ public class GeoLocaLisation {
      * Cette methode boucle sur la liste des epingles pokemon et compare la distance entre la position de l utilisateur et la position de ces epingles
      * Si cette distance est inferieure au rayon predefini alors on ajoute cette epingle dans une liste et on affichera ensuite sur la carte toutes les epingles de cette liste.
      * 
-     * @see be.ac.ulb.infof307.g07.Models.PokeMarker
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * 
      * @param ListMarker
      * 					la table de hachage contenant les epingles pokemon

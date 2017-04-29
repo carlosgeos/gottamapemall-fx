@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models;
+package be.ac.ulb.infof307.g07.models;
 
 import java.util.List;
 

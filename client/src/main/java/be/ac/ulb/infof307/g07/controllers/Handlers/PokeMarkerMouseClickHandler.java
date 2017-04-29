@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Controllers.Handlers;
+package be.ac.ulb.infof307.g07.controllers.Handlers;
 
 import com.lynden.gmapsfx.javascript.event.UIEventHandler;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
@@ -6,7 +6,7 @@ import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.Marker;
 
-import be.ac.ulb.infof307.g07.Models.PokeMarker;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
 import netscape.javascript.JSObject;
 
 /**
@@ -20,9 +20,9 @@ import netscape.javascript.JSObject;
  * 
  * @version 1.0
  * @see PokeMarkerMouseClickHandler#handle(JSObject)
- * @see be.ac.ulb.infof307.g07.Models.PokeMarker
- * @see be.ac.ulb.infof307.g07.Views.MapView
- * @see be.ac.ulb.infof307.g07.Views.MapView#addMarker(PokeMarker)
+ * @see be.ac.ulb.infof307.g07.models.PokeMarker
+ * @see be.ac.ulb.infof307.g07.views.MapView
+ * @see be.ac.ulb.infof307.g07.views.MapView#addMarker(PokeMarker)
  *
  */
 public class PokeMarkerMouseClickHandler implements UIEventHandler{
@@ -35,7 +35,7 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
     /**
      * Un objet modele pokeMarker qui contient les donnees relatives a une epingle (id, position...)
      * 
-     * @see be.ac.ulb.infof307.g07.Models.PokeMarker
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * 
      */
     private PokeMarker pokeMarker;
@@ -60,7 +60,7 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
      * @see PokeMarkerMouseClickHandler#marker
      * @see PokeMarkerMouseClickHandler#pokeMarker
      * @see PokeMarkerMouseClickHandler#googleMap
-     * @see be.ac.ulb.infof307.g07.Views.MapView
+     * @see be.ac.ulb.infof307.g07.views.MapView
      * 
      */
     public PokeMarkerMouseClickHandler(Marker marker, PokeMarker pokeMarker, GoogleMap googleMap) {

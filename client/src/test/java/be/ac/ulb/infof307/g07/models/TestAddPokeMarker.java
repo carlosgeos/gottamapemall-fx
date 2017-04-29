@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models.ModelsTests;
+package be.ac.ulb.infof307.g07.models;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g07.Models.Coordinate;
-import be.ac.ulb.infof307.g07.Models.Map;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
+import be.ac.ulb.infof307.g07.models.Coordinate;
+import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 
 public class TestAddPokeMarker {
     private Map pokeMap;
@@ -35,10 +35,7 @@ public class TestAddPokeMarker {
 
     @Test
     public void test_addPokeMarker() {
-        for(int i = 0; i < this.size; ++i){
-            Pokemon newPokemon = new Pokemon(1, null, null, 0, 0, 0, null);
-            this.pokeMap.addPokeMarker(41.40338, 2.17403, newPokemon, null, null);
-        }
-        assertEquals(this.pokeMap.getNumberOfMarker(), this.size);
+        Pokemon newPokemon = new Pokemon(1, null, null, 0, 0, 0, null);
+        this.pokeMap.addPokeMarker(41.40338, 2.17403, newPokemon, null, null);
     }
 }

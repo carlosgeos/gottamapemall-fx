@@ -1,11 +1,11 @@
-package be.ac.ulb.infof307.g07.Controllers.Handlers;
+package be.ac.ulb.infof307.g07.controllers.Handlers;
 
-import be.ac.ulb.infof307.g07.Controllers.ChoosePokemonViewListener;
-import be.ac.ulb.infof307.g07.Models.Coordinate;
-import be.ac.ulb.infof307.g07.Models.Map;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
-import be.ac.ulb.infof307.g07.Models.PokeMarker;
-import be.ac.ulb.infof307.g07.Views.MapView;
+import be.ac.ulb.infof307.g07.controllers.ChoosePokemonViewListener;
+import be.ac.ulb.infof307.g07.models.Coordinate;
+import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.models.Pokemon;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
+import be.ac.ulb.infof307.g07.views.MapView;
 
 public class addNewPokeMarkerHandler implements ChoosePokemonViewListener {
     private Map pokeMap;

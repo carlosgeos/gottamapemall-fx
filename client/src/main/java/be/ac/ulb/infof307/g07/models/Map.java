@@ -1,9 +1,11 @@
-package be.ac.ulb.infof307.g07.Models;
+package be.ac.ulb.infof307.g07.models;
 
 import net.dongliu.requests.Requests;
 import org.bson.types.ObjectId;
 import com.google.gson.Gson;
-import be.ac.ulb.infof307.g07.libs.CustomGson;
+import be.ac.ulb.infof307.g07.libss.CustomGson;
+import java.lang.NullPointerException;
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,11 +19,13 @@ import java.util.HashMap;
  * <p>
  * 
  * @version 1.2
- * @see be.ac.ulb.infof307.g07.Models.PokeMarker
- * @see be.ac.ulb.infof307.g07.Models.Coordinate
+ * @see be.ac.ulb.infof307.g07.models.PokeMarker
+ * @see be.ac.ulb.infof307.g07.models.Coordinate
  *
  */
 public class Map {
+    private final static Logger LOGGER = Logger.getLogger(Map.class.getName());
+
     /**
      * Sauvegarde et crée un PokeMarker.
      *
@@ -32,11 +36,15 @@ public class Map {
      * @param time L'heure a laquelle le pokemon a ete vu.
      * @return une nouvelle epingle pokemon (avec un identifiant unique) sous la forme d un objet PokeMarker, contenant sa position sur la carte.
      *
-     * @see be.ac.ulb.infof307.g07.Models.PokeMarker
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
      */
     public PokeMarker addPokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
         PokeMarker marker = new PokeMarker(lat, lon, pokemon, date, time);
-        addPokeMarker(marker);
+        try {
+            addPokeMarker(marker);
+        } catch (NullPointerException e) {
+            LOGGER.info("Failed to save the pokemon.");
+        }
         return marker;
     }
 
@@ -46,14 +54,12 @@ public class Map {
      * @param marker Un PokeMarker qui doit être sauvegardé.
      * 
      * @see Map#addPokeMarker(double, double, Pokemon, String, String)
-     * @see be.ac.ulb.infof307.g07.Models.PokeMarker
-     * @see be.ac.ulb.infof307.g07.Models.PokeMarker#getId() 
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker#getId() 
      */
     public PokeMarker addPokeMarker(PokeMarker marker) {
         Gson gson = CustomGson.get();
-        System.out.println(gson.toJson(marker));
         String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
-        System.out.println(response);
         PokeMarker created = gson.fromJson(response, PokeMarker.class);
         return created;
     }
@@ -64,7 +70,7 @@ public class Map {
      * @param id Reference vers ce marker.
      * @return Détail du PokeMarker.
      */
-    public final PokeMarker getPokeMarker(ObjectId id) {
+    public PokeMarker getPokeMarker(ObjectId id) {
         String response = Requests.get("http://127.0.0.1:4567/locations/" + id.toHexString()).send().readToText();
         Gson gson = CustomGson.get();
         PokeMarker marker = gson.fromJson(response, PokeMarker.class);

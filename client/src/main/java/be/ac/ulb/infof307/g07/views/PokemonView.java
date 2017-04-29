@@ -1,9 +1,9 @@
-package be.ac.ulb.infof307.g07.Views;
+package be.ac.ulb.infof307.g07.views;
 
 import java.util.ArrayList;
 
-import be.ac.ulb.infof307.g07.Controllers.PokemonViewListener;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
+import be.ac.ulb.infof307.g07.controllers.PokemonViewListener;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

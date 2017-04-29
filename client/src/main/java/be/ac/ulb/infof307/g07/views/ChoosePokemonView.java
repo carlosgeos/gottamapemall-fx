@@ -1,13 +1,13 @@
-package be.ac.ulb.infof307.g07.Views;
+package be.ac.ulb.infof307.g07.views;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import be.ac.ulb.infof307.g07.Controllers.ChoosePokemonViewListener;
-import be.ac.ulb.infof307.g07.Controllers.PokemonViewListener;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
+import be.ac.ulb.infof307.g07.controllers.ChoosePokemonViewListener;
+import be.ac.ulb.infof307.g07.controllers.PokemonViewListener;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

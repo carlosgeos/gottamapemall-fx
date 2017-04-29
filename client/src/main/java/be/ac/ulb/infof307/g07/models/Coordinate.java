@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models;
+package be.ac.ulb.infof307.g07.models;
 
 /**
  * <b>Coordinate est la classe representant une coordonnee dans un plan (deux nombres reels).</b>
@@ -9,7 +9,7 @@ package be.ac.ulb.infof307.g07.Models;
  * par la classe Map, dans sa methode addPokeMarker(double, double).
  * <p>
  * 
- * @see be.ac.ulb.infof307.g07.Models.Map
+ * @see be.ac.ulb.infof307.g07.models.Map
  * 
  * @author fan
  * @version 1.2

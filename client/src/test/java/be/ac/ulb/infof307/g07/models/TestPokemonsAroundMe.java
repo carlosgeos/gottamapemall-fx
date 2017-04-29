@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models.ModelsTests;
+package be.ac.ulb.infof307.g07.models;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +8,9 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g07.Models.Coordinate;
-import be.ac.ulb.infof307.g07.Models.GeoLocaLisation;
-import be.ac.ulb.infof307.g07.Models.PokeMarker;
+import be.ac.ulb.infof307.g07.models.Coordinate;
+import be.ac.ulb.infof307.g07.models.GeoLocaLisation;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
 
 public class TestPokemonsAroundMe {
     private HashMap<Integer, PokeMarker> listPokeMarker; 
@@ -18,6 +18,7 @@ public class TestPokemonsAroundMe {
     private PokeMarker marker2;
     private PokeMarker marker3;
     private ArrayList<Integer> PokemonsAroundMe;
+
     @Before
     public void setUp() throws Exception {
         listPokeMarker = new HashMap<Integer, PokeMarker> ();
@@ -39,5 +40,4 @@ public class TestPokemonsAroundMe {
         PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 100, marker1);
         assertEquals(PokemonsAroundMe.size(), 1);
     }
-
 }

@@ -1,10 +1,10 @@
-package be.ac.ulb.infof307.g07.libs;
+package be.ac.ulb.infof307.g07.libss;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.bson.types.ObjectId;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 
 /**
  * Gère la création d'une instance `gson` de manière globale.

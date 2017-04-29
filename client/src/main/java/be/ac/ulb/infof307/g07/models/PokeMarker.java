@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models;
+package be.ac.ulb.infof307.g07.models;
 
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import org.bson.types.ObjectId;
@@ -13,13 +13,13 @@ import org.bson.types.ObjectId;
  * 
  * @version 1.0
  * 
- * @see be.ac.ulb.infof307.g07.Models.Map
- * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(double, double, Pokemon, String, String)
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
- * @see be.ac.ulb.infof307.g07.Models.Coordinate
+ * @see be.ac.ulb.infof307.g07.models.Map
+ * @see be.ac.ulb.infof307.g07.models.Map#addPokeMarker(double, double, Pokemon, String, String)
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerRemoveFromMapHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
+ * @see be.ac.ulb.infof307.g07.models.Coordinate
  */
 public class PokeMarker {
     /**
@@ -57,13 +57,13 @@ public class PokeMarker {
      * @param date Date où le pokémon a été repéré.
      * @param time Heures à laquelle le pokemon a été repéré.
      * 
-     * @see be.ac.ulb.infof307.g07.Models.Map
-     * @see be.ac.ulb.infof307.g07.Models.Map#addPokeMarker(double, double, Pokemon, String, String)
-     * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
-     * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
-     * @see be.ac.ulb.infof307.g07.Models.Coordinate
-     * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
-     * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerRemoveFromMapHandler
+     * @see be.ac.ulb.infof307.g07.models.Map
+     * @see be.ac.ulb.infof307.g07.models.Map#addPokeMarker(double, double, Pokemon, String, String)
+     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler
+     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
+     * @see be.ac.ulb.infof307.g07.models.Coordinate
+     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
+     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerRemoveFromMapHandler
      */
     public PokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
         this.lat = lat;
@@ -87,7 +87,7 @@ public class PokeMarker {
      * 
      * @return La position sur la carte de l epingle, sous forme d un objet Coordinate.
      * 
-     * @see be.ac.ulb.infof307.g07.Models.Coordinate
+     * @see be.ac.ulb.infof307.g07.models.Coordinate
      * 
      */
     public Coordinate getOnMapPosition() {

@@ -1,9 +1,9 @@
-package be.ac.ulb.infof307.g07.Views;
+package be.ac.ulb.infof307.g07.views;
 
-import be.ac.ulb.infof307.g07.Controllers.PokemonViewListener;
-import be.ac.ulb.infof307.g07.Controllers.Handlers.ClosePokemonDetailWindowHandler;
-import be.ac.ulb.infof307.g07.Controllers.Handlers.PokemonViewDblClickHandler;
-import be.ac.ulb.infof307.g07.Models.Pokemon;
+import be.ac.ulb.infof307.g07.controllers.PokemonViewListener;
+import be.ac.ulb.infof307.g07.controllers.Handlers.ClosePokemonDetailWindowHandler;
+import be.ac.ulb.infof307.g07.controllers.Handlers.PokemonViewDblClickHandler;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 import net.dongliu.requests.Requests;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;

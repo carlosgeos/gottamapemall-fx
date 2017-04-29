@@ -1,12 +1,12 @@
-package be.ac.ulb.infof307.g07.Controllers.Handlers;
+package be.ac.ulb.infof307.g07.controllers.Handlers;
 
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.MouseEventHandler;
 
-import be.ac.ulb.infof307.g07.Models.Coordinate;
-import be.ac.ulb.infof307.g07.Models.Map;
-import be.ac.ulb.infof307.g07.Views.ChoosePokemonView;
-import be.ac.ulb.infof307.g07.Views.MapView;
+import be.ac.ulb.infof307.g07.models.Coordinate;
+import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.views.ChoosePokemonView;
+import be.ac.ulb.infof307.g07.views.MapView;
 
 public class onMapDblClickHandler implements MouseEventHandler {
     private Map pokeMap;

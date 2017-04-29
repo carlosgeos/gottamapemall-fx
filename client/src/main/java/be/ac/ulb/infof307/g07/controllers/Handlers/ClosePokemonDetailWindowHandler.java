@@ -1,6 +1,6 @@
-package be.ac.ulb.infof307.g07.Controllers.Handlers;
+package be.ac.ulb.infof307.g07.controllers.Handlers;
 
-import be.ac.ulb.infof307.g07.Views.PokedexView;
+import be.ac.ulb.infof307.g07.views.PokedexView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 

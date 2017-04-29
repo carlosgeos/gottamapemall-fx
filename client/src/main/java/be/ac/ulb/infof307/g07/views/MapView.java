@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Views;
+package be.ac.ulb.infof307.g07.views;
 
 import java.util.HashMap;
 import org.bson.types.ObjectId;
@@ -13,12 +13,12 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
-import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler;
-import be.ac.ulb.infof307.g07.Controllers.Handlers.onMapDblClickHandler;
-import be.ac.ulb.infof307.g07.Models.Coordinate;
-import be.ac.ulb.infof307.g07.Models.Map;
-import be.ac.ulb.infof307.g07.Models.PokeMarker;
+import be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler;
+import be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler;
+import be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblClickHandler;
+import be.ac.ulb.infof307.g07.models.Coordinate;
+import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -32,7 +32,7 @@ import javafx.scene.layout.BorderPane;
  * @version 1.0
  *
  * @see be.ac.ulb.infof307.g07.MainGUI
- * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
  * @see MapView#mapInitialized()
  *
  */
@@ -40,7 +40,7 @@ public class MapView  implements MapComponentInitializedListener {
     /**
      * Une table de hachage contenant les markers (epingles) presents sur la carte et leurs identifiants (nombre entier servant de clef).
      * 
-     * @see be.ac.ulb.infof307.g07.Models.Map#pokeMarkers
+     * @see be.ac.ulb.infof307.g07.models.Map#pokeMarkers
      * 
      */
     private HashMap<ObjectId, Marker> markersOnMap = new HashMap<ObjectId, Marker>();
@@ -131,7 +131,7 @@ public class MapView  implements MapComponentInitializedListener {
      * @param pokeMarker
      *                     the custom pokemon marker object.                    
      * 
-     * @see be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler
+     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler
      * @see MapView#googleMap
      * 
      */

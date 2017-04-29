@@ -1,8 +1,8 @@
 package be.ac.ulb.infof307.g07;
 
-import be.ac.ulb.infof307.g07.libs.CustomGson;
-import be.ac.ulb.infof307.g07.Views.MapView;
-import be.ac.ulb.infof307.g07.Views.PokedexView;
+import be.ac.ulb.infof307.g07.libss.CustomGson;
+import be.ac.ulb.infof307.g07.views.MapView;
+import be.ac.ulb.infof307.g07.views.PokedexView;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  * <b>MainGUI est la classe qui se charge de lancer l'interface graphique (afficher la carte dans la fenetre).</b>
  * Elle hÃ©rite de la classe Application de javafx.
  *
- * @see be.ac.ulb.infof307.g07.Views.MapView
+ * @see be.ac.ulb.infof307.g07.views.MapView
  *
  * @see MapView
  * @author fan
@@ -38,7 +38,7 @@ public class MainGUI extends Application {
     /**
      * L'objet vue de la carte pokemon pour les actions a effectuer sur l affichage.
      *
-     * @see be.ac.ulb.infof307.g07.Views.MapView
+     * @see be.ac.ulb.infof307.g07.views.MapView
      */
     private MapView pokeMapView;
     private PokedexView pokedexView;

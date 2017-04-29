@@ -1,8 +1,8 @@
-package be.ac.ulb.infof307.g07.Controllers.Handlers;
+package be.ac.ulb.infof307.g07.controllers.Handlers;
 
-import be.ac.ulb.infof307.g07.Models.Map;
-import be.ac.ulb.infof307.g07.Models.PokeMarker;
-import be.ac.ulb.infof307.g07.Views.MapView;
+import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
+import be.ac.ulb.infof307.g07.views.MapView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
