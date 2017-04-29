@@ -19,7 +19,7 @@ import be.ac.ulb.infof307.g07.libs.Error;
  *
  * @param <T> The model instance to create the API endpoint on.
  */
-public class ListView<T> {
+public abstract class ListView<T> {
     static protected Gson gson = CustomGson.get();
 
     /**
@@ -32,9 +32,7 @@ public class ListView<T> {
     /**
      * Used to define the model used with the endpoint.
      */
-    protected Class<T> getModel () {
-        return null;
-    }
+    protected abstract Class<T> getModel ();
 
     /**
      * Used to define the field to search in the database.
