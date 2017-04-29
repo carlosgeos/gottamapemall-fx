@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g07;
 
-import be.ac.ulb.infof307.g07.libss.CustomGson;
+import be.ac.ulb.infof307.g07.libs.CustomGson;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;
 import javafx.application.Application;

@@ -3,7 +3,7 @@ package be.ac.ulb.infof307.g07.models;
 import net.dongliu.requests.Requests;
 import org.bson.types.ObjectId;
 import com.google.gson.Gson;
-import be.ac.ulb.infof307.g07.libss.CustomGson;
+import be.ac.ulb.infof307.g07.libs.CustomGson;
 import java.lang.NullPointerException;
 import java.util.logging.Logger;
 import java.util.ArrayList;

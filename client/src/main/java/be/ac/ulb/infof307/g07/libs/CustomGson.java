@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.libss;
+package be.ac.ulb.infof307.g07.libs;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
