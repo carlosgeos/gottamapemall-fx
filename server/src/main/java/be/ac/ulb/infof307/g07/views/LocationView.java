@@ -6,9 +6,9 @@ import spark.Request;
 import org.bson.types.ObjectId;
 
 import be.ac.ulb.infof307.g07.models.LocationModel;
-import be.ac.ulb.infof307.g07.lib.Database;
-import be.ac.ulb.infof307.g07.lib.ListView;
-import be.ac.ulb.infof307.g07.lib.Error;
+import be.ac.ulb.infof307.g07.libs.Database;
+import be.ac.ulb.infof307.g07.libs.ListView;
+import be.ac.ulb.infof307.g07.libs.Error;
 
 import java.util.List;
 

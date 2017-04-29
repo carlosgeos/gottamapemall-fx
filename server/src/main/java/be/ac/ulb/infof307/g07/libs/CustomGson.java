@@ -2,18 +2,16 @@ package be.ac.ulb.infof307.g07.libs;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.bson.types.ObjectId;
-import be.ac.ulb.infof307.g07.models.Pokemon;
 
 /**
- * Gère la création d'une instance `gson` de manière globale.
+ * Handle the gson creation globally with custom serializers for each objects.
  */
 public class CustomGson {
     static private Gson gson = null;
 
     /**
-     * Crée l'instance `gson` avec des serializers particuliés.
+     * Create a custom gson instance.
      */
     static public void create () {
         GsonBuilder gsonBuild = new GsonBuilder();
@@ -21,12 +19,9 @@ public class CustomGson {
     }
 
     /**
-     * Récupère l'instance `gson`.
-     *
-     * @return L'instance `gson` partagée.
+     * Get the custom gson instance with custom serializers.
      */
     static public Gson get () {
         return gson;
     }
 }
-

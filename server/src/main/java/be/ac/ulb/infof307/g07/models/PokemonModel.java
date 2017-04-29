@@ -9,8 +9,8 @@ import org.mongodb.morphia.annotations.IndexOptions;
 import java.util.Map;
 import java.util.List;
 
-import be.ac.ulb.infof307.g07.lib.errors.RequiredFieldException;
-import be.ac.ulb.infof307.g07.lib.errors.WrongTypeFieldException;
+import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
+import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
 
 @Entity("pokemon")
 public class PokemonModel {
