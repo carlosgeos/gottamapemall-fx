@@ -187,11 +187,8 @@ public class MapView  implements MapComponentInitializedListener{
 		Integer empty = -1;
 		
 		while(idOfPokeMarker != empty){
-			
 			addMarker(this.pokeMap.getPokeMarker(idOfPokeMarker));
-			
-			this.pokeMap.removePokeMarkerJustAddedOnMapView(idOfPokeMarker);
-			
+			this.pokeMap.removePokeMarkerJustAddedOnMapView(idOfPokeMarker);			
 			idOfPokeMarker = this.pokeMap.getIdOfPokeMarkerNotOnMap();
 		}
 		
