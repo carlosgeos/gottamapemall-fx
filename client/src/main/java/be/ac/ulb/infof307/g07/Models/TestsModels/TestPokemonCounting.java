@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models.ModelsTests;
+package be.ac.ulb.infof307.g07.Models.TestsModels;
 
 import static org.junit.Assert.*;
 

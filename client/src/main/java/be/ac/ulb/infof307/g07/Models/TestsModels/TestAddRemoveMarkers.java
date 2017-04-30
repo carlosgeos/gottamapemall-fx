@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g07.Models.ModelsTests;
+package be.ac.ulb.infof307.g07.Models.TestsModels;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +35,7 @@ public class TestAddRemoveMarkers {
 	@Test
 	public void testRemoveMarker() {
 		Coordinate coord = new Coordinate(23.44, 43.65);
-		PokeMarker pokemarker = this.map.addPokeMarker(coord, 23, null, null);
+		PokeMarker pokemarker = this.map.addPokeMarker(coord, 1, null, null);
 		this.map.removePokeMarker(pokemarker);
 		assertEquals(this.map.getNumberOfMarkers(),0);
 		
