@@ -27,7 +27,7 @@ public class Pokemon {
         this.height = height;
         this.weight = weight;
         this.types = types;
-  
+        System.out.println(this.toString());
         
     }
     
@@ -68,9 +68,10 @@ public class Pokemon {
     public String toString(){
         
         String res = "";
-        
-        res += this.id +" : "+ this.name;
-        
+        res += this.id + ":" + this.name + ":" + this.base_experience + ":" + this.height + ":" + this.weight;
+        for (int i = 0 ; i<this.types.length ; ++i){
+        	res += ":" + this.types[i];
+        }
         return res;
         
     }
