@@ -166,5 +166,8 @@ public class Map {
 		pokeMarkers.remove(pokeMarker.getId());
 		
 	}
-
+	
+	public final HashMap<Integer, PokeMarker> getPokeMarkers(){
+		return this.pokeMarkers;
+	}
 }

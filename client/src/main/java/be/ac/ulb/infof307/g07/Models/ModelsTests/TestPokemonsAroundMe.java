@@ -33,11 +33,11 @@ public class TestPokemonsAroundMe {
 	@Test
 	public void test() {
 		listPokeMarker.put(2, marker2);
-		PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 100, marker1);
+		PokemonsAroundMe = GeoLocaLisation.pokemonsAroundMe(listPokeMarker, 100, marker1);
 		assertEquals(PokemonsAroundMe.size(), 1);
 		// ajouter un marker mais il est plus loin aue le rayon de recherche   
 		listPokeMarker.put(3, marker3);
-		PokemonsAroundMe = GeoLocaLisation.PokemonsAroundMe(listPokeMarker, 100, marker1);
+		PokemonsAroundMe = GeoLocaLisation.pokemonsAroundMe(listPokeMarker, 100, marker1);
 		assertEquals(PokemonsAroundMe.size(), 1);
 	}
 

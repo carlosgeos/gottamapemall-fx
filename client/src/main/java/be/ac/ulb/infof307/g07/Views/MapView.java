@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g07.Views;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.lynden.gmapsfx.GoogleMapView;
@@ -12,6 +13,7 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
+import be.ac.ulb.infof307.g07.Controllers.Handlers.OnMapRightClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.onMapDblClickHandler;
@@ -214,6 +216,14 @@ public class MapView  implements MapComponentInitializedListener{
 		markersOnMap.remove(id);
 		
 	}
+	
+	public void geoLocalisationSetMarkers(ArrayList<Integer> markerList){
+		
+		for (Integer key : markerList){
+			
+			this.markersOnMap.get(key).setVisible(false);
+		}
+	}
 
 	@Override
 	public void mapInitialized() {
@@ -236,6 +246,7 @@ public class MapView  implements MapComponentInitializedListener{
 				
 		googleMap = this.googleMapView.createMap(defaultMapOptions);
 		googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
+		googleMap.addMouseEventHandler(UIEventType.rightclick, new OnMapRightClickHandler(this.pokeMap,this));
 		
 		this.mapViewBorderPane.setOpacity(1);
 		

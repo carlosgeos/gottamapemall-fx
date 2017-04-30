@@ -63,7 +63,7 @@ public class GeoLocaLisation {
      * 					l epingle pokemon
      * @return la liste des epingles pokemons a afficher (comprises dans le rayon donc)
      */
-    public static ArrayList<Integer> PokemonsAroundMe(HashMap<Integer,PokeMarker> ListMarker, int distanceMetre, PokeMarker fromMarker){
+    public static ArrayList<Integer> pokemonsAroundMe(HashMap<Integer,PokeMarker> ListMarker, int distanceMetre, Coordinate  fromMarker){
     	
     	
     	/*Boucle jusqu'à ce que tous les marqueurs aient été comparés. */
@@ -72,10 +72,10 @@ public class GeoLocaLisation {
     		
     		/* Comparaison avec tous les marqueurs . */
     		
-    		double distanceBetnTwoPointsTemp = distanceBetnTwoPoints(fromMarker.getOnMapPosition().getX(), fromMarker.getOnMapPosition().getY(), ListMarker.get(key).getOnMapPosition().getX(), ListMarker.get(key).getOnMapPosition().getY());
+    		double distanceBetnTwoPointsTemp = distanceBetnTwoPoints(fromMarker.getX(), fromMarker.getY(), ListMarker.get(key).getOnMapPosition().getX(), ListMarker.get(key).getOnMapPosition().getY());
     		
     		
-	    	if (distanceBetnTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre)){
+	    	if (!(distanceBetnTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre))){
 	    			
 	    		tempMarkerList.add(key);
 	    	}
