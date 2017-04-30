@@ -143,7 +143,6 @@ public class Map {
 	}
 	
 	public final PokeMarker getPokeMarker(int idOfPokeMarker){
-		
 		return this.pokeMarkers.get(idOfPokeMarker);
 		
 	}
@@ -162,7 +161,7 @@ public class Map {
 	 * @see Map#pokeMarkers
 	 * 
 	 */
-	public int getNumberOfMarker(){
+	public int getNumberOfMarkers(){
 		
 		return pokeMarkers.size();
 	}

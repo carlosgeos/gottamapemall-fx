@@ -27,8 +27,17 @@ public class Pokemon {
         this.height = height;
         this.weight = weight;
         this.types = types;
-        System.out.println(this.toString());
         
+    }
+    
+    public Pokemon(Pokemon pokemon){
+        this.id = pokemon.id;
+        this.name = pokemon.name;
+        this.imagePath = pokemon.imagePath;
+        this.base_experience = pokemon.base_experience;
+        this.height = pokemon.height;
+        this.weight = pokemon.weight;
+        this.types = pokemon.types;
     }
     
     public void increaseGlobalCounting(){
@@ -113,6 +122,16 @@ public class Pokemon {
     }
 
     public boolean equals (Pokemon otherPokemon) {
-    	return this.id == otherPokemon.id;
+    	boolean res;
+    	res = this.id == otherPokemon.id && 
+    	      this.name == otherPokemon.name && 
+    		  this.imagePath == otherPokemon.imagePath &&
+    	      this.base_experience == otherPokemon.base_experience &&
+    	      this.height == otherPokemon.height &&
+    		  this.weight == otherPokemon.weight &&
+    		  this.types == otherPokemon.types;
+    	
+    	return res;
+    	
     }
 }
