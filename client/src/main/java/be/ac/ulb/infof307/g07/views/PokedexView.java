@@ -74,9 +74,9 @@ public class PokedexView {
         newGrid.add(this.pokemonHeightField, 1, 3);
         newGrid.add(this.pokemonWeightField, 1, 4);
         // any image only for the purpose of instanciation
-        Image pokemonImage = new Image("http://www.solidbackgrounds.com/images/2560x1440/2560x1440-black-solid-color-background.jpg",this.pokemonImageWidth,this.pokemonImageHeight, true, true);
-        this.pokemonImageView = new ImageView(pokemonImage);
-        newGrid.add(this.pokemonImageView, 0,0);
+        // Image pokemonImage = new Image("http://www.solidbackgrounds.com/images/2560x1440/2560x1440-black-solid-color-background.jpg",this.pokemonImageWidth,this.pokemonImageHeight, true, true);
+        // this.pokemonImageView = new ImageView(pokemonImage);
+        // newGrid.add(this.pokemonImageView, 0,0);
 
         Button newButton = new Button("Return");
         newButton.setOnAction(new ClosePokemonDetailWindowHandler(this));
@@ -156,8 +156,8 @@ public class PokedexView {
         this.pokemonTypeTextField.setText(typesText);
         this.pokemonHeightField.setText(Double.toString(pokemon.getHeight()));
         this.pokemonWeightField.setText(Double.toString(pokemon.getWeight()));
-        Image pokemonImage = new Image(pokemon.getImagePath(), 100, 130, true, true);
-        this.pokemonImageView.setImage(pokemonImage);
+        // Image pokemonImage = new Image(pokemon.getImagePath(), 100, 130, true, true);
+        // this.pokemonImageView.setImage(pokemonImage);
 
         // send the window of detail info to the front
         // and others to the back

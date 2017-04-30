@@ -48,7 +48,7 @@ public class PokemonView implements EventHandler<MouseEvent> {
         this.pokemonGridPane.setPadding(pokemonPadding);
 
 
-        Image pokemonImage = new Image(this.pokemon.getImagePath(), iconWidth, iconHeight, true, true);
+        Image pokemonImage = new Image("file:joder.png", iconWidth, iconHeight, true, true);
         ImageView pokemonImageView = new ImageView(pokemonImage);
 
         this.pokemonGridPane.add(pokemonImageView, 0, 0);
