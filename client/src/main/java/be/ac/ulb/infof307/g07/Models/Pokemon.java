@@ -111,4 +111,8 @@ public class Pokemon {
         return this.height;
     
     }
+
+    public boolean equals (Pokemon otherPokemon) {
+    	return this.id == otherPokemon.id;
+    }
 }
