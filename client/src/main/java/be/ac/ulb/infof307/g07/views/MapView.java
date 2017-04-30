@@ -3,6 +3,10 @@ package be.ac.ulb.infof307.g07.views;
 import java.util.HashMap;
 import org.bson.types.ObjectId;
 
+import be.ac.ulb.infof307.g07.libs.CustomGson;                                   
+import com.google.gson.Gson;
+import net.dongliu.requests.Requests;
+
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
@@ -63,6 +67,16 @@ public class MapView  implements MapComponentInitializedListener {
     private double mapHeight;
     
     private BorderPane mapViewBorderPane;
+
+    private void fillPokeMap () {
+        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
+        Gson gson = CustomGson.get();
+        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
+
+        for (int i = 0; i < markers.length; ++i) {
+            this.addMarker(markers[i]);
+        }
+    }
 
     /**
      * Constructeur de l'objet MapView.
@@ -194,5 +208,6 @@ public class MapView  implements MapComponentInitializedListener {
         googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
         
         this.mapViewBorderPane.setOpacity(1);
+        this.fillPokeMap();
     }
 }
