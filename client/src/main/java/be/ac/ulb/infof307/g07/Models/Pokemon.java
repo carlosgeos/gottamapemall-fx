@@ -1,9 +1,6 @@
 package be.ac.ulb.infof307.g07.Models;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import be.ac.ulb.infof307.g07.Controllers.ChoosePokemonViewListener;
 import be.ac.ulb.infof307.g07.Controllers.PokemonListener;
 
 public class Pokemon {
@@ -19,6 +16,9 @@ public class Pokemon {
     private final String[] types;
     private int globalCounting = 0;
     
+	/**
+	 * Constructeur
+	 */ 
     public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types) {
         this.id = id;
         this.name = name;
@@ -30,6 +30,9 @@ public class Pokemon {
         
     }
     
+	/**
+	 * constructeur de copie
+	 */ 
     public Pokemon(Pokemon pokemon){
         this.id = pokemon.id;
         this.name = pokemon.name;
@@ -40,6 +43,9 @@ public class Pokemon {
         this.types = pokemon.types;
     }
     
+	/**
+	 * Incremente le nombre d efois que ce pokemon a ete ajoute
+	 */ 
     public void increaseGlobalCounting(){
     	
     	this.globalCounting += 1;
@@ -51,6 +57,9 @@ public class Pokemon {
     	
     }
     
+	/**
+	 * Decremente le nombre d efois que ce pokemon a ete ajoute
+	 */  
     public void decreaseGlobalCounting(){
     	if (this.globalCounting > 0){
     		this.globalCounting -= 1;
@@ -62,10 +71,18 @@ public class Pokemon {
     	}
     }
     
+	/**
+	 * Renvoie le numero de fois que ce pokemon a ete ajoute
+	 */  
     public final int getGlobalCounting(){
     	return this.globalCounting;
     }
     
+	/**
+	 * Ajoute le listener pour ce pokemon
+	 * @param newListener
+	 * 				listener utilise pour mettre a jour le nombre de pokemons egaux qui se trouvent sur la map
+	 */  
     public void addListener( PokemonListener newListener){
     	
     	this.listeners.add(newListener);
@@ -73,7 +90,10 @@ public class Pokemon {
     }
     
     
-    
+	/**
+	 * Renvoie la representation en string du pokemon
+	 * 
+	 */  
     public String toString(){
         
         String res = "";
@@ -85,42 +105,72 @@ public class Pokemon {
         
     }
     
+	/**
+	 * Renvoie l'id du pokemon
+	 * 
+	 */  
     public final int getId(){
         
         return this.id;
         
     }
     
+	/**
+	 * Renvoie le nom du pokemon
+	 * 
+	 */  
     public final String getName(){
         
         return this.name;
         
     }
     
+	/**
+	 * Renvoie le lien vers l'icon du pokemon
+	 * 
+	 */  
     public final String getImagePath(){
         
         return this.imagePath;
 
     }
     
+	/**
+	 * Renvoie la liste de types du pokemon
+	 * 
+	 */  
     public final String[] getTypes(){
 
         return this.types;
 
     }
 
+	/**
+	 * Renvoie la largeur du pokemon
+	 * 
+	 */  
     public final int getWeight () {
 
         return this.weight;
     
     }
 
+	/**
+	 * Renvoie la hauteur du pokemon
+	 * 
+	 */    
     public final int getHeight () {
 
         return this.height;
     
     }
 
+	/**
+	 * Renvoie vrai si deux pokemon contiennent exactement les mêmes attributs
+	 * @param otherPokemon
+	 * 					  Le pokemon avec lequel l'objet sera comparé
+	 * 
+	 */    
     public boolean equals (Pokemon otherPokemon) {
     	boolean res;
     	res = this.id == otherPokemon.id && 
