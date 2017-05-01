@@ -75,9 +75,9 @@ Pull requests welcome !
 
 ## Screenshot
 
-![Screenshot 1]("team/images/screenshot1.png" "Map view and clusters")
-![Screenshot 2]("team/images/screenshot2.png" "Geo localisation")
-![Screenshot 3]("team/images/screenshot3.png" "Add a pokemon")
+![Screenshot 1](team/images/screenshot1.png "Map view and clusters")
+![Screenshot 2](team/images/screenshot2.png "Geo localisation")
+![Screenshot 3](team/images/screenshot3.png "Add a pokemon")
 
 ## License
 
