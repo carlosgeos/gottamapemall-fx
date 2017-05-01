@@ -9,15 +9,11 @@ import org.mongodb.morphia.annotations.IndexOptions;
 import java.util.Map;
 import java.util.List;
 
-import be.ac.ulb.infof307.g07.lib.models.GenericModel;
-import be.ac.ulb.infof307.g07.lib.errors.RequiredFieldException;
-import be.ac.ulb.infof307.g07.lib.errors.WrongTypeFieldException;
+import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
+import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
 
-// @Indexes({
-//     @Index(fields = @Field("name", options = @IndexOptions(unique=true)))
-// })
 @Entity("pokemon")
-public class PokemonModel implements GenericModel {
+public class PokemonModel {
     @Id
     private ObjectId _id;
     @Indexed(options=@IndexOptions(unique=true))
@@ -29,6 +25,4 @@ public class PokemonModel implements GenericModel {
     private int height;
     private int weight;
     private List<String> types;
-
-    public PokemonModel () {}
 }

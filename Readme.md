@@ -16,9 +16,12 @@ Après avoir cloner le répertoire [Gitlab](https://gitlab.com/INFO307-1617/Grou
 
 ## Démarrage
 
-`gradle run`
+```
+$ gradle server:run &
+$ gradle client:run
+```
 
-Un fichier exécutable .jar est fourni dans le dossier `dist` pour faciliter la tâche d’exécution.
+Deux fichiers exécutables `.jar` sont fournis dans le dossier `dist` pour faciliter la tâche d’exécution, si gradle ne veut pas être utilisé.
 
 ## Outils et librairies
 
@@ -37,17 +40,27 @@ GMapsFX JavaFX API for Google Maps http://rterp.github.io/GMapsFX/
 
 ## Serveur
 
-TO DO: Informations sur la configuration du serveur
+Le serveur a besoin de deux bases de données Mongo: `gmta` et `gtma-test`. Ses URI specifiées dans le fichier `Database.java`:
+
+```java
+final String prod_db = "mongodb://gmta:bonjourmdp@ds163010.mlab.com:63010/gmta";
+final String test_db = "mongodb://gmta:bonjourmdp@ds115131.mlab.com:15131/gmta-test";
+
+```
 
 ## Client
 
-TO DO: Informations sur la configuration du client
+Une clé Google Maps JavaScript API doit être fourni.
 
 # Tests
 
-TO DO: Informations sur la façon d'executer les tests
+```
+$ gradle test
+```
 
 # Misc
+
+Happy Mapping !
 
 ## Développement
 
