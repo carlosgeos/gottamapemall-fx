@@ -12,6 +12,12 @@ import be.ac.ulb.infof307.g07.models.GeoLocaLisation;
 import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.views.MapView;
 
+/**
+ * Definit la position de l utilisateur a l endroit du clic droit sur la carte.
+ * 
+ * @author pierre et fan
+ *
+ */
 public class OnMapRightClickHandler implements MouseEventHandler {
     private Map pokeMap;
     private MapView pokeMapView;
