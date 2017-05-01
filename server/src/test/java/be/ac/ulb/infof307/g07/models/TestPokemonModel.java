@@ -39,18 +39,6 @@ public class TestPokemonModel {
         }
     }
 
-    // @Test
-    // public void testBlankCreation () throws Exception {
-    //     String json = "{}";
-
-    //     try {
-    //         PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
-    //         Database.get().save(pokemon);
-    //         Assert.fail("Database test failed: It did not raised an exception");
-    //     } catch (Exception e) {
-    //     }
-    // }
-
     @Test
     public void testWrongTypeCreation () throws Exception {
         String json = "{\"id\": \"foo\", \"name\": \"test\"}";
@@ -62,20 +50,6 @@ public class TestPokemonModel {
         } catch (Exception e) {
         }
     }
-
-    // @Test
-    // public void testMissingRequiredCreation () throws Exception {
-    //     String json = "{\"name\": \"test\"}";
-
-    //     PokemonModel model = new PokemonModel();
-
-    //     try {
-    //         PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
-    //         Database.get().save(pokemon);
-    //         Assert.fail("Database test failed: It did not raised an exception");
-    //     } catch (Exception e) {
-    //     }
-    // }
 
     @Test
     public void testNameNonUnique () throws Exception {
@@ -93,25 +67,4 @@ public class TestPokemonModel {
 
         assertEquals(l.size(), 1);
     }
-
-    // @Test
-    // public void testIdNonUnique () throws Exception {
-    //     PokemonModel model1 = new PokemonModel();
-    //     Map<String, String[]> map1 = new HashMap();
-    //     map1.put("id", new String[]{"1"});
-    //     map1.put("name", new String[]{"foo"});
-    //     model1.set(map1);
-    //     Database.get().save(model1);
-
-    //     PokemonModel model2 = new PokemonModel();
-    //     Map<String, String[]> map2 = new HashMap();
-    //     map2.put("id", new String[]{"1"});
-    //     map2.put("name", new String[]{"bar"});
-    //     model1.set(map2);
-    //     Database.get().save(model2);
-
-    //     List<PokemonModel> l = Database.get().find(PokemonModel.class).field("id").equal(1).asList();
-
-    //     assertEquals(l.size(), 1);
-    // }
 }
