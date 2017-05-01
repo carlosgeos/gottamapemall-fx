@@ -45,7 +45,6 @@ public class Pokemon {
      * Incremente le nombre d efois que ce pokemon a ete ajoute
      */ 
     public void increaseGlobalCounting() {
-        System.out.println("Increase");
         this.globalCounting += 1;
         for(PokemonListener listener : this.listeners){
             listener.onChangeGlobalCount();

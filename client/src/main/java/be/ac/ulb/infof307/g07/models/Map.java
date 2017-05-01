@@ -87,7 +87,19 @@ public class Map {
         PokeMarker marker = gson.fromJson(response, PokeMarker.class);
         return marker;
     }
-    
+
+    /**
+     * Récupère tout les PokeMarker.
+     *
+     * @return Tout les PokeMarkers.
+     */
+    public PokeMarker[] getPokeMarkers() {
+        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
+        Gson gson = CustomGson.get();
+        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
+        return markers;
+    }
+
     /**
      * Retourne le nombre de markers contenu sur la carte.
      * 

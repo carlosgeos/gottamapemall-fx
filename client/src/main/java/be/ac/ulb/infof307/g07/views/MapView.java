@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g07.views;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import org.bson.types.ObjectId;
 
@@ -16,7 +17,10 @@ import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.shapes.Circle;
+import com.lynden.gmapsfx.shapes.CircleOptions; 
 
+import be.ac.ulb.infof307.g07.controllers.Handlers.OnMapRightClickHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblClickHandler;
@@ -48,6 +52,9 @@ public class MapView  implements MapComponentInitializedListener {
      * 
      */
     private HashMap<ObjectId, Marker> markersOnMap = new HashMap<ObjectId, Marker>();
+
+    private Circle centerOfGeoLoc = null;
+    private Circle roundOfGeoLoc = null; 
     
     /**
      * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
@@ -208,8 +215,40 @@ public class MapView  implements MapComponentInitializedListener {
                 
         googleMap = this.googleMapView.createMap(defaultMapOptions);
         googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
+        googleMap.addMouseEventHandler(UIEventType.rightclick, new OnMapRightClickHandler(this.pokeMap,this)); 
         
         this.mapViewBorderPane.setOpacity(1);
         this.fillPokeMap();
     }
+
+    public void geoLocalisationSetMarkers(HashMap<ObjectId, Integer> markerList) {
+        for (ObjectId key : this.markersOnMap.keySet()) {
+            if (markerList.containsKey(key)) {
+                this.markersOnMap.get(key).setVisible(true);
+            } else {
+                this.markersOnMap.get(key).setVisible(false);
+            }
+        }
+    }
+    
+    public void geoLocalisationSetShape(Coordinate center, int radius) {
+        if (this.centerOfGeoLoc != null) {
+            this.googleMap.removeMapShape(this.centerOfGeoLoc);
+        }
+        
+        CircleOptions newCircleOption = new CircleOptions();
+        newCircleOption.center(new LatLong(center.getX(), center.getY()))
+            .radius(radius)
+            .fillColor("#c9d4fc")
+            .fillOpacity(0.6)
+            .clickable(false)
+            .draggable(false)
+            .editable(false)
+            .strokeColor("#bccbff")
+            .strokeWeight(1)
+            .strokeOpacity(0.6);
+        
+        this.centerOfGeoLoc = new Circle(newCircleOption);
+        this.googleMap.addMapShape(centerOfGeoLoc);
+   }
 }
