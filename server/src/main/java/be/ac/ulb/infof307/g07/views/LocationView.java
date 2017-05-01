@@ -12,6 +12,10 @@ import be.ac.ulb.infof307.g07.libs.Error;
 
 import java.util.List;
 
+/**
+ * Vue pour voir les markers sauvegardé par l'utilisateur ainsi
+ * que leur positiion et leur pokémon associé.
+ */
 public final class LocationView extends ListView<LocationModel> {
     protected final String getRoute () {
         return "locations";
