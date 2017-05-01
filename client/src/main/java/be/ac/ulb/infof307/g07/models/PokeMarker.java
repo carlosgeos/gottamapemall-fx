@@ -157,4 +157,10 @@ public class PokeMarker {
     public void setTime(String newTime) {
         this.time = newTime;
     }
+
+    /*
+     */
+    public void remove () {
+    
+    }
 }

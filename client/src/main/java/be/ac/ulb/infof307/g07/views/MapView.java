@@ -62,6 +62,7 @@ public class MapView  implements MapComponentInitializedListener {
     private GoogleMapView googleMapView;
     
     private Map pokeMap;
+    private PokedexView pokedexView;
     
     private double mapWidth;
     private double mapHeight;
@@ -93,11 +94,12 @@ public class MapView  implements MapComponentInitializedListener {
      *@see MapView#googleMap
      * 
      */
-    public MapView(double width, double height) {
+    public MapView(double width, double height, PokedexView pokedexView) {
         this.mapWidth = width;
         this.mapHeight = height;
-        
-        this.pokeMap = new Map();
+
+        this.pokedexView = pokedexView;
+        this.pokeMap = new Map(pokedexView.getPokedex());
         
         this.googleMapView = new GoogleMapView(null, apikey);
         googleMapView.addMapInializedListener(this);
@@ -110,7 +112,7 @@ public class MapView  implements MapComponentInitializedListener {
     }
     
     public MapView() {
-        this.pokeMap = new Map();
+        this.pokeMap = new Map(null);
         this.googleMap = null;
         this.googleMapView = null;
     }

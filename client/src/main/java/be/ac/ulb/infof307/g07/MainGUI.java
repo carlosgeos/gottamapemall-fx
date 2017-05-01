@@ -45,7 +45,7 @@ public class MainGUI extends Application {
 
     @Override
     /**
-     * La mÃ©thode qui lance l'interface graphique et l'affiche.
+     * La méthode qui lance l'interface graphique et l'affiche.
      *
      * @param primaryStage
      *                         le containeur parent.
@@ -59,8 +59,8 @@ public class MainGUI extends Application {
         primaryStage.setTitle("PokéMap");
         primaryStage.getIcons().add(new Image("https://pro-rankedboost.netdna-ssl.com/wp-content/uploads/2016/08/Togepi-Pokemon-Go.png"));
 
-        this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight);
         this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
+        this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight, this.pokedexView);
 
         // configure map view and pokedex view
         StackPane pokedexViewStackPane = pokedexView.getView();
@@ -73,7 +73,6 @@ public class MainGUI extends Application {
 
         GridPane mainGrid = new GridPane();
         mainGrid.add(stackpane, 0, 0);
-
 
         Scene mainScene = new Scene(mainGrid);
         primaryStage.setScene(mainScene);
