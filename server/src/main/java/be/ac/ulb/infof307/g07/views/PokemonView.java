@@ -47,12 +47,6 @@ public final class PokemonView extends ListView<PokemonModel> {
     }
 
     /**
-     * Do not implement update route.
-     */
-    @Override
-    protected final void updateRoute () {}
-
-    /**
      * Do not implement delete route.
      */
     @Override

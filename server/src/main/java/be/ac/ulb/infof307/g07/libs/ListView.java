@@ -23,12 +23,12 @@ public abstract class ListView<T> {
     static protected Gson gson = CustomGson.get();
 
     /**
-     * Used to define the route of the API endpoint.
+     * Utilisé pour définir la route.
      */
     protected abstract String getRoute ();
 
     /**
-     * Used to define the model used with the endpoint.
+     * Utilisé pour définir le model utilisé.
      */
     protected abstract Class<T> getModel ();
 
@@ -47,11 +47,11 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Get a parameter from the request, could be from the url or a form.
+     * Récupère le paramètre de la requète. Il peut venir de l'url ou d'une form.
      *
-     * @param req The request object providing information about the HTTP request
-     * @param key Key of the parameter to retrieve.
-     * @return Parameter value as a String.
+     * @param req L'instance de la requète qui contient les infos HTTP.
+     * @param key Clé du paramètre à récuperer.
+     * @return Valeur du paramètre sous forme de String.
      */
     static protected String getParam(Request req, String key) {
         String param = "";
@@ -60,12 +60,12 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Get a parameter from the request and change its form.
+     * Récupère le paramètre de la requète et change sa forme.
      *
-     * @param req The request object providing information about the HTTP request
-     * @param key Key of the parameter to retrieve.
-     * @param handler Function to modify the value of the parameter.
-     * @return Parameter value parsed.
+     * @param req L'instance de la requète qui contient les infos HTTP.
+     * @param key Clé du paramètre à récuperer.
+     * @param handler Fonction pour modifier la valeur du paramètre
+     * @return La valeur du paramètre parśe.
      */
     static protected Object getParam(Request req, String key, ParamHandler handler) {
         Object param = getParam(req, key);
@@ -81,8 +81,12 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Define API endpoint to filter the viewset by matching with the result
-     * of a certain field.
+     * Gère la recherche d'une valeur.
+     *
+     * @param current L'état actuel de l'ensemble de recherche.
+     * @param query La recherche.
+     *
+     * @return L'état une fois la recherche effectuée.
      */
     protected Query<T> search (Query<T> current, String query) {
         return current.field(this.getSearchField()).contains(query);
@@ -101,6 +105,12 @@ public abstract class ListView<T> {
 
     /**
      * Gère le filtre des valeurs. Par défaut ne fait rien.
+     *
+     * @param current L'état actuel de l'ensemble à filtrer.
+     * @param param Le champs à filtrer.
+     * @param query Le filtre appliqué sur le champ.
+     *
+     * @return L'état une fois le filtre effectué.
      */
     protected Query<T> filter(Query<T> current, String param, String query) {
         return current;
@@ -108,6 +118,11 @@ public abstract class ListView<T> {
 
     /**
      * S'occupe d'envoyer les bonnes valeurs pour être filtrées.
+     *
+     * @param req L'instance de la requète qui contient les infos HTTP.
+     * @param query L'état actuel de l'ensemble à filtrer.
+     *
+     * @return L'état une fois les filtres effectués.
      */
     private Query<T> handleFilters(Request req, Query<T> query) {
         String[] filters = getFiltersFields();
@@ -121,8 +136,8 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Define API endpoint to get all the object saved in the database
-     * under the model defined in this.getModel().
+     * Défini la route pour récuperer tout les objets d'un certain model
+     * dans la base de donnée.
      */
     protected void viewsetRoute () {
         get(this.getRoute(), (req, res) -> {
@@ -139,10 +154,11 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Define how to retrieve the data passed in the URL of the request.
+     * Défini comment récupérer les données passé dans l'URL d'une requète.
      * 
-     * @param req The request object providing information about the HTTP request
-     * @return Detail object given in the url.
+     * @param req L'instance de la requète qui contient les infos HTTP.
+     *
+     * @return L'objet passé dans l'URL.
      */
     protected Object getDetail (Request req) throws Exception {
         return getParam(req, ":detail", (val) -> {
@@ -151,8 +167,7 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Define API endpoint to get a specific object saved in the database
-     * under the model defined in this.getModel().
+     * Défini la route pour récupérer les détails.
      */
     protected void detailRoute () {
         get(this.getRoute() + "/:detail", (req, res) -> {
@@ -176,7 +191,7 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Define API endpoint to save a new data in the model defined in this.getModel().
+     * Défini la route pour créer un nouveau model dans la BDD.
      */
     protected void createRoute () {
         post(this.getRoute(), (req, res) -> {
@@ -193,12 +208,7 @@ public abstract class ListView<T> {
     }
 
     /**
-     * Define API endpoint to update a specific data in the model.
-     */
-    protected void updateRoute () {}
-
-    /**
-     * Define API endpoint to delete a specific object in the model.
+     * Défini la route pour supprimer une instance du model.
      */
     protected void deleteRoute () {
         delete(this.getRoute() + "/:detail", (req, res) -> {
@@ -222,7 +232,6 @@ public abstract class ListView<T> {
         this.viewsetRoute();
         this.detailRoute();
         this.createRoute();
-        this.updateRoute();
         this.deleteRoute();
 
         after((req, res) -> {

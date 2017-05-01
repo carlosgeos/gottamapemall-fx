@@ -22,12 +22,7 @@ public final class LocationView extends ListView<LocationModel> {
     }
 
     /**
-     * Do not implement update route.
-     */
-    @Override
-    protected final void updateRoute () {}
-
-    /**
+     * Défini la manière de récupérer un ObjectId.
      */
     @Override
     protected final Object getDetail (Request req) throws Exception {
