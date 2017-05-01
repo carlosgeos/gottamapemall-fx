@@ -183,6 +183,10 @@ public class PokedexView {
         this.pokemonDetailBorderPane.setOpacity(0);
     }
 
+    public Pokemon getPokemonFromPokedex(int id) {
+        return this.pokedex.getPokemonWithId(id);
+    }
+
     public Pokedex getPokedex() {
         return this.pokedex;
     } 

@@ -27,6 +27,7 @@ import be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblClickHandler;
 import be.ac.ulb.infof307.g07.models.Coordinate;
 import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.models.PokeMarker;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -82,6 +83,8 @@ public class MapView  implements MapComponentInitializedListener {
         PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
 
         for (int i = 0; i < markers.length; ++i) {
+            Pokemon pokemon = pokedexView.getPokemonFromPokedex(markers[i].getPokemonId());
+            pokemon.increaseGlobalCounting();
             this.addMarker(markers[i]);
         }
     }
