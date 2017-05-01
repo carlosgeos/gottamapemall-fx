@@ -7,7 +7,7 @@ import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.Datastore;
 import com.mongodb.MongoClient;
 
-import be.ac.ulb.infof307.g07.lib.Database;
+import be.ac.ulb.infof307.g07.libs.Database;
 
 public class TestConnection {
     @Test
