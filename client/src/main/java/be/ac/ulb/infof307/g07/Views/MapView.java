@@ -12,6 +12,8 @@ import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.shapes.Circle;
+import com.lynden.gmapsfx.shapes.CircleOptions;
 
 import be.ac.ulb.infof307.g07.Controllers.Handlers.OnMapRightClickHandler;
 import be.ac.ulb.infof307.g07.Controllers.Handlers.PokeMarkerMouseClickHandler;
@@ -47,6 +49,10 @@ public class MapView  implements MapComponentInitializedListener{
 	 * 
 	 */
 	private HashMap<Integer, Marker> markersOnMap= new HashMap<Integer, Marker>();
+	
+	
+	private Circle centerOfGeoLoc = null;
+	private Circle roundOfGeoLoc = null;
 	
 	
 	/**
@@ -217,12 +223,41 @@ public class MapView  implements MapComponentInitializedListener{
 		
 	}
 	
-	public void geoLocalisationSetMarkers(ArrayList<Integer> markerList){
+	public void geoLocalisationSetMarkers(HashMap<Integer,Integer> markerList){
 		
-		for (Integer key : markerList){
+		for (Integer key : this.markersOnMap.keySet()){
 			
-			this.markersOnMap.get(key).setVisible(false);
+			if( markerList.containsKey(key) ){
+				this.markersOnMap.get(key).setVisible(true);
+			}else{
+				this.markersOnMap.get(key).setVisible(false);
+			}
+			
 		}
+	}
+	
+	public void geoLocalisationSetShape(Coordinate center, int radius){
+		
+		if( this.centerOfGeoLoc != null ){
+			
+			this.googleMap.removeMapShape(this.centerOfGeoLoc);
+			
+		}
+		
+		CircleOptions newCircleOption = new CircleOptions();
+		newCircleOption.center(new LatLong(center.getX(), center.getY()))
+		.radius(radius)
+		.fillColor("#c9d4fc")
+		.fillOpacity(0.6)
+		.clickable(false)
+		.draggable(false)
+		.editable(false)
+		.strokeColor("#bccbff")
+		.strokeWeight(1)
+		.strokeOpacity(0.6);
+		
+		this.centerOfGeoLoc = new Circle(newCircleOption);
+		this.googleMap.addMapShape(centerOfGeoLoc);
 	}
 
 	@Override

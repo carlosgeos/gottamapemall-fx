@@ -1,14 +1,17 @@
 package be.ac.ulb.infof307.g07;
 
+import be.ac.ulb.infof307.g07.Views.GeoLocalisationView;
 import be.ac.ulb.infof307.g07.Views.MapView;
 import be.ac.ulb.infof307.g07.Views.PokedexView;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import javafx.stage.Stage;
@@ -30,7 +33,7 @@ public class MainGUI extends Application{
     /**
      * la largeur de la fenetre en pixels
      */
-    private int mainWindowWidth = 800;
+    private int mainWindowWidth = 1200;
 
     /**
      * la hauteur de la fenetre en pixels
@@ -87,12 +90,17 @@ public class MainGUI extends Application{
 	stackpane.getChildren().add(this.pokeMapView.getView());
 	stackpane.getChildren().add(pokedexViewStackPane);
 	StackPane.setAlignment(pokedexViewStackPane, Pos.TOP_RIGHT);
-
+	
+	Slider slider = GeoLocalisationView.createView(mainWindowWidth/3*2, 200);
+	stackpane.getChildren().add(slider);
+	StackPane.setAlignment(slider, Pos.TOP_LEFT);
+	
 	StackPane.setMargin(pokedexViewStackPane, new Insets(0, 15, 0, 0));
-
+	
+	
 	GridPane mainGrid = new GridPane();
 	mainGrid.add(stackpane, 0, 0);
-
+	
 
 	Scene mainScene = new Scene(mainGrid);
 	primaryStage.setScene(mainScene);

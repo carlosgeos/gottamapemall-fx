@@ -122,6 +122,7 @@ public class PokedexView{
         Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
 
         for (int i = 0; i < pokemons.length; ++i) {
+        	System.out.println(pokemons[i].getImagePath());
             pokemonInPokedex.add(pokemons[i]);
         }
     }

@@ -15,16 +15,24 @@ import be.ac.ulb.infof307.g07.Models.PokeMarker;
 public class TestPokemonsAroundMe {
 
 	private HashMap<Integer, PokeMarker> listPokeMarker; 
+	
+	private Coordinate position1;
+	private Coordinate position2;
+	private Coordinate position3;
+	
 	private PokeMarker marker1;
 	private PokeMarker marker2;
 	private PokeMarker marker3;
-	private ArrayList<Integer> PokemonsAroundMe;
+	private HashMap<Integer, Integer> PokemonsAroundMe;
 	@Before
 	public void setUp() throws Exception {
 		listPokeMarker = new HashMap<Integer, PokeMarker> ();
-		marker1 = new PokeMarker(new Coordinate(41.40338, 2.17403), null, null, null) ;// my position 
-		marker2 = new PokeMarker(new Coordinate(41.40345, 2.17402), null, null, null) ;
-		marker3 = new PokeMarker(new Coordinate(51.40344, 2.17402), null, null, null) ;
+		position1 = new Coordinate(41.40338, 2.17403);
+		position2 = new Coordinate(41.40345, 2.17402);
+		position3 = new Coordinate(51.40344, 2.17402);
+		marker1 = new PokeMarker(position1, null, null, null) ;// my position 
+		marker2 = new PokeMarker(position2, null, null, null) ;
+		marker3 = new PokeMarker(position3, null, null, null) ;
 		
 		
 		listPokeMarker.put(3, marker3);
@@ -33,11 +41,11 @@ public class TestPokemonsAroundMe {
 	@Test
 	public void test() {
 		listPokeMarker.put(2, marker2);
-		PokemonsAroundMe = GeoLocaLisation.pokemonsAroundMe(listPokeMarker, 100, marker1);
+		PokemonsAroundMe = GeoLocaLisation.pokemonsAroundMe(listPokeMarker, 100, position1);
 		assertEquals(PokemonsAroundMe.size(), 1);
 		// ajouter un marker mais il est plus loin aue le rayon de recherche   
 		listPokeMarker.put(3, marker3);
-		PokemonsAroundMe = GeoLocaLisation.pokemonsAroundMe(listPokeMarker, 100, marker1);
+		PokemonsAroundMe = GeoLocaLisation.pokemonsAroundMe(listPokeMarker, 100, position1);
 		assertEquals(PokemonsAroundMe.size(), 1);
 	}
 

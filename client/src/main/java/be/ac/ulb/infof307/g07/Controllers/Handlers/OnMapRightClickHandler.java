@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07.Controllers.Handlers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.MouseEventHandler;
@@ -24,10 +25,10 @@ public class OnMapRightClickHandler implements MouseEventHandler{
 	@Override
 	public void handle(GMapMouseEvent event) {
 		
-		int distance = 100;
-		Coordinate myPosition = new Coordinate(event.getLatLong().getLatitude(), event.getLatLong().getLongitude()); 
-		ArrayList<Integer> tempMarkerList = GeoLocaLisation.pokemonsAroundMe(pokeMap.getPokeMarkers(), distance, myPosition);
+		Coordinate myPosition = new Coordinate(event.getLatLong().getLatitude(), event.getLatLong().getLongitude());
+		HashMap<Integer,Integer> tempMarkerList = GeoLocaLisation.pokemonsAroundMe(pokeMap.getPokeMarkers(), GeoLocaLisation.radius, myPosition);
 		pokeMapView.geoLocalisationSetMarkers(tempMarkerList);
+		pokeMapView.geoLocalisationSetShape(myPosition, GeoLocaLisation.radius);
 		
 	}
 	

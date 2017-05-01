@@ -3,6 +3,8 @@ package be.ac.ulb.infof307.g07.Models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.lynden.gmapsfx.shapes.Circle;
+
 /**
  * Cette classe calcule la distance entre deux points en utilisant les coordonnees decimales (latitude, longitude)
  * ici la premiere position represente la position de l'utilisateur sur la carte et la deuxiemme represente une 
@@ -14,6 +16,10 @@ import java.util.HashMap;
  * @version 1.0 
  */
 public class GeoLocaLisation {
+	
+	
+	public static int radius = 100;
+	public static Coordinate center = null;
 	
 	/**
 	 * calcule la distance entre deux points en utilisant les coordonnees decimales (latitude, longitude)
@@ -63,11 +69,12 @@ public class GeoLocaLisation {
      * 					l epingle pokemon
      * @return la liste des epingles pokemons a afficher (comprises dans le rayon donc)
      */
-    public static ArrayList<Integer> pokemonsAroundMe(HashMap<Integer,PokeMarker> ListMarker, int distanceMetre, Coordinate  fromMarker){
+    public static HashMap<Integer,Integer> pokemonsAroundMe(HashMap<Integer,PokeMarker> ListMarker, int distanceMetre, Coordinate  fromMarker){
     	
     	
     	/*Boucle jusqu'à ce que tous les marqueurs aient été comparés. */
-    	ArrayList<Integer> tempMarkerList = new ArrayList<Integer>();
+    	HashMap<Integer,Integer> tempMarkerList = new HashMap<Integer,Integer>();
+    	int count = 0;
     	for (Integer key : ListMarker.keySet()){
     		
     		/* Comparaison avec tous les marqueurs . */
@@ -75,11 +82,13 @@ public class GeoLocaLisation {
     		double distanceBetnTwoPointsTemp = distanceBetnTwoPoints(fromMarker.getX(), fromMarker.getY(), ListMarker.get(key).getOnMapPosition().getX(), ListMarker.get(key).getOnMapPosition().getY());
     		
     		
-	    	if (!(distanceBetnTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre))){
+	    	if (distanceBetnTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre)){
 	    			
-	    		tempMarkerList.add(key);
+	    		tempMarkerList.put(key, count);
+	    		++count;
 	    	}
     	}
     	return tempMarkerList;
     }
+    
 }
