@@ -194,6 +194,10 @@ public class MapView extends ClusteredMainApp {
         googleMap.setZoom(current);
     }
     
+    /**
+     * Suppression d une epingle pokemon de la carte
+     * @param id l id de l objet a supprimer
+     */
     public void removeMarker(ObjectId id) {
         googleMap.removeMarker(markersOnMap.get(id));
         markersOnMap.remove(id);

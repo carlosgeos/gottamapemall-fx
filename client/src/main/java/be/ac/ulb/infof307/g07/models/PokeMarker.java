@@ -168,7 +168,8 @@ public class PokeMarker {
         this.time = newTime;
     }
 
-    /*
+    /**
+     * 
      */
     public void remove () {
     

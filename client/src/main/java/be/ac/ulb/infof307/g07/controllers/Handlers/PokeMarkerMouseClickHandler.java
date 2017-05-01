@@ -26,6 +26,7 @@ import netscape.javascript.JSObject;
  *
  */
 public class PokeMarkerMouseClickHandler implements UIEventHandler{
+	
     /**
      * On objet Marker de la bibliotheque gmpasfx, pour afficher une epingle sur la carte.
      * 
