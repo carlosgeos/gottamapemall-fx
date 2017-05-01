@@ -53,7 +53,7 @@ public class GeoLocaLisation {
      * 
      * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * 
-     * @param ListMarker la table de hachage contenant les epingles pokemon
+     * @param markers la table de hachage contenant les epingles pokemon
      * @param distanceMetre le rayon predefini, en metres
      * @param fromMarker l epingle pokemon
      * @return la liste des epingles pokemons a afficher (comprises dans le rayon donc)
