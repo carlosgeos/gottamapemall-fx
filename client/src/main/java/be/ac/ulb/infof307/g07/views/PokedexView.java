@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g07.views;
 
 import be.ac.ulb.infof307.g07.controllers.PokemonViewListener;
 import be.ac.ulb.infof307.g07.controllers.Handlers.ClosePokemonDetailWindowHandler;
+import be.ac.ulb.infof307.g07.controllers.Handlers.PokedexSearchHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.models.Pokemon;
 import be.ac.ulb.infof307.g07.models.Pokedex;
@@ -50,6 +51,8 @@ public class PokedexView {
     // used for detail info window
     private TextField pokemonNameTextField;
     private TextField pokemonTypeTextField;
+    private TextField pokedexSearchTextField;
+    
     private Label pokemonHeightField;
     private Label pokemonWeightField;
     private ImageView pokemonImageView;
@@ -109,7 +112,18 @@ public class PokedexView {
         pokedexScrollPane = new ScrollPane();
 
         pokedexBorderPane.setCenter(pokedexScrollPane);
-
+        
+        
+        GridPane searchGridPane = new GridPane();
+        searchGridPane.setMaxSize(pokedexViewWidth, 20);
+        searchGridPane.setMinSize(pokedexViewWidth, 20);
+        this.pokedexSearchTextField = new TextField();
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction(null);
+        searchGridPane.add( pokedexSearchTextField, 0, 0);
+        searchGridPane.add(searchButton, 1, 0);
+        pokedexBorderPane.setTop(searchGridPane);
+        
         // it will add all pokemon in vbox
         updatePokedex();
     }
