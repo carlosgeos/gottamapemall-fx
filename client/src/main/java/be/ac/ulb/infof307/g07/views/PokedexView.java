@@ -4,6 +4,8 @@ import be.ac.ulb.infof307.g07.controllers.PokemonViewListener;
 import be.ac.ulb.infof307.g07.controllers.Handlers.ClosePokemonDetailWindowHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.PokemonViewDblClickHandler;
 import be.ac.ulb.infof307.g07.models.Pokemon;
+import be.ac.ulb.infof307.g07.models.Pokedex;
+import be.ac.ulb.infof307.g07.controllers.Handlers.onPokemonGlobalCountChangeHandler;
 import net.dongliu.requests.Requests;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
@@ -20,6 +22,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -28,7 +32,8 @@ import javafx.scene.layout.VBox;
  */
 public class PokedexView {
     // stock real pokemon
-    private ObservableList<Pokemon> pokemonInPokedex;
+    private ObservableList<PokemonView> pokemonViewInPokedex;
+    private Pokedex pokedex;
 
     private double pokedexViewWidth = 0;
 
@@ -51,8 +56,11 @@ public class PokedexView {
     private int pokemonImageWidth = 180;
     private int pokemonImageHeight = 140;
 
+    public static HashMap<Integer, Integer> markedPokemonCounting = new HashMap<Integer, Integer>();
 
     public PokedexView(double pokedexViewWidth, double pokedexViewHeight) {
+        this.pokedex = new Pokedex();
+
         this.pokedexViewWidth = pokedexViewWidth;
 
         pokedexBorderPane = new BorderPane();
@@ -95,10 +103,7 @@ public class PokedexView {
 
         pokedexStackPane.getChildren().addAll(pokemonDetailBorderPane, pokedexBorderPane);
 
-        // instance the list for stocking pokemon
-        pokemonInPokedex = FXCollections.observableArrayList();
-        // used only for autofilling the pokedex
-        fillPokedex();
+        this.pokemonViewInPokedex = FXCollections.observableArrayList();
 
         // Vbox will be stocked in ScrollPane
         pokedexScrollPane = new ScrollPane();
@@ -109,18 +114,14 @@ public class PokedexView {
         updatePokedex();
     }
 
+    public void refreshCounts() {
+        for(int i = 0; i < this.pokemonViewInPokedex.size(); ++i) {
+            this.pokemonViewInPokedex.get(i).refreshCount();
+        }
+    } 
+
     public void updatePokedex() {
         pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
-    }
-
-    private void fillPokedex() {
-        String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
-        Gson gson = new Gson();
-        Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
-
-        for (int i = 0; i < pokemons.length; ++i) {
-            pokemonInPokedex.add(pokemons[i]);
-        }
     }
 
     public VBox getPokedexViewWithDefaultStyle() {
@@ -131,8 +132,12 @@ public class PokedexView {
     public VBox getPokedexView(PokemonViewListener handler, double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap) {
         VBox newVBox = new VBox();
 
-        for(int i = 0; i < this.pokemonInPokedex.size(); ++i) {
-            PokemonView newPokemonView = new PokemonView(this.pokemonInPokedex.get(i), this);
+        for(int i = 0; i < this.pokedex.getSize(); ++i) {
+            PokemonView newPokemonView = new PokemonView(this.pokedex.getPokemon(i), this);
+            onPokemonGlobalCountChangeHandler tmphandler = new onPokemonGlobalCountChangeHandler(newPokemonView);
+            this.pokedex.getPokemon(i).addListener(tmphandler);
+            this.pokemonViewInPokedex.add(newPokemonView); 
+
             newPokemonView.registerListener(handler);
 
             newVBox.getChildren().add(newPokemonView.createView( pokemonViewWidth, pokemonViewHeight, pokemonPadding, iconWidth, iconHeight, VGap, HGap ));
@@ -149,10 +154,14 @@ public class PokedexView {
         // prepare all info of this pokemon
         this.pokemonNameTextField.setText(pokemon.getName());
         String typesText = "";
-        String[] types = pokemon.getTypes();
-        for (int i = 0; i < types.length; ++i) {
-            typesText += types[i] + ", ";
+
+        if (pokemon.getTypes() != null) {
+            String[] types = pokemon.getTypes();
+            for (int i = 0; i < types.length; ++i) {
+                typesText += types[i] + ", ";
+            }
         }
+
         this.pokemonTypeTextField.setText(typesText);
         this.pokemonHeightField.setText(Double.toString(pokemon.getHeight()));
         this.pokemonWeightField.setText(Double.toString(pokemon.getWeight()));
@@ -173,4 +182,12 @@ public class PokedexView {
         this.pokedexBorderPane.setOpacity(1);
         this.pokemonDetailBorderPane.setOpacity(0);
     }
+
+    public Pokemon getPokemonFromPokedex(int id) {
+        return this.pokedex.getPokemonWithId(id);
+    }
+
+    public Pokedex getPokedex() {
+        return this.pokedex;
+    } 
 }

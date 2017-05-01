@@ -16,6 +16,7 @@ public class PokemonView implements EventHandler<MouseEvent> {
     private Pokemon pokemon;
     private PokedexView pokedexView;
     private GridPane pokemonGridPane;
+    private Label globalCountLabel;
     private String holdGridStyle;
     private String defaultGridStyle;
     private String hoverGridStyle;
@@ -54,6 +55,9 @@ public class PokemonView implements EventHandler<MouseEvent> {
         this.pokemonGridPane.add(pokemonImageView, 0, 0);
         this.pokemonGridPane.add(new Label(Integer.toString(this.pokemon.getId())), 1, 0);
         this.pokemonGridPane.add(new Label(this.pokemon.getName()), 2, 0);
+
+        this.globalCountLabel = new Label(Integer.toString(this.pokemon.getGlobalCounting()));
+        this.pokemonGridPane.add(this.globalCountLabel, 3, 0);
 
         this.pokemonGridPane.setOnMouseClicked(this);
         this.pokemonGridPane.setOnMouseEntered(mouseEvent -> {
@@ -109,4 +113,8 @@ public class PokemonView implements EventHandler<MouseEvent> {
             setSelectStyle();
         }
     }
+
+    public void refreshCount() {
+        this.globalCountLabel.setText(Integer.toString(this.pokemon.getGlobalCounting()));
+    } 
 }
