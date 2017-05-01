@@ -67,7 +67,7 @@ public class Map {
      * @see be.ac.ulb.infof307.g07.models.PokeMarker#getId() 
      */
     public PokeMarker addPokeMarker(PokeMarker marker) {
-        Pokemon pokemon = marker.getPokemon();
+        Pokemon pokemon = this.pokedex.getPokemonWithId(marker.getPokemon().getId());
         pokemon.increaseGlobalCounting();
         Gson gson = CustomGson.get();
         String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
@@ -101,7 +101,8 @@ public class Map {
     }
     
     public void removePokeMarker(PokeMarker pokeMarker) {
-        pokeMarker.getPokemon().decreaseGlobalCounting();
+        Pokemon pokemon = this.pokedex.getPokemonWithId(pokeMarker.getPokemon().getId());
+        pokemon.decreaseGlobalCounting();
         pokeMarker.remove(); 
     }
 }
