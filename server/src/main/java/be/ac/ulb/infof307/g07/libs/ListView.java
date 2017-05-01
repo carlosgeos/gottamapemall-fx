@@ -25,9 +25,7 @@ public abstract class ListView<T> {
     /**
      * Used to define the route of the API endpoint.
      */
-    protected String getRoute () {
-        return "";
-    }
+    protected abstract String getRoute ();
 
     /**
      * Used to define the model used with the endpoint.
@@ -35,10 +33,17 @@ public abstract class ListView<T> {
     protected abstract Class<T> getModel ();
 
     /**
-     * Used to define the field to search in the database.
+     * Utilisé pour définir les champs qui peuvent être cherché.
      */
     protected String getSearchField () {
         return "name";
+    }
+
+    /**
+     * Utilisé pour définir les champs qui peuvent être filtrés.
+     */
+    protected String[] getFiltersFields() {
+        return new String[0];
     }
 
     /**
@@ -50,13 +55,8 @@ public abstract class ListView<T> {
      */
     static protected String getParam(Request req, String key) {
         String param = "";
-        try{
-            param = req.params(key);
-        } catch (Exception e) {
-            halt(400, "Parameter not found for key: " + key);
-        }
-
-        return param;
+        
+        return req.params(key);
     }
 
     /**
@@ -74,10 +74,50 @@ public abstract class ListView<T> {
         try {
             param = handler.handle((String) param);
         } catch (Exception e) {
-            halt(400, "Parameter " + param + " is not accepted.");
+            param = null;
         }
 
         return param;
+    }
+
+    /**
+     * Define API endpoint to filter the viewset by matching with the result
+     * of a certain field.
+     */
+    protected Query<T> search (Query<T> current, String query) {
+        return current.field(this.getSearchField()).contains(query);
+    }
+
+    /**
+     * Gère de fournir des données correct à la méthode search.
+     */
+    private Query<T> handleSearch(Request req, Query<T> query) {
+        String searchQuery = req.queryParams("search");
+        if (searchQuery != null) {
+            return search(query, searchQuery);
+        }
+        return query;    
+    }
+
+    /**
+     * Gère le filtre des valeurs. Par défaut ne fait rien.
+     */
+    protected Query<T> filter(Query<T> current, String param, String query) {
+        return current;
+    }
+
+    /**
+     * S'occupe d'envoyer les bonnes valeurs pour être filtrées.
+     */
+    private Query<T> handleFilters(Request req, Query<T> query) {
+        String[] filters = getFiltersFields();
+        for (int i = 0; i < filters.length; ++i) {
+            String filterQuery = req.queryParams(filters[i]);
+            if (filterQuery != null) {
+                query = filter(query, filters[i], filterQuery);
+            }
+        }
+        return query;
     }
 
     /**
@@ -86,21 +126,15 @@ public abstract class ListView<T> {
      */
     protected void viewsetRoute () {
         get(this.getRoute(), (req, res) -> {
-            final List<T> sets = Database.get().find(this.getModel()).order("id").asList();
+            Query<T> q = Database.get().find(this.getModel()).order("id");
+
+            q = handleSearch(req, q);
+            q = handleFilters(req, q);
+
+            final List<T> sets = q.asList();
 
             res.status(200);
             return sets;
-        }, gson::toJson);
-    }
-
-    /**
-     * Define API endpoint to filter the viewset by matching with the result
-     * of a certain field.
-     */
-    protected void searchSetRoute () {
-        get(this.getRoute() + "/search/:query", (req, res) -> {
-            String param = (String) getParam(req, ":query");
-            return Database.get().find(this.getModel()).field(this.getSearchField()).contains(param).asList();
         }, gson::toJson);
     }
 
@@ -161,18 +195,7 @@ public abstract class ListView<T> {
     /**
      * Define API endpoint to update a specific data in the model.
      */
-    protected void updateRoute () {
-        //update(this.getRoute() + "/:id", (req, res) -> {
-        //    int id = (int) getParam(req, ":id", (val) -> {
-        //        return Integer.parseInt(val);
-        //    });
-
-        //    res.status(200);
-        //    T object = Database.get().find(this.getModel()).field("id").equal(id).get();
-        //    object.update(req.queryMap().toMap());
-        //    Database.update()
-        //}, gson::toJson);
-    }
+    protected void updateRoute () {}
 
     /**
      * Define API endpoint to delete a specific object in the model.
@@ -197,7 +220,6 @@ public abstract class ListView<T> {
         assert gson != null;
 
         this.viewsetRoute();
-        this.searchSetRoute();
         this.detailRoute();
         this.createRoute();
         this.updateRoute();
