@@ -1,0 +1,70 @@
+package be.ac.ulb.infof307.g07.models;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import com.google.gson.Gson;
+import java.util.List;
+
+import be.ac.ulb.infof307.g07.models.LocationModel;
+import be.ac.ulb.infof307.g07.libs.Database;
+import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
+import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
+
+public class TestLocationModel {
+    private static final Gson gson = new Gson();
+
+    @Before
+    public void setup () {
+        Database.init("gmta-test");
+        Database.get().getDB().dropDatabase();
+    }
+
+    @Test
+    public void testCorrectCreation () throws Exception {
+        String json = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
+
+        try {
+            LocationModel location = gson.fromJson(json, LocationModel.class);
+            Database.get().save(location);
+        } catch (Exception e) {
+            Assert.fail("Database test failed: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testWrongTypeCreation () throws Exception {
+        String json = "{\"lat\": \"feowijfew\", \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
+
+        try {
+            LocationModel location = gson.fromJson(json, LocationModel.class);
+            Database.get().save(location);
+            Assert.fail("Database test failed: It did not raised an exception");
+        } catch (Exception e) {
+        }
+    }
+
+    @Test
+    public void testNonUnique () throws Exception {
+        String json1 = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
+
+        LocationModel location1 = gson.fromJson(json1, LocationModel.class);
+        Database.get().save(location1);
+
+        String json2 = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
+
+        LocationModel location2 = gson.fromJson(json2, LocationModel.class);
+        Database.get().save(location2);
+
+        List<LocationModel> l = Database.get().find(LocationModel.class).asList();
+
+        assertEquals(l.size(), 2);
+    }
+}
