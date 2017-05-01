@@ -12,6 +12,9 @@ import be.ac.ulb.infof307.g07.libs.Error;
 
 import java.util.List;
 
+/**
+ * Vue pour voir les filtres sauvegardé par l'utilisateur.
+ */
 public final class FilterView extends ListView<FilterModel> {
     protected final String getRoute () {
         return "filters";
