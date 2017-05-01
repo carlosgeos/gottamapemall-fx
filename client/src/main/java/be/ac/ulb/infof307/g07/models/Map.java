@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g07.models;
 
+import be.ac.ulb.infof307.g07.models.Pokemon;
+import be.ac.ulb.infof307.g07.models.Pokedex;
 import net.dongliu.requests.Requests;
 import org.bson.types.ObjectId;
 import com.google.gson.Gson;
@@ -25,6 +27,13 @@ import java.util.HashMap;
  */
 public class Map {
     private final static Logger LOGGER = Logger.getLogger(Map.class.getName());
+    private Pokedex pokedex;
+
+    public Map () {}
+
+    public Map (Pokedex pokedex) {
+        this.pokedex = pokedex;
+    }
 
     /**
      * Sauvegarde et crée un PokeMarker.
@@ -58,6 +67,8 @@ public class Map {
      * @see be.ac.ulb.infof307.g07.models.PokeMarker#getId() 
      */
     public PokeMarker addPokeMarker(PokeMarker marker) {
+        Pokemon pokemon = this.pokedex.getPokemonWithId(marker.getPokemon().getId());
+        pokemon.increaseGlobalCounting();
         Gson gson = CustomGson.get();
         String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
         PokeMarker created = gson.fromJson(response, PokeMarker.class);
@@ -76,22 +87,34 @@ public class Map {
         PokeMarker marker = gson.fromJson(response, PokeMarker.class);
         return marker;
     }
-    
+
+    /**
+     * Récupère tout les PokeMarker.
+     *
+     * @return Tout les PokeMarkers.
+     */
+    public PokeMarker[] getPokeMarkers() {
+        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
+        Gson gson = CustomGson.get();
+        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
+        return markers;
+    }
+
     /**
      * Retourne le nombre de markers contenu sur la carte.
      * 
      * @return Nombew de markers sous forme d'un entier.
      */
-    public int getNumberOfMarker() {
+    public int getNumberOfMarkers() {
         String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
         Gson gson = CustomGson.get();
         PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
         return markers.length;
     }
     
-    /**
-     * TODO
-     */
     public void removePokeMarker(PokeMarker pokeMarker) {
+        Pokemon pokemon = this.pokedex.getPokemonWithId(pokeMarker.getPokemon().getId());
+        pokemon.decreaseGlobalCounting();
+        pokeMarker.remove(); 
     }
 }

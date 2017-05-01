@@ -5,24 +5,24 @@ import spark.Request;
 
 import org.bson.types.ObjectId;
 
-import be.ac.ulb.infof307.g07.models.LocationModel;
+import be.ac.ulb.infof307.g07.models.FilterModel;
 import be.ac.ulb.infof307.g07.libs.Database;
 import be.ac.ulb.infof307.g07.libs.ListView;
 import be.ac.ulb.infof307.g07.libs.Error;
 
 import java.util.List;
 
-public final class LocationView extends ListView<LocationModel> {
+public final class FilterView extends ListView<FilterModel> {
     protected final String getRoute () {
-        return "locations";
+        return "filters";
     }
 
-    protected final Class<LocationModel> getModel () {
-        return LocationModel.class;
+    protected final Class<FilterModel> getModel () {
+        return FilterModel.class;
     }
 
     /**
-     * Défini la manière de récupérer un ObjectId.
+     * Un object est accedé en utilisant la forme hexadecimal d'un ObjectId.
      */
     @Override
     protected final Object getDetail (Request req) throws Exception {
@@ -34,7 +34,7 @@ public final class LocationView extends ListView<LocationModel> {
         });
     }
 
-    public LocationView () {
+    public FilterView () {
         super();
     }
 }

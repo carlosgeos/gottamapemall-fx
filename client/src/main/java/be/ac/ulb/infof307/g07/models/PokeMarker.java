@@ -121,6 +121,16 @@ public class PokeMarker {
     public Pokemon getPokemon() {
         return this.pokemon;
     }
+
+    /**
+     * Renvoie l'id du pokémon reférencé par le marker.
+     *
+     * @return L'id du pokemon reférencé.
+     */
+    public int getPokemonId() {
+        return this.pokemon.getId();
+    }
+ 
     
     /**
      * Renvoie la date à laquelle le pokémon reférencé par le marker a été aperçu.
@@ -156,5 +166,11 @@ public class PokeMarker {
      */
     public void setTime(String newTime) {
         this.time = newTime;
+    }
+
+    /*
+     */
+    public void remove () {
+    
     }
 }
