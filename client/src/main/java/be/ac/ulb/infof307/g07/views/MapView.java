@@ -43,7 +43,7 @@ import javafx.scene.layout.BorderPane;
  *
  * @see be.ac.ulb.infof307.g07.MainGUI
  * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
- * @see be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblCLickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblClickHandler
  * @see be.ac.ulb.infof307.g07.controllers.Handlers.OnMapRightClickHandler
  * @see be.ac.ulb.infof307.g07.controllers.Handlers.addNewPokeMarkerHandler
  * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerRemoveFromMapHandler

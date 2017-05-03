@@ -14,7 +14,7 @@ import be.ac.ulb.infof307.g07.views.MapView;
  * @version 1.0
  * 
  * @see be.ac.ulb.infof307.g07.models.Map
- * @see @see be.ac.ulb.infof307.g07.views.MapView
+ * @see be.ac.ulb.infof307.g07.views.MapView
  */
 public class addNewPokeMarkerHandler implements ChoosePokemonViewListener {
 	
