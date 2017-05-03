@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /**
  * 
- * Gestion de la suppression d une epingle pokemon de la carte, a savoir la retirer de l affichage et decrementer son compteur d apparitions
+ * Gestion de la suppression d'une épingle pokemon de la carte, à savoir la retirer de l'affichage et décrémenter son compteur d'apparitions
  * 
  * @version 1.0
  * 
@@ -20,11 +20,44 @@ import javafx.stage.Stage;
  *
  */
 public class PokeMarkerRemoveFromMapHandler implements EventHandler<ActionEvent> {
+	
+   /**
+    * le modèle sur la carte pokemon 
+    * 
+    * @see be.ac.ulb.infof307.g07.models.Map
+    */
     private Map pokeMap;
+    
+    //TODO: Changer nom pokeMarkerView -> pokeMapView 
+    /**
+     * L'objet vue de la carte pokemon pour les actions à effectuer sur l'affichage.
+     *
+     * @see be.ac.ulb.infof307.g07.views.MapView
+     */
     private MapView pokeMarkerView;
+    
+    /**
+     * l'objet modèle pour une épingle pokemon
+     * 
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
+     */
     private PokeMarker pokeMarker ;
+    
+    //TODO: TBD...
+    /**
+     * 
+     */
     private Stage mainStage;
     
+    //TODO: mainStage TBD...
+    /**
+     * Constructeur de PokeMarkerRemoveFromMapHandler
+     * 
+     * @param pokeMap le modèle sur la carte pokemon 
+     * @param pokeMapView L'objet vue de la carte pokemon pour les actions à effectuer sur l'affichage
+     * @param pokeMarker l'objet modèle pour une épingle pokemon
+     * @param mainStage //TODO: TBD...
+     */
     public PokeMarkerRemoveFromMapHandler(Map pokeMap, MapView pokeMapView, PokeMarker pokeMarker, Stage mainStage){
         this.pokeMap = pokeMap;
         this.pokeMarkerView = pokeMapView;
@@ -33,8 +66,8 @@ public class PokeMarkerRemoveFromMapHandler implements EventHandler<ActionEvent>
     }
     
     /**
-     * Fait appel aux methodes removePokeMarker et removeMarker de Map et MapView, qui s occupent respectivement de decrementer le compteur 
-     * de signalisations du pokemon et de retirer l epingle du pokemon de la carte.
+     * Fait appel aux méthodes removePokeMarker et removeMarker de Map et MapView, qui s'occupent respectivement de décrémenter le compteur 
+     * de signalisations du pokemon et de retirer l'épingle du pokemon de la carte.
      * 
      * @see be.ac.ulb.infof307.g07.models.Map
      * @see be.ac.ulb.infof307.g07.views.MapView

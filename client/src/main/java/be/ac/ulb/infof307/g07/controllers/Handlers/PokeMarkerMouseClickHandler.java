@@ -11,11 +11,11 @@ import netscape.javascript.JSObject;
 
 /**
  * 
- * La classe PokeMarkerMouseClickHandler s occupe de gerer le clic sur une epingle de la carte 
- * et affiche une petite infobulle contenant des informations sur cette epingle (marker).
+ * La classe PokeMarkerMouseClickHandler s'occupe de gérer le clic sur une épingle de la carte 
+ * et affiche une petite infobulle contenant des informations sur cette épingle (marker).
  * 
  * <p>
- * Un objet de cette classe est instancie par la classe MapView, dans sa methode addMarker().
+ * Un objet de cette classe est instancié par la classe MapView, dans sa méthode addMarker().
  * <p>
  * 
  * @version 1.0
@@ -28,13 +28,13 @@ import netscape.javascript.JSObject;
 public class PokeMarkerMouseClickHandler implements UIEventHandler{
 	
     /**
-     * On objet Marker de la bibliotheque gmpasfx, pour afficher une epingle sur la carte.
+     * Un objet Marker de la bibliothèque gmpasfx, pour afficher une épingle sur la carte.
      * 
      */
     private Marker marker;
     
     /**
-     * Un objet modele pokeMarker qui contient les donnees relatives a une epingle (id, position...)
+     * Un objet modèle pokeMarker qui contient les données relatives à une épingle (id, position...)
      * 
      * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * 
@@ -42,7 +42,7 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
     private PokeMarker pokeMarker;
     
     /**
-     * On objet googleMap de la bibliotheque gmpasfx, pour afficher une carte de type googlemaps.
+     * Un objet googleMap de la bibliothèque gmpasfx, pour afficher une carte de type googlemaps.
      * 
      */
     private GoogleMap googleMap;
@@ -52,11 +52,11 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
      * Le constructeur de la classe PokeMarkerMouseClickHandler.
      * 
      * @param marker
-     *                 L objet Marker (epingle) de la bibliotheque gmapsfx pour l affichage.
+     *               L'objet Marker (épingle) de la bibliothèque gmapsfx pour l'affichage.
      * @param pokeMarker
-     *                     L objet PokeMarker (epingle pokemon) contenant les donnees de l epingle a afficher.
+     *                 L'objet PokeMarker (épingle pokemon) contenant les données de l'épingle à afficher.
      * @param googleMap
-     *                     L objet GoogleMap de la bibliotheque gmapsfx, pour l affichage de la carte.
+     *                 L'objet GoogleMap de la bibliothèque gmapsfx, pour l'affichage de la carte.
      * 
      * @see PokeMarkerMouseClickHandler#marker
      * @see PokeMarkerMouseClickHandler#pokeMarker
@@ -73,10 +73,10 @@ public class PokeMarkerMouseClickHandler implements UIEventHandler{
     @Override
     /**
      * 
-     * La methode handle gere le clic sur une epingle, cad affiche une petite infobulle contenant des informations sur cette epingle.
+     * La méthode handle gère le clic sur une épingle, càd affiche une petite infobulle contenant des informations sur cette épingle.
      * 
      * @param event
-     *                 Le clic sur l epingle sur la carte.
+     *             Le clic sur l'épingle sur la carte.
      */
     public void handle(JSObject event) {
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();

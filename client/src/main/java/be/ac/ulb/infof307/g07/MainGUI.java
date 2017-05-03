@@ -44,6 +44,9 @@ public class MainGUI extends Application {
      * @see be.ac.ulb.infof307.g07.views.MapView
      */
     private MapView pokeMapView;
+    
+    
+    
     private PokedexView pokedexView;
 
     @Override

@@ -17,19 +17,86 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
+/**
+ * Cette classe gère le double clic sur une épingle, 
+ * càd afficher les informations de cette épingle (image, id du pokemon et nom, date et heure de la signalisation) dans une fenêtre avec un bouton delete et un bouton modify, permettant respectivement de supprimer l'épingle ou modifier ses informations. 
+ * 
+ * @version 1.0
+ * 
+ * @see be.ac.ulb.infof307.g07.models.Map
+ * @see be.ac.ulb.infof307.g07.views.MapView
+ * @see be.ac.ulb.infof307.g07.models.PokeMarker
+ *
+ */
 public class PokeMarkerMouseDblClickHandler implements UIEventHandler {
+	
+	/**
+	 * fenêtre pour afficher les informations de l'épingle ainsi que la possibilité de les modifier ou de supprimer l'épingle
+	 */
     private Stage mainStage = new Stage();
+    
+    /**
+     * largeur de la fenêtre
+     */
     private double mainWidth = 220;
+    
+    /**
+     * hauteur de la fenêtre
+     */
     private double mainHeight = 220;
+    
+    /**
+	 * le modèle sur la carte pokemon 
+	 * 
+	 * @see be.ac.ulb.infof307.g07.models.Map
+	 */
     private Map pokeMap;
+    
+    /**
+     * L'objet vue de la carte pokemon pour les actions à effectuer sur l'affichage.
+     *
+     * @see be.ac.ulb.infof307.g07.views.MapView
+     */
     private MapView pokeMapView;
+    
+    /**
+     * l'objet modèle pour une épingle pokemon
+     * 
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
+     */
     private PokeMarker pokeMarker;
     
+    /**
+     * la date du repérage du pokemon
+     */
     private TextField date;
+    
+    /**
+     * l'heure à laquelle le pokemon a été vu
+     */
     private TextField time;
+    
+    /**
+     * un bouton pour supprimer l'épingle pokemon
+     */
     private Button deleteButton;
+    
+    /**
+     * un bouton pour modifier les informations de l'épingle (date et heure du repérage)
+     */
     private Button modifyButton;
     
+    /**
+     * Constructeur de PokeMarkerMouseDblClickHandler
+     * 
+     * @param pokeMap  le modèle sur la carte pokemon.
+     * @param pokeMapView L'objet vue de la carte pokemon pour les actions à effectuer sur l'affichage.
+     * @param pokeMarker l'objet modèle pour une épingle pokemon
+     * 
+     * @see be.ac.ulb.infof307.g07.models.Map
+     * @see be.ac.ulb.infof307.g07.views.MapView
+     * @see be.ac.ulb.infof307.g07.models.PokeMarker
+     */
     public PokeMarkerMouseDblClickHandler(Map pokeMap, MapView pokeMapView, PokeMarker pokeMarker) {
         this.pokeMap = pokeMap;
         this.pokeMapView = pokeMapView;
@@ -38,6 +105,9 @@ public class PokeMarkerMouseDblClickHandler implements UIEventHandler {
         createWindow();
     }
     
+    /**
+     * Crée une fenêtre contenant les informations de l'épingle (image, id et nom du pokemon, date et heure de la signalisation) et deux boutons, modify et delete, pour modifier l'heure ou la date du repérage, ou supprimer l'épingle.
+     */
     public void createWindow() {
         GridPane mainGridPane = new GridPane();
         
@@ -88,6 +158,9 @@ public class PokeMarkerMouseDblClickHandler implements UIEventHandler {
         this.mainStage.setTitle("Modify menu");
     }
     
+    /**
+     * Lance et affiche la fenêtre créée
+     */
     @Override
     public void handle(JSObject event) {
         this.mainStage.show();

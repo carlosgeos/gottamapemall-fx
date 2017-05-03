@@ -33,29 +33,39 @@ import javafx.scene.layout.BorderPane;
 
 /**
  * 
- * Cette classe represente la vue dans la structure MVC cad la classe s occupant de l affichage de la carte et de ses composantes graphiques.
+ * Cette classe représente la vue dans la structure MVC cad la classe s'occupant de l'affichage de la carte et de ses composantes graphiques.
  * 
  * <p>
- * Un objet de cette classe est cree par les classes suivantes: MapController, MapMouseDblClickHandler et MainGUI, dans leurs constructeurs respectifs et la methode mapInitialized() de MainGUI.
+ * Un objet de cette classe est créé par les classes suivantes: onMapDblCLickHandler, OnMapRightClickHandler, addNewPokeMarkerHandler, PokeMarkerMouseDblClickHandler, PokeMarkerRemoveFromMapHandler et MainGUI, dans leurs constructeurs respectifs et la méthode start() de MainGUI.
  * <p>
  * 
  * @version 1.0
  *
  * @see be.ac.ulb.infof307.g07.MainGUI
  * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblCLickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.OnMapRightClickHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.addNewPokeMarkerHandler
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerRemoveFromMapHandler
  * @see MapView#mapInitialized()
  *
  */
 public class MapView extends ClusteredMainApp { 
-    /**
-     * Une table de hachage contenant les markers (epingles) presents sur la carte et leurs identifiants (nombre entier servant de clef).
+   
+	/**
+     * Une table de hachage contenant les markers (épingles) présents sur la carte et leurs identifiants (nombre entier servant de clef).
      * 
      * @see be.ac.ulb.infof307.g07.models.Map#pokeMarkers
      * 
      */
     private HashMap<ObjectId, Marker> markersOnMap = new HashMap<ObjectId, Marker>();
 
+    /**
+     * La zone circulaire pour afficher les pokemons autour de l'utilisateur (cercle de rayon définis par celui-ci)
+     */
     private Circle centerOfGeoLoc = null;
+    
+    
     private Circle roundOfGeoLoc = null; 
     
     /**
@@ -195,8 +205,9 @@ public class MapView extends ClusteredMainApp {
     }
     
     /**
-     * Suppression d une epingle pokemon de la carte
-     * @param id l id de l objet a supprimer
+     * Suppression d'une épingle pokemon de la carte
+     * 
+     * @param id l'identifiant de l'objet à supprimer
      */
     public void removeMarker(ObjectId id) {
         googleMap.removeMarker(markersOnMap.get(id));
@@ -229,7 +240,17 @@ public class MapView extends ClusteredMainApp {
         this.fillPokeMap();
     }
 
+    /**
+     * Cette méthode compare la liste markerList contenant les pokemons autour de l'utilisateur (reçue de GeoLocaLisation.pokemonsAroundMe) avec la liste markersOnMap qui contient toutes les épingles (= pokemons) présentes sur la carte.
+     * Elle parcourt les identifiants de chaque épingle affichée sur la carte, et pour chacune, la rend invisible si celle-ci n'est pas présente dans la liste markerList et inversément la rend visible si elle est présente.
+     * 
+     * @param markerList la liste des épingles pokemons autour de l'utilisateur
+     * 
+     * @see be.ac.ulb.infof307.g07.models.GeoLocaLisation
+     * @see be.ac.ulb.infof307.g07.models.GeoLocaLisation#pokemonsAroundMe(PokeMarker[], int, Coordinate)
+     */
     public void geoLocalisationSetMarkers(HashMap<ObjectId, Integer> markerList) {
+    	//key est l'id des épingles 
         for (ObjectId key : this.markersOnMap.keySet()) {
             if (markerList.containsKey(key)) {
                 this.markersOnMap.get(key).setVisible(true);
@@ -239,11 +260,19 @@ public class MapView extends ClusteredMainApp {
         }
     }
     
+    /**
+     * 
+     * Crée un cercle de rayon radius (en mètres) sur la carte à la position donnée par l'objet center de type Coordinate (reçu de la méthode handle de OnMapRightClickHandler) et le colorie entièrement.
+     * 
+     * @param center le centre du cercle (en coordonnées latitude et longitude) qu'on veut créer.
+     * @param radius le rayon du cercle (en mètres) qu'on veut créer.
+     */
     public void geoLocalisationSetShape(Coordinate center, int radius) {
+    	//si une zone circulaire est déjà présente sur la carte on la retire avant d'ajouter la nouvelle
         if (this.centerOfGeoLoc != null) {
             this.googleMap.removeMapShape(this.centerOfGeoLoc);
         }
-        
+        //création d'un cercle plein coloré pour afficher sur la carte 
         CircleOptions newCircleOption = new CircleOptions();
         newCircleOption.center(new LatLong(center.getX(), center.getY()))
             .radius(radius)

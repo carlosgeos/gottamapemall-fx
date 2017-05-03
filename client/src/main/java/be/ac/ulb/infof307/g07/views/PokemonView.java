@@ -12,10 +12,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+/**
+ * 
+ * Cette classe représente la vue sur un pokemon, cad l'affichage des pokemons dans le pokedex
+ * 
+ * @version 1.0
+ *
+ * @see be.ac.ulb.infof307.g07.models.Pokemon
+ */
 public class PokemonView implements EventHandler<MouseEvent> {
+	
     private Pokemon pokemon;
     private PokedexView pokedexView;
     private GridPane pokemonGridPane;
+    
+    /**
+     * un libellé (texte) pour indiquer le nombre de fois que ce pokemon a été signalé sur la carte
+     */
     private Label globalCountLabel;
     private String holdGridStyle;
     private String defaultGridStyle;
@@ -114,6 +127,12 @@ public class PokemonView implements EventHandler<MouseEvent> {
         }
     }
 
+    /**
+     * cette méthode actualise le libellé globalCountLabel (via getGlobalCounting de Pokemon) avec le nombre de fois que le pokemon a été ajouté sur la carte (Pokemon.globalCounting) 
+     * 
+     * @see be.ac.ulb.infof307.g07.models.Pokemon
+     * @see be.ac.ulb.infof307.g07.models.Pokemon#getGlobalCounting()
+     */
     public void refreshCount() {
         this.globalCountLabel.setText(Integer.toString(this.pokemon.getGlobalCounting()));
     } 

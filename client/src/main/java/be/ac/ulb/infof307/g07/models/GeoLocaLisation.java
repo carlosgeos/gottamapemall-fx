@@ -6,6 +6,9 @@ import org.bson.types.ObjectId;
 
 import com.lynden.gmapsfx.shapes.Circle;
 
+
+//TODO: Changer nom du fichier ! GeoLocaLisation -> GeoLocalisation
+
 /**
  * Cette classe calcule la distance entre deux points en utilisant les coordonnees decimales (latitude, longitude)
  * ici la premiere position represente la position de l'utilisateur sur la carte et la deuxiemme represente une 
@@ -17,7 +20,15 @@ import com.lynden.gmapsfx.shapes.Circle;
  * @version 1.0 
  */
 public class GeoLocaLisation {
+	
+	/**
+	 * le rayon du cercle pour afficher les pokemons autour de l'utilisateur qui peut d'ailleurs le modifier grâce à un slider (curseur).
+	 */
     public static int radius = 100;
+    
+    /**
+     * le centre du cerlcu pour afficher les pokemons autour de l'utilisateur, sous forme d'un objet Coordinate (coordonées latitude et longtitude).
+     */
     public static Coordinate center = null;
         
     /**
@@ -40,6 +51,7 @@ public class GeoLocaLisation {
      * 
      * @param metres la distance a convertir
      * @return une distance decimale (latitude-longitude)  
+     * 
      */
     public static double metersToDecimalsCoordinates(int metres){
         double coordinate = metres * 0.0009 / 100 ;
@@ -48,15 +60,15 @@ public class GeoLocaLisation {
     }
 
     /**
-     * Cette methode boucle sur la liste des epingles pokemon et compare la distance entre la position de l utilisateur et la position de ces epingles
-     * Si cette distance est inferieure au rayon predefini alors on ajoute cette epingle dans une liste et on affichera ensuite sur la carte toutes les epingles de cette liste.
+     * Cette methode boucle sur la liste des épingles pokemon et compare la distance entre la position de l'utilisateur et la position de ces épingles.
+     * Si cette distance est inférieure au rayon choisi alors on ajoute cette épingle dans une liste (HashMap tempMarkerList) et on affichera ensuite sur la carte toutes les épingles de cette liste.
      * 
      * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * 
-     * @param markers la table de hachage contenant les epingles pokemon
-     * @param distanceMetre le rayon predefini, en metres
-     * @param fromMarker l epingle pokemon
-     * @return la liste des epingles pokemons a afficher (comprises dans le rayon donc)
+     * @param markers la table de hachage contenant toutes les épingles pokemon
+     * @param distanceMetre le rayon sélectionné, en mètres
+     * @param fromMarker la position de l'utilisateur sur la carte
+     * @return la liste des épingles pokemons à afficher (qui sont donc comprises dans le cercle de rayon distanceMetre)
      */
     public static HashMap<ObjectId, Integer> pokemonsAroundMe(PokeMarker[] markers, int distanceMetre, Coordinate fromMarker) {
         /*Boucle jusqu'à ce que tous les marqueurs aient été comparés. */

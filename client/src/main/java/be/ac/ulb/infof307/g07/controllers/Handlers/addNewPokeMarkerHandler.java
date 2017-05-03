@@ -9,7 +9,7 @@ import be.ac.ulb.infof307.g07.views.MapView;
 
 /**
  * 
- * Cette classe gere la gestion d une nouvelle epingle pokemon
+ * Cette classe gère la gestion de l'ajout d'une nouvelle épingle pokemon
  * 
  * @version 1.0
  * 
@@ -19,32 +19,36 @@ import be.ac.ulb.infof307.g07.views.MapView;
 public class addNewPokeMarkerHandler implements ChoosePokemonViewListener {
 	
 	/**
-	 * le modele sur la carte pokemon 
+	 * le modèle sur la carte pokemon 
+	 * 
+	 * @see be.ac.ulb.infof307.g07.models.Map
 	 */
     private Map pokeMap;
     
     /**
-     * la vue sur la carte pokemon
+     * L'objet vue de la carte pokemon pour les actions à effectuer sur l'affichage.
+     *
+     * @see be.ac.ulb.infof307.g07.views.MapView
      */
     private MapView pokeMapView;
     
     /**
-     * la latitude pour placer la nouvelle epingle
+     * la latitude où placer la nouvelle épingle
      */
     private double lat;
     
     /**
-     * la longitude pour placer la nouvelle epingle
+     * la longitude où placer la nouvelle épingle
      */
     private double lon;
     
     /**
      * Le constructeur de addNewPokeMarkerHandler
      * 
-     * @param pokeMap le modele sur la carte pokemon
+     * @param pokeMap le modèle sur la carte pokemon
      * @param pokeMapView la vue sur la carte pokemon
-     * @param lat la latitude pour placer la nouvelle epingle
-     * @param lon la longitude pour placer la nouvelle epingle
+     * @param lat la latitude pour placer la nouvelle épingle
+     * @param lon la longitude pour placer la nouvelle épingle
      */
     public addNewPokeMarkerHandler(Map pokeMap, MapView pokeMapView, double lat, double lon) {
         this.pokeMap = pokeMap;
@@ -54,12 +58,12 @@ public class addNewPokeMarkerHandler implements ChoosePokemonViewListener {
     }
     
     /**
-     * La methode qui s occupe des actions a effectuer apres avoir clique sur le bouton ok lors de l ajout d une epingle.
-     * Elle transmet les informations necessaire a addPokeMarker de Map, pour faire l ajout effectif de l epingle avec ses informations.
+     * La méthode qui s'occupe des actions à effectuer après avoir cliqué sur le bouton ok lors de l'ajout d une épingle.
+     * Elle transmet les informations nécessaires à addPokeMarker de Map, pour faire l'ajout effectif de l'épingle avec ses informations.
      * 
-     * @param pokemon le pokemon a ajouter
-     * @param date la date a laquelle le pokemon a ete vu
-     * @param time l heure a laquelle le pokemon a ete vu
+     * @param pokemon le pokemon à ajouter
+     * @param date la date à laquelle le pokemon a été vu
+     * @param time l'heure à laquelle le pokemon a été vu
      * 
      * @see be.ac.ulb.infof307.g07.models.Map
      * @see be.ac.ulb.infof307.g07.models.Map#addPokeMarker(double, double, Pokemon, String, String)

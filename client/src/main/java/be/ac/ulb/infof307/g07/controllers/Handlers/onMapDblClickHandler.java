@@ -10,7 +10,7 @@ import be.ac.ulb.infof307.g07.views.MapView;
 
 /**
  * 
- * Cette classe gere le double clic sur la carte et envoie les coordonnees a addNewPokeMarkerHandler pour creer une nouvelle epingle a l endroit du clic.
+ * Cette classe gère le double clic sur la carte et envoie les coordonnées à addNewPokeMarkerHandler pour créer une nouvelle épingle à l'endroit du clic.
  * 
  * @version 1.0
  *
@@ -18,17 +18,35 @@ import be.ac.ulb.infof307.g07.views.MapView;
  * @see be.ac.ulb.infof307.g07.views.ChoosePokemonView
  */
 public class onMapDblClickHandler implements MouseEventHandler {
-    private Map pokeMap;
+   
+	/**
+	 * le modèle sur la carte pokemon 
+	 * 
+	 * @see be.ac.ulb.infof307.g07.models.Map
+	 */
+	private Map pokeMap;
+	
+    /**
+     * L'objet vue de la carte pokemon pour les actions à effectuer sur l'affichage.
+     *
+     * @see be.ac.ulb.infof307.g07.views.MapView
+     */
     private MapView pokeMapView;
-    
+  
+    /**
+     * Constructeur de onMapDblClickHandler
+     * 
+     * @param pokeMap le modèle sur la carte pokemon
+     * @param pokeMapView la vue sur la carte pokemon
+     */
     public onMapDblClickHandler(Map pokeMap, MapView pokeMapView) {
         this.pokeMap = pokeMap;
         this.pokeMapView = pokeMapView;
     }
     
     /**
-     * Recupere les coordonnees du clic (latitude, longitude) et les envoie au handler addNewPokeMarkerHandler pour l ajout d une epingle pokemon.
-     * ChoosePokemonView qui se charge d'afficher les differents pokemons selectionnables, est aussi appelee ici.
+     * Récupère les coordonnées du clic (latitude, longitude) et les envoie au handler addNewPokeMarkerHandler pour l'ajout d'une épingle pokemon.
+     * ChoosePokemonView qui se charge d'afficher les différents pokemons sélectionnables, est aussi appelée ici.
      * 
      * @see be.ac.ulb.infof307.g07.views.ChoosePokemonView
      */

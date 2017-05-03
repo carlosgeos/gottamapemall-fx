@@ -5,7 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 /**
- * Cette classe s occupe de gerer les changements effectues sur le slider pour le rayon de la geolocalisation.
+ * Cette classe s'occupe de gérer les changements effectués sur le curseur (slider) pour le rayon de la géolocalisation.
  * 
  * @version 1.0
  *
@@ -13,7 +13,7 @@ import javafx.beans.value.ObservableValue;
 public class GeoLocalisationSliderChangeHandler implements ChangeListener<Number> {
     
 	/**
-	 * Lorsque l on change le slider on recupere la nouvelle valeur pour l affecter au rayon.
+	 * Lorsque l on change le curseur on récupère la nouvelle valeur pour l'affecter au rayon.
 	 */
 	@Override
     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {

@@ -31,7 +31,7 @@ public class Map {
     
     private Pokedex pokedex;
 
-    
+    //TODO: utilisé ? -> si oui ok et dire dans doc? sinon supprimer?
     public Map () {}
 
     public Map (Pokedex pokedex) {
@@ -117,9 +117,9 @@ public class Map {
     }
     
     /**
-     * Retire une epingle pokemon: decremente son compteur de signalisations et fait appel a la methode remove de pokeMarker.
+     * Retire une épingle pokemon: décrémente son compteur de signalisations et fait appel à la méthode remove de pokeMarker.
      * 
-     * @param pokeMarker l epingle pokemon a supprimer
+     * @param pokeMarker l'épingle pokemon à supprimer
      */
     public void removePokeMarker(PokeMarker pokeMarker) {
         Pokemon pokemon = this.pokedex.getPokemonWithId(pokeMarker.getPokemon().getId());

@@ -27,8 +27,10 @@ import java.util.HashMap;
 
 /**
  *
- * @author Fan et Renato
+ * Cette classe s'occupe de l'affichage du pokedex
  *
+ * @author Fan et Renato
+ * @version 1.0
  */
 public class PokedexView {
     // stock real pokemon
@@ -150,6 +152,14 @@ public class PokedexView {
         return pokedexStackPane;
     }
 
+    
+    /**
+     * 
+     * Affiche en lieu et place du pokedex, le pokemon sélectionné et des informations complémentaires (image, nom, id, caractéristiques: type-s, taille, et poids)
+     * 
+     * @param pokemon le pokemon à afficher
+     * 
+     */
     public void showPokemonDetail( Pokemon pokemon ) {
         // prepare all info of this pokemon
         this.pokemonNameTextField.setText(pokemon.getName());

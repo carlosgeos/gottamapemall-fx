@@ -5,6 +5,15 @@ import be.ac.ulb.infof307.g07.controllers.PokemonListener;
 
 public class Pokemon {
     private transient ArrayList<PokemonListener> listeners = new ArrayList<PokemonListener>();
+    
+    /**
+     * le nombre de fois qu'on a ajouté le pokemon sur la carte, utilisé pour onPokemonGlobalCountChangeHandler et PokemonView
+     * 
+     * @see be.ac.ulb.infof307.g07.controllers.Handlers.onPokemonGlobalCountChangeHandler
+     * @see be.ac.ulb.infof307.g07.views.PokemonView
+     * @see be.ac.ulb.infof307.g07.views.PokemonView#globalCountLabel
+     * @see be.ac.ulb.infof307.g07.views.PokemonView#refreshCount()
+     */
     private transient int globalCounting = 0;
     private final int id;
     private final String name;
@@ -63,9 +72,10 @@ public class Pokemon {
         }
     }
     
-    /**
-     * Renvoie le numero de fois que ce pokemon a ete ajoute
-     */  
+   /**
+    * Renvoie le nombre de fois que ce pokemon a été ajouté sur la carte 
+    * @return le compteur de repérages du pokemon sur la carte (nombre de signalisations), sous forme d'une entier constant 
+    */
     public final int getGlobalCounting(){
         return this.globalCounting;
     }

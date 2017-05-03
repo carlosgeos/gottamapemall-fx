@@ -6,24 +6,30 @@ import javafx.event.EventHandler;
 
 /**
  * 
- * Cette classe s occupe de la fermeture de la fenetre de detail d un pokemon dans le pokedex.
+ * Cette classe s'occupe de la fermeture de la fenêtre de détails d un pokemon dans le pokedex.
  * 
  * @version 1.0
  */
 public class ClosePokemonDetailWindowHandler implements EventHandler<ActionEvent>{
 	
+   /**
+	*
+	* L'objet vue du pokedex pour les actions à effectuer sur l'affichage.
+    *
+    * @see be.ac.ulb.infof307.g07.views.PokedexView
+    */
     private PokedexView pokedex;
     
     /**
      * Constructeur
-     * @param pokedex la vue du pokedex
+     * @param pokedex la vue du pokedex pour les modifications sur l'affichage
      */
     public ClosePokemonDetailWindowHandler(PokedexView pokedex) {
         this.pokedex = pokedex;
     }
     
     /**
-     * Ferme la fenetre 
+     * Ferme la fenêtre 
      */
     @Override
     public void handle(ActionEvent event) {
