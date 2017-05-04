@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07;
 
 import be.ac.ulb.infof307.g07.libs.CustomGson;
+import be.ac.ulb.infof307.g07.views.FilterView;
 import be.ac.ulb.infof307.g07.views.GeoLocalisationView;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;
@@ -45,6 +46,7 @@ public class MainGUI extends Application {
      */
     private MapView pokeMapView;
     private PokedexView pokedexView;
+    private FilterView filterView;
 
     @Override
     /**
@@ -64,18 +66,21 @@ public class MainGUI extends Application {
 
         this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
         this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight, this.pokedexView);
-
+        this.filterView = new FilterView(mainWindowWidth/3,mainWindowHeight/3);
+        
         // configure map view and pokedex view
         StackPane pokedexViewStackPane = pokedexView.getView();
         StackPane stackpane = new StackPane();
         stackpane.getChildren().add(this.pokeMapView.getView());
+
         stackpane.getChildren().add(pokedexViewStackPane);
         StackPane.setAlignment(pokedexViewStackPane, Pos.TOP_RIGHT);
         
         Slider slider = GeoLocalisationView.createView(mainWindowWidth/3*2, 200);
         stackpane.getChildren().add(slider);
         StackPane.setAlignment(slider, Pos.TOP_LEFT);
-        
+        stackpane.getChildren().add(this.filterView.getView());
+        //StackPane.setAlignment(this.filterView, Pos.TOP_LEFT);        
         StackPane.setMargin(pokedexViewStackPane, new Insets(0, 15, 0, 0));
         
         
