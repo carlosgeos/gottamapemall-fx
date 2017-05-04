@@ -49,7 +49,7 @@ public class PokemonView implements EventHandler<MouseEvent> {
         this.pokemonGridPane.setPadding(pokemonPadding);
 
 
-        Image pokemonImage = new Image(this.pokemon.getImagePath(), iconWidth, iconHeight, true, true);
+        Image pokemonImage = new Image(this.pokemon.getId() + ".gif", iconWidth, iconHeight, true, true);
         ImageView pokemonImageView = new ImageView(pokemonImage);
 
         this.pokemonGridPane.add(pokemonImageView, 0, 0);
@@ -116,5 +116,5 @@ public class PokemonView implements EventHandler<MouseEvent> {
 
     public void refreshCount() {
         this.globalCountLabel.setText(Integer.toString(this.pokemon.getGlobalCounting()));
-    } 
+    }
 }
