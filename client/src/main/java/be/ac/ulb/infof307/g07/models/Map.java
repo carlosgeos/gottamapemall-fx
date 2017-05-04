@@ -26,9 +26,12 @@ import java.util.HashMap;
  *
  */
 public class Map {
+	
     private final static Logger LOGGER = Logger.getLogger(Map.class.getName());
+    
     private Pokedex pokedex;
 
+    
     public Map () {}
 
     public Map (Pokedex pokedex) {
@@ -65,6 +68,7 @@ public class Map {
      * @see Map#addPokeMarker(double, double, Pokemon, String, String)
      * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * @see be.ac.ulb.infof307.g07.models.PokeMarker#getId() 
+     * 
      */
     public PokeMarker addPokeMarker(PokeMarker marker) {
         Pokemon pokemon = this.pokedex.getPokemonWithId(marker.getPokemon().getId());
@@ -112,6 +116,11 @@ public class Map {
         return markers.length;
     }
     
+    /**
+     * Retire une epingle pokemon: decremente son compteur de signalisations et fait appel a la methode remove de pokeMarker.
+     * 
+     * @param pokeMarker l epingle pokemon a supprimer
+     */
     public void removePokeMarker(PokeMarker pokeMarker) {
         Pokemon pokemon = this.pokedex.getPokemonWithId(pokeMarker.getPokemon().getId());
         pokemon.decreaseGlobalCounting();

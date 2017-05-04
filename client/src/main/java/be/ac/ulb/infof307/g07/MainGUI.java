@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 /**
  * <b>MainGUI est la classe qui se charge de lancer l'interface graphique (afficher la carte dans la fenetre).</b>
- * Elle hÃ©rite de la classe Application de javafx.
+ * Elle herite de la classe Application de javafx.
  *
  * @see be.ac.ulb.infof307.g07.views.MapView
  *
