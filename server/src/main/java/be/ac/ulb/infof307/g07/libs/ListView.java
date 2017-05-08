@@ -20,7 +20,7 @@ import be.ac.ulb.infof307.g07.libs.Error;
  * @param <T> The model instance to create the API endpoint on.
  */
 public abstract class ListView<T> {
-    static protected Gson gson = CustomGson.get();
+    protected Gson gson = CustomGson.get();
 
     /**
      * Utilisé pour définir la route.
