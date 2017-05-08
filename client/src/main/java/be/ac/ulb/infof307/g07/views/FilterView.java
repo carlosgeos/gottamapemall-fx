@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -34,12 +36,15 @@ public class FilterView {
         this.mainView.add(new Label("Name : "), 0, 0);
         this.nameTextField = new TextField();
         this.mainView.add(this.nameTextField, 1, 0);
+        
         this.mainView.add(new Label("Type 1 : "), 0, 1);
         this.type1TextField = new TextField();
         this.mainView.add(this.type1TextField, 1, 1);
+        
         this.mainView.add(new Label("Type 2 : "), 0, 2);
         this.type2TextField = new TextField();
         this.mainView.add(this.type2TextField, 1, 2);
+        
         this.mainView.add(new Label("Weight : "), 0, 3);
         this.weightTextField = new TextField();
         this.mainView.add(this.weightTextField, 1, 3);
@@ -47,20 +52,24 @@ public class FilterView {
         this.mainView.add(new Label("Height : "), 0, 4);
         this.heightTextField = new TextField();
         this.mainView.add(this.heightTextField, 1, 4);
+        
         this.mainView.add(new Label("Base experience : "), 0, 5);
         this.baseExpTextField = new TextField();
         this.mainView.add(this.baseExpTextField, 1, 5);
         
         this.saveButton = new Button("Save");
-        this.mainView.add( this.saveButton, 0, 7);
+        this.mainView.add(this.saveButton, 0, 6);
         this.saveButton.setOnAction(new FilterSaveHandler(this));
+        
         this.searchButton = new Button("Search");
-        this.mainView.add(this.searchButton, 1, 7);
+        this.mainView.add(this.searchButton, 1, 6);
         this.searchButton.setOnAction(new FilterSearchHandler(this));
        
         this.mainView.setVgap(2);
         this.mainView.setHgap(2);
         this.mainView.setPadding(new Insets(2,2,2,2));
+        
+                
     }
 
     public FilterModel getFilter() {

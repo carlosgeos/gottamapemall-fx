@@ -67,6 +67,8 @@ public class MainGUI extends Application {
         this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
         this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight, this.pokedexView);
         this.filterView = new FilterView(mainWindowWidth/3,mainWindowHeight/3);
+        GridPane filterPane = new GridPane();
+        filterPane = this.filterView.getView();
         
         // configure map view and pokedex view
         StackPane pokedexViewStackPane = pokedexView.getView();
@@ -79,8 +81,10 @@ public class MainGUI extends Application {
         Slider slider = GeoLocalisationView.createView(mainWindowWidth/3*2, 200);
         stackpane.getChildren().add(slider);
         StackPane.setAlignment(slider, Pos.TOP_LEFT);
-        stackpane.getChildren().add(this.filterView.getView());
-        //StackPane.setAlignment(this.filterView, Pos.TOP_LEFT);        
+        
+        stackpane.setAlignment(filterPane, Pos.CENTER_LEFT);
+        stackpane.getChildren().add(filterPane);
+        
         StackPane.setMargin(pokedexViewStackPane, new Insets(0, 15, 0, 0));
         
         

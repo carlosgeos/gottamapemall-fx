@@ -7,7 +7,6 @@ import org.mongodb.morphia.query.Query;
 import org.bson.types.ObjectId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import be.ac.ulb.infof307.g07.lib.serializers.LocationDeserializer;
 import com.google.gson.JsonSyntaxException;
 import be.ac.ulb.infof307.g07.models.LocationModel;
 import be.ac.ulb.infof307.g07.models.PokemonModel;
