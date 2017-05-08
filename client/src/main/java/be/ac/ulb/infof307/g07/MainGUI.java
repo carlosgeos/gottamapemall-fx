@@ -66,7 +66,7 @@ public class MainGUI extends Application {
 
         this.pokedexView = new PokedexView(mainWindowWidth/3, mainWindowHeight);
         this.pokeMapView = new MapView(mainWindowWidth, mainWindowHeight, this.pokedexView);
-        this.filterView = new FilterView(mainWindowWidth/3,mainWindowHeight/3);
+        this.filterView = new FilterView(mainWindowWidth/3,mainWindowHeight/3, this.pokeMapView);
         GridPane filterPane = new GridPane();
         filterPane = this.filterView.getView();
         

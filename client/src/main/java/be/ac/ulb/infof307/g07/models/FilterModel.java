@@ -17,6 +17,23 @@ public class FilterModel {
     }
 
     public String createQuery () {
-        return ""; 
+        String query = "?";
+        if (this.name != null) {
+            query += "search=" + this.name + "&";
+        }
+
+        if (this.weight != -1) {
+            query += "weight=" + Integer.toString(this.weight) + "&";
+        }
+
+        if (this.height != -1) {
+            query += "height=" + Integer.toString(this.height) + "&";
+        }
+
+        if (this.base_experience != -1) {
+            query += "base_experience=" + Integer.toString(this.base_experience);
+        }
+
+        return query; 
     }
 }

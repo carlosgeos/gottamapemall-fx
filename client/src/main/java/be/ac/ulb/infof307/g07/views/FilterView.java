@@ -5,6 +5,7 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import be.ac.ulb.infof307.g07.controllers.Handlers.FilterSaveHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.FilterSearchHandler;
 import be.ac.ulb.infof307.g07.models.FilterModel;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class FilterView {
+    private MapView view;
     private GridPane mainView;
     private TextField nameTextField;
     private TextField type1TextField;
@@ -27,7 +29,8 @@ public class FilterView {
     private Button saveButton;
     private Button searchButton;
     
-    public FilterView( double width, double height) {
+    public FilterView(double width, double height, MapView view) {
+        this.view = view;
         this.mainView = new GridPane();
         this.mainView.setMaxSize(width, height);
         this.mainView.setMinSize(width, height);
@@ -74,7 +77,7 @@ public class FilterView {
 
     public FilterModel getFilter() {
         String name = this.nameTextField.textProperty().get();
-        List<String> types = new ArrayList<String>();
+        ArrayList<String> types = new ArrayList<String>();
         String type1 = this.type1TextField.textProperty().get();
         if (!type1.isEmpty()) {
             types.add(type1);
@@ -102,8 +105,14 @@ public class FilterView {
             base_experience = Integer.parseInt(baseText);
         }
 
-        String[] typesArray = (String[]) types.toArray();
+        String[] typesArray = new String[types.size()];
+        typesArray = types.toArray(typesArray);
+
         return new FilterModel(name, typesArray, weight, height, base_experience);
+    }
+
+    public void filterOnMap(PokeMarker[] markers) {
+        this.view.setMarkers(markers);
     }
     
     public GridPane getView() {

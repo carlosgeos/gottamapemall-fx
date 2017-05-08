@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g07.views;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+// import java.util.Map;
 import org.bson.types.ObjectId;
 
 import be.ac.ulb.infof307.g07.libs.CustomGson;                                   
@@ -177,6 +178,17 @@ public class MapView  implements MapComponentInitializedListener {
             googleMap.addUIEventHandler(newMarker, UIEventType.dblclick, new PokeMarkerMouseDblClickHandler(pokeMap, this, pokeMarker));
         
             refreshMap();
+        }
+    }
+
+    public void setMarkers(PokeMarker[] markers) {
+        for (HashMap.Entry<ObjectId, Marker> entry: markersOnMap.entrySet()) {
+            googleMap.removeMarker(markersOnMap.get(entry.getKey()));
+        }
+        this.markersOnMap = new HashMap<ObjectId, Marker>();
+
+        for (int i = 0; i < markers.length; ++i) {
+            this.addMarker(markers[i]);
         }
     }
     
