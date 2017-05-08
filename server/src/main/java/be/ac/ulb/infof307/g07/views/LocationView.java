@@ -29,6 +29,10 @@ public final class LocationView extends ListView<LocationModel> {
         return LocationModel.class;
     }
 
+    protected String getSearchField () {
+        return "pokemon.name";
+    }
+
     /**
      * Il est possible de filtrer sur les caractéristiques du pokémon:
      *  - types
