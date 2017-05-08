@@ -7,20 +7,21 @@ import javafx.collections.ObservableList;
 
 /**
  * 
- * Cette classe contient les donnees (modele) relatives au pokedex.
+ * Cette classe contient les données (modèle) relatives au pokedex.
  * 
- * @author corentin
  * @version 1.0
+ * @see be.ac.ulb.infof307.g07.models.Pokemon
  */
 public class Pokedex {
 	
 	/**
-	 * Un objet ObservableList de javaFx pour pouvoir observer les changements subis
+	 * Un objet ObservableList de javaFx pour pouvoir observer les changements subis par le pokedex
 	 */
     private ObservableList<Pokemon> pokemonInPokedex;
     
     /**
-     * Constructeur de Pokedex, instancie la liste pokemonInPokedex (objet observableArrayList) et appelle la methode fillPokedex.
+     * Constructeur de Pokedex, instancie la liste pokemonInPokedex (objet observableArrayList) et appelle la méthode fillPokedex.
+     * @see Pokedex#fillPokedex()
      */
     public Pokedex(){
         // instance the list for stocking pokemon
@@ -29,7 +30,9 @@ public class Pokedex {
     }
     
     /**
-     * Remplit la liste pokemonInPokedex avec tous les pokemons recuperes du serveur
+     * Remplit la liste pokemonInPokedex avec tous les pokemons récupérés du serveur
+     * 
+     * @see be.ac.ulb.infof307.g07.models.Pokemon
      */
     private void fillPokedex() {
         String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
@@ -41,6 +44,7 @@ public class Pokedex {
         }
     }
     /**
+     * Renvoie la taille de du pokedex, sous forme d'un nombre entier (nombre de pokemon)
      * 
      * @return la taille de la liste pokemonInPokedex, sous forme d'un entier constant
      */
@@ -51,18 +55,19 @@ public class Pokedex {
     /**
      * Renvoie un pokemon de la liste en fonction de sa position 
      * 
-     * @param index la postion dans la liste d'un pokemon donne
-     * @return	le pokemon a la position demandee dans la liste
+     * @param index la position dans la liste d'un pokemon donné
+     * @return	le pokemon à la position demandée dans la liste
      */
     public final Pokemon getPokemon(int index) {
         return this.pokemonInPokedex.get(index);
     }
 
     /**
-     * Renvoie un pokemon de la liste en fonction de son id
+     * Renvoie un pokemon de la liste en fonction de son identifiant (id)
      * 
-     * @param id l identifiant du pokemon qu on recherche
-     * @return le pokemon avec l id demande
+     * @param id l'identifiant du pokemon recherché
+     * @return le pokemon avec l'id demandé
+     * @see be.ac.ulb.infof307.g07.models.Pokemon
      */
     public final Pokemon getPokemonWithId(int id) {
         Pokemon res;
