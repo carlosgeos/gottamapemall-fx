@@ -4,11 +4,14 @@ import javax.swing.event.HyperlinkEvent.EventType;
 
 import be.ac.ulb.infof307.g07.controllers.Handlers.FilterSaveHandler;
 import be.ac.ulb.infof307.g07.controllers.Handlers.FilterSearchHandler;
+import be.ac.ulb.infof307.g07.models.FilterModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import java.util.List;
+import java.util.ArrayList;
 
 public class FilterView {
     private GridPane mainView;
@@ -18,7 +21,6 @@ public class FilterView {
     private TextField weightTextField;
     private TextField heightTextField;
     private TextField baseExpTextField;
-    private TextField filterNameTextField;
     
     private Button saveButton;
     private Button searchButton;
@@ -49,27 +51,50 @@ public class FilterView {
         this.baseExpTextField = new TextField();
         this.mainView.add(this.baseExpTextField, 1, 5);
         
-        this.mainView.add(new Label("Filtername : "), 0, 6);
-        this.filterNameTextField = new TextField();
-        this.mainView.add(this.filterNameTextField, 1, 6);
-        
         this.saveButton = new Button("Save");
         this.mainView.add( this.saveButton, 0, 7);
+        this.saveButton.setOnAction(new FilterSaveHandler(this));
         this.searchButton = new Button("Search");
         this.mainView.add(this.searchButton, 1, 7);
-        this.saveButton.setOnAction(new FilterSaveHandler( this.nameTextField.textProperty().get(), 
-                this.type1TextField.textProperty().get(), this.type2TextField.textProperty().get(), 
-                Integer.parseInt(this.weightTextField.textProperty().get()),
-                Integer.parseInt(this.heightTextField.textProperty().get()), Integer.parseInt(this.baseExpTextField.textProperty().get()),
-                this.filterNameTextField.textProperty().get()));
-        
-        this.searchButton.setOnAction(new FilterSearchHandler(this.nameTextField.textProperty().get(), 
-                this.type1TextField.textProperty().get(), this.type2TextField.textProperty().get(), 
-                Integer.parseInt(this.weightTextField.textProperty().get()),
-                Integer.parseInt(this.heightTextField.textProperty().get()), Integer.parseInt(this.baseExpTextField.textProperty().get())));
+        this.searchButton.setOnAction(new FilterSearchHandler(this));
+       
         this.mainView.setVgap(2);
         this.mainView.setHgap(2);
         this.mainView.setPadding(new Insets(2,2,2,2));
+    }
+
+    public FilterModel getFilter() {
+        String name = this.nameTextField.textProperty().get();
+        List<String> types = new ArrayList<String>();
+        String type1 = this.type1TextField.textProperty().get();
+        if (!type1.isEmpty()) {
+            types.add(type1);
+        }
+        String type2 = this.type2TextField.textProperty().get();
+        if (!type2.isEmpty()) {
+            types.add(type2);
+        }
+
+        String heightText = this.heightTextField.textProperty().get();
+        int height = -1;
+        if (!heightText.isEmpty()) {
+            height = Integer.parseInt(heightText);
+        }
+
+        String weightText = this.weightTextField.textProperty().get();
+        int weight = -1;
+        if (!weightText.isEmpty()) {
+            weight = Integer.parseInt(weightText);
+        }
+
+        String baseText = this.baseExpTextField.textProperty().get();
+        int base_experience = -1;
+        if (!baseText.isEmpty()) {
+            base_experience = Integer.parseInt(baseText);
+        }
+
+        String[] typesArray = (String[]) types.toArray();
+        return new FilterModel(name, typesArray, weight, height, base_experience);
     }
     
     public GridPane getView() {
