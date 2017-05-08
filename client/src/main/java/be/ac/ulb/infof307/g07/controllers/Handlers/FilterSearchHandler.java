@@ -18,8 +18,6 @@ public class FilterSearchHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         FilterModel model = this.view.getFilter();
-        String response = Requests.get("http://127.0.0.1:4567/pokemons" + model.getQuery()).send().readToText();
-        Gson gson = CustomGson.get();
-        Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
+        String response = Requests.get("http://127.0.0.1:4567/locations" + model.getQuery()).send().readToText();
     }
 }
