@@ -16,13 +16,12 @@ import java.util.HashMap;
  * Par exemple les epingles (markers) et les informations les concernant.
  * 
  * <p>
- * C est aussi ici qu on cree les objets PokeMarker et Coordinate.
- * Un objet de cette classe est cree par les classes suivantes: MapMouseDblClickHandler et MapController dans leurs constructeurs respectifs.
+ * C est aussi ici qu on crée les objets PokeMarkers.
+ * Un objet de cette classe est crée par les classes suivantes:    dans leurs constructeurs respectifs.
  * <p>
  * 
  * @version 1.2
  * @see be.ac.ulb.infof307.g07.models.PokeMarker
- * @see be.ac.ulb.infof307.g07.models.Coordinate
  *
  */
 public class Map {

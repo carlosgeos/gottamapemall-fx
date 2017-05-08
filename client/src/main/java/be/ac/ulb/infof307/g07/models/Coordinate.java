@@ -1,31 +1,38 @@
 package be.ac.ulb.infof307.g07.models;
 
+//TODO: Pourquoi on utilise des réels (double lat, et double lon) dans onMapDblClickHandler au lieu de Coordinate? 
+//Ne faudrait-il pas choisir l'un ou l'autre?
+
 /**
- * <b>Coordinate est la classe representant une coordonnee dans un plan (deux nombres reels).</b>
- * Elle est utilisee pour afficher une epingle a une position donnee sur la carte.
+ * <b>Coordinate est la classe représentant une coordonnée dans un plan (deux nombres réels).</b>
+ * Elle est utilisée pour afficher une épingle à une position donnée sur la carte.
  * 
  * <p>
- * Un objet de cette classe est instancie par la classe MapMouseDblClickHandler, dans sa methode handle(), ainsi que
- * par la classe Map, dans sa methode addPokeMarker(double, double).
+ * Un objet de cette classe est instancié par la classe OnMapRightClickHandler dans sa méthode handle(),   (attribut statique 'center'),   
+ * PokeMarker dans sa méthode getOnMapPosition() et MapView (attribut statique position). 
  * <p>
  * 
- * @see be.ac.ulb.infof307.g07.models.Map
+ * @see be.ac.ulb.infof307.g07.controllers.Handlers.OnMapRightClickHandler
+ * @see be.ac.ulb.infof307.g07.models.GeoLocaLisation
+ * @see be.ac.ulb.infof307.g07.models.PokeMarker
+ * @see be.ac.ulb.infof307.g07.views.MapView
  * 
  * @author fan
  * @version 1.2
  */
 public class Coordinate {
+	
     /**
      * La position en abscisse (x) dans le plan, ou latitude sur une carte.
      */
     private double x;
     
     /**
-     * La position en ordonnee (y) dans le plan, ou longitude sur une carte.
+     * La position en ordonnée (y) dans le plan, ou longitude sur une carte.
      */
     private double y;
     
-     /**
+    /**
      * Constructeur de Coordinate.
      * 
      * @param newX
@@ -42,16 +49,16 @@ public class Coordinate {
     /**
      * Retourne la position en abscisse (x), ou latitude.
      * 
-     * @return La coordonnee en abscisse, sous forme d'un nombre reel (double).
+     * @return La coordonnée en abscisse, sous forme d'un nombre réel (double).
      */
     public double getX() {
         return x;
     }
     
     /**
-     * Retourne la position en ordonnee (y), ou longitude.
+     * Retourne la position en ordonnée (y), ou longitude.
      * 
-     * @return La coordonnee en ordonnee, sous forme d'un nombre reel (double).
+     * @return La coordonnée en ordonnée, sous forme d'un nombre réel (double).
      */
     public double getY() {
         return y;

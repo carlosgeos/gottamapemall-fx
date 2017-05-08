@@ -10,10 +10,11 @@ import be.ac.ulb.infof307.g07.models.Pokemon;
  * Gère la création d'une instance `gson` de manière globale.
  */
 public class CustomGson {
+	
     static private Gson gson = null;
 
     /**
-     * Crée l'instance `gson` avec des serializers particuliés.
+     * Crée l'instance `gson` avec des serializers particuliers.
      */
     static public void create () {
         GsonBuilder gsonBuild = new GsonBuilder();

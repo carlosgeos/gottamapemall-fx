@@ -10,10 +10,9 @@ import com.lynden.gmapsfx.shapes.Circle;
 //TODO: Changer nom du fichier ! GeoLocaLisation -> GeoLocalisation
 
 /**
- * Cette classe calcule la distance entre deux points en utilisant les coordonnees decimales (latitude, longitude)
- * ici la premiere position represente la position de l'utilisateur sur la carte et la deuxiemme represente une 
- * epingle (pokemon).
- * finalement on aura une liste qui contient les id des epingles a afficher 
+ * Cette classe calcule la distance entre deux points en utilisant les coordonnées décimales (latitude, longitude) 
+ * Ici la première position représente la position de l'utilisateur sur la carte et la deuxième représente une épingle (pokemon).
+ * Finalement on aura une liste qui contient les identifiants des épingles à afficher. 
  * 
  * @see be.ac.ulb.infof307.g07.models.PokeMarker 
  * @author Pieer Lahdo
@@ -27,18 +26,18 @@ public class GeoLocaLisation {
     public static int radius = 100;
     
     /**
-     * le centre du cerlcu pour afficher les pokemons autour de l'utilisateur, sous forme d'un objet Coordinate (coordonées latitude et longtitude).
+     * le centre du cercle pour afficher les pokemons autour de l'utilisateur, sous forme d'un objet Coordinate (coordonées latitude et longtitude).
      */
     public static Coordinate center = null;
         
     /**
-     * calcule la distance entre deux points en utilisant les coordonnees decimales (latitude, longitude)
+     * Calcule la distance entre deux points en utilisant les coordonnées décimales (latitude, longitude)
      * 
-     * @param lon1 Longitude de la position de l'utilisateur
-     * @param lat1 Latitude de la position de l'utilisateur
-     * @param lon2 Longitude de la position du pokemon
-     * @param lat2 Latitude de la position du pokemon
-     * @return distance entre deux points 
+     * @param lon1 Longitude de la position de l'utilisateur sous forme décimale 
+     * @param lat1 Latitude de la position de l'utilisateur sous forme décimale
+     * @param lon2 Longitude de la position du pokemon sous forme décimale
+     * @param lat2 Latitude de la position du pokemon sous forme décimale
+     * @return la distance entre les deux points sous forme d'un nombre réel (double)
      */
     public static double distanceBetnTwoPoints(double lon1, double lat1, double lon2, double lat2){
         double res;
@@ -47,26 +46,25 @@ public class GeoLocaLisation {
     }
     
     /**
-     * Convertit la distance entre deux points (en metres), en une distance decimale (latitude-longitude)  
+     * Convertit la distance entre deux points (en mètres), en une distance décimale (latitude-longitude)  
      * 
-     * @param metres la distance a convertir
-     * @return une distance decimale (latitude-longitude)  
-     * 
+     * @param metres la distance à convertir
+     * @return une distance décimale (latitude-longitude) résultat de la conversion de la distance initiale en mètres 
      */
     public static double metersToDecimalsCoordinates(int metres){
         double coordinate = metres * 0.0009 / 100 ;
-        // regle de trois, 100 metres c'est 0.0009 entre deux points de coordonnées, 0.0009 == 0 degrés 0 minutes 3secondes
+        // règle de trois, 100 mètres c'est 0.0009 entre deux points de coordonnées, 0.0009 == 0 degrés 0 minutes 3 secondes
         return coordinate;
     }
 
     /**
-     * Cette methode boucle sur la liste des épingles pokemon et compare la distance entre la position de l'utilisateur et la position de ces épingles.
-     * Si cette distance est inférieure au rayon choisi alors on ajoute cette épingle dans une liste (HashMap tempMarkerList) et on affichera ensuite sur la carte toutes les épingles de cette liste.
+     * Cette méthode boucle sur la liste des épingles pokemon et compare la distance entre la position de l'utilisateur et la position de ces épingles.
+     * Si cette distance est inférieure au rayon prédéfini (ou choisi par l'utilisateur) alors on ajoute cette épingle dans une liste (HashMap tempMarkerList) et on affichera ensuite sur la carte toutes les épingles de cette liste.
      * 
      * @see be.ac.ulb.infof307.g07.models.PokeMarker
      * 
      * @param markers la table de hachage contenant toutes les épingles pokemon
-     * @param distanceMetre le rayon sélectionné, en mètres
+     * @param distanceMetre le rayon prédéfini ou choisi par l'utilisateur, en mètres
      * @param fromMarker la position de l'utilisateur sur la carte
      * @return la liste des épingles pokemons à afficher (qui sont donc comprises dans le cercle de rayon distanceMetre)
      */
