@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g07.models;
 
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
@@ -15,6 +17,7 @@ public class PokeMarker extends Marker{
 	private final double lon;
 	private final Pokemon assignedPokemon;
 	private final String discoveredTime;
+	private InfoWindow infoWindow;
 	
 	/**
 	 * Le constructeur de la classe PokeMarker.
@@ -33,6 +36,7 @@ public class PokeMarker extends Marker{
 		assignedPokemon = newAssignedPokemon;
 		discoveredTime = newDiscoveredTime;
 		setOptions(createDefaultOption());
+		createInfoWindow();
 	}
 	
 	/**
@@ -87,6 +91,20 @@ public class PokeMarker extends Marker{
 	 */
 	public final double getLon(){
 		return lon;
-	}	
+	}
+	
+	public void createInfoWindow(){
+		InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+		infoWindowOptions.content(getHTML());
+		infoWindow = new InfoWindow(infoWindowOptions);
+	}
+	
+	public void openWindow(){
+		infoWindow.open(Map.getInstance(), this);
+	}
+	
+	public void closeWindow(){
+		infoWindow.close();
+	}
 	
 }

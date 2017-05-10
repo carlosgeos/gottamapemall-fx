@@ -3,18 +3,18 @@ package be.ac.ulb.infof307.g07.models;
 import java.net.ConnectException;
 import java.util.HashMap;
 
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+
 
 /**
  * Map est le modele qui stocke l ensemble de modeles (ex: PokerMarker) se trouvant sur la map.
- * @author Groupe 7
  *
  */
-public class Map {
+public class Map extends GoogleMap{
 
 	private static Map instance = null;
 	private HashMap<Integer, PokeMarker> pokeMarkers;
 	private Gson gson;
-	
 	
 	/**
 	 * Construit un objet du type Map
