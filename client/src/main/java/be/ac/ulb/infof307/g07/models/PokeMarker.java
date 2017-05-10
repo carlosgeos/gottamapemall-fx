@@ -61,6 +61,17 @@ public class PokeMarker extends Marker{
 	}
 	
 	/**
+	 * Retourne l id unique du Pokemon.
+	 * 
+	 * @return l id unique du Pokemon
+	 */
+	public final int getId(){
+		
+		return id;
+		
+	}
+	
+	/**
 	 * Retourne Latitude du Marker.
 	 *  
 	 * @return Latitude du Marker

@@ -47,7 +47,7 @@ public class Map {
 	 */
 	public PokeMarker addPokeMarker(Pokemon pokemon, double lat, double lon, String dateTime){
 		
-		PokerMarker pokeMarker;
+		PokeMarker pokeMarker;
 		
 		try{
 			pokeMarker = new PokeMarker(pokemon, lat, lon, dateTime);
@@ -71,7 +71,7 @@ public class Map {
 	 */
 	private void savePokeMarkerOnServer(PokeMarker pokeMarker){
 		try{
-			String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
+			String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(pokeMarker)).send().readToText();
 			//PokeMarker created = gson.fromJson(response, PokeMarker.class);
 		} catch (ConnectException error){
 			throw error;
