@@ -15,8 +15,6 @@ import java.util.List;
 
 import be.ac.ulb.infof307.g07.models.LocationModel;
 import be.ac.ulb.infof307.g07.libs.Database;
-import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
-import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
 
 public class TestLocationModel {
     private static final Gson gson = new Gson();
