@@ -8,11 +8,10 @@ import be.ac.ulb.infof307.g07.libs.CustomGson;
 import com.google.gson.Gson;
 import net.dongliu.requests.Requests;
 
-import com.lynden.gmapsfx.ClusteredGoogleMapView;
-import com.lynden.gmapsfx.ClusteredMainApp; 
+import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
@@ -46,7 +45,7 @@ import javafx.scene.layout.BorderPane;
  * @see MapView#mapInitialized()
  *
  */
-public class MapView extends ClusteredMainApp { 
+public class MapView  implements MapComponentInitializedListener { 
     /**
      * Une table de hachage contenant les markers (epingles) presents sur la carte et leurs identifiants (nombre entier servant de clef).
      * 
@@ -67,8 +66,8 @@ public class MapView extends ClusteredMainApp {
     private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
     public static Coordinate position;
     
-    private ClusteredGoogleMap googleMap;
-    private ClusteredGoogleMapView googleMapView;
+    private GoogleMap googleMap;
+    private GoogleMapView googleMapView;
     
     private Map pokeMap;
     private PokedexView pokedexView;
@@ -112,7 +111,7 @@ public class MapView extends ClusteredMainApp {
         this.pokedexView = pokedexView;
         this.pokeMap = new Map(pokedexView.getPokedex());
         
-        this.googleMapView = new ClusteredGoogleMapView(null, apikey);
+        this.googleMapView = new GoogleMapView(null, apikey);
         googleMapView.addMapInializedListener(this);
         
         this.mapViewBorderPane = new BorderPane();
@@ -133,7 +132,7 @@ public class MapView extends ClusteredMainApp {
      * 
      * @return L'objet map de type GoogleMap.
      */
-    public ClusteredGoogleMap getGoogleMap() {
+    public GoogleMap getGoogleMap() {
         return googleMap;
     }
     
@@ -173,7 +172,7 @@ public class MapView extends ClusteredMainApp {
         
         // this if is only used for the test unit
         if(googleMap != null){
-            googleMap.addClusterableMarker(newMarker);
+            googleMap.addMarker(newMarker);
             googleMap.addUIEventHandler(newMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newMarker, pokeMarker, googleMap));
             googleMap.addUIEventHandler(newMarker, UIEventType.dblclick, new PokeMarkerMouseDblClickHandler(pokeMap, this, pokeMarker));
         

@@ -17,8 +17,6 @@ import be.ac.ulb.infof307.g07.models.PokemonModel;
 public class LocationModel {
     @Id
     private ObjectId id;
-    // @Indexed(options=@IndexOptions(unique=true))
-    // private int id;
     private float lat;
     private float lon;
     private PokemonModel pokemon;

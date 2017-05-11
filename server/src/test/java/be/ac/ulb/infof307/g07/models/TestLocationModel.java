@@ -13,12 +13,12 @@ import static org.junit.Assert.assertTrue;
 import com.google.gson.Gson;
 import java.util.List;
 
-import be.ac.ulb.infof307.g07.models.PokemonModel;
+import be.ac.ulb.infof307.g07.models.LocationModel;
 import be.ac.ulb.infof307.g07.libs.Database;
 import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
 import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
 
-public class TestPokemonModel {
+public class TestLocationModel {
     private static final Gson gson = new Gson();
 
     @Before
@@ -29,11 +29,11 @@ public class TestPokemonModel {
 
     @Test
     public void testCorrectCreation () throws Exception {
-        String json = "{\"id\": 3, \"name\": \"test\"}";
+        String json = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
 
         try {
-            PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
-            Database.get().save(pokemon);
+            LocationModel location = gson.fromJson(json, LocationModel.class);
+            Database.get().save(location);
         } catch (Exception e) {
             Assert.fail("Database test failed: " + e.getMessage());
         }
@@ -41,30 +41,30 @@ public class TestPokemonModel {
 
     @Test
     public void testWrongTypeCreation () throws Exception {
-        String json = "{\"id\": \"foo\", \"name\": \"test\"}";
+        String json = "{\"lat\": \"feowijfew\", \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
 
         try {
-            PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
-            Database.get().save(pokemon);
+            LocationModel location = gson.fromJson(json, LocationModel.class);
+            Database.get().save(location);
             Assert.fail("Database test failed: It did not raised an exception");
         } catch (Exception e) {
         }
     }
 
     @Test
-    public void testNameNonUnique () throws Exception {
-        String json1 = "{\"id\": 1, \"name\": \"test\"}";
+    public void testNonUnique () throws Exception {
+        String json1 = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
 
-        PokemonModel pokemon1 = gson.fromJson(json1, PokemonModel.class);
-        Database.get().save(pokemon1);
+        LocationModel location1 = gson.fromJson(json1, LocationModel.class);
+        Database.get().save(location1);
 
-        String json2 = "{\"id\": 2, \"name\": \"test\"}";
+        String json2 = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
 
-        PokemonModel pokemon2 = gson.fromJson(json2, PokemonModel.class);
-        Database.get().save(pokemon2);
+        LocationModel location2 = gson.fromJson(json2, LocationModel.class);
+        Database.get().save(location2);
 
-        List<PokemonModel> l = Database.get().find(PokemonModel.class).field("id").equal(1).asList();
+        List<LocationModel> l = Database.get().find(LocationModel.class).asList();
 
-        assertEquals(l.size(), 1);
+        assertEquals(l.size(), 2);
     }
 }
