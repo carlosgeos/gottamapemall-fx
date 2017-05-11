@@ -25,6 +25,8 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
+
 
 import javafx.geometry.HPos;
 
@@ -61,8 +63,19 @@ public class FilteringController implements Initializable {
     @FXML
     private JFXButton saveButton;
 
+    @FXML
+    private void handleSearchAction(ActionEvent e) {
+
+    }
+
+    @FXML
+    private void handleSaveAction(ActionEvent e) {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-	// TODO
+        // TODO
+
     }
 }

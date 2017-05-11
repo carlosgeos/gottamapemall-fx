@@ -24,6 +24,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javafx.event.ActionEvent;
+
 import javafx.geometry.HPos;
 
 
@@ -50,6 +52,16 @@ public class GeolocationController implements Initializable {
     private JFXSlider geoSlider;
     @FXML
     private JFXButton geoCancel;
+
+    @FXML
+    private void handleCancelAction(ActionEvent e) {
+
+    }
+
+    @FXML
+    private void handleSliderAction(ActionEvent e) {
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

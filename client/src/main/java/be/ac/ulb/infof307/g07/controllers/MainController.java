@@ -54,24 +54,24 @@ public class MainController extends ClusteredMainApp implements Initializable {
         MapOptions mapOptions = new MapOptions();
 
         mapOptions.center(new LatLong(47.6097, -122.3331))
-	    .mapType(MapTypeIdEnum.ROADMAP)
-	    .zoom(9);
+            .mapType(MapTypeIdEnum.ROADMAP)
+            .zoom(9);
         map = googleMapView.createMap(mapOptions, false);
 
-	// Pokedex button event
-	// pokedex.setSidePane(new TextField("Holaa"));
-	// pokedexButton.addEventHandler(MOUSE_PRESSED, e -> {
-	// 	pokedex.open();
-	//     });
+        // Pokedex button event
+        // pokedex.setSidePane(new TextField("Holaa"));
+        // pokedexButton.addEventHandler(MOUSE_PRESSED, e -> {
+        //      pokedex.open();
+        //     });
 
-	// Map double click event
+        // Map double click event
         map.addMouseEventHandler(UIEventType.dblclick, (GMapMouseEvent event) -> {
-		// add to map
-		map.setZoom(map.getZoom() - 1); // Compensate zoom
-		LatLong latLong = event.getLatLong();
-		map.addClusterableMarker(new Marker(new MarkerOptions().position(latLong)));
-		// add to database
-		// TODO
-	    });
+                // add to map
+                map.setZoom(map.getZoom() - 1); // Compensate zoom
+                LatLong latLong = event.getLatLong();
+                map.addClusterableMarker(new Marker(new MarkerOptions().position(latLong)));
+                // add to database
+                // TODO
+            });
     }
 }
