@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.lang.IllegalArgumentException;
 import java.lang.NumberFormatException;
+import org.mongodb.morphia.query.UpdateException;
+import com.google.gson.JsonSyntaxException;
 
 import be.ac.ulb.infof307.g07.libs.CustomGson;
 import be.ac.ulb.infof307.g07.libs.ParamHandler;
@@ -199,9 +201,13 @@ public abstract class ListView<T> {
                 Database.get().save(creation);
                 res.status(201);
                 return creation;
-            } catch (Exception e) {
+            } catch (UpdateException e) {
                 res.status(400);
-                return new Error(e.getMessage());
+                return new Error("Can't create nothing", e.getMessage());
+            } catch (JsonSyntaxException |NumberFormatException e) {
+                // Les float ne renvoient pas une exception Json.
+                res.status(400);
+                return new Error("Syntax error", e.getMessage());
             }
         }, gson::toJson);
     }
