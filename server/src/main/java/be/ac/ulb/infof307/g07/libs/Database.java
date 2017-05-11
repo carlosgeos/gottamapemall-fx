@@ -44,7 +44,8 @@ public class Database {
         try {
             // connect to the database on mLab
             String db_uri = (db.equals("gmta-test")) ? test_db : prod_db;
-            datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(db_uri)), db);
+            // datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(db_uri)), db);
+            datastore = morphia.createDatastore(new MongoClient(), db);
             datastore.ensureIndexes();
         } catch (MongoException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

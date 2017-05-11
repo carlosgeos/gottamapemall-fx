@@ -12,7 +12,6 @@ import java.lang.NumberFormatException;
 import org.mongodb.morphia.query.UpdateException;
 import com.google.gson.JsonSyntaxException;
 
-import be.ac.ulb.infof307.g07.libs.CustomGson;
 import be.ac.ulb.infof307.g07.libs.ParamHandler;
 import be.ac.ulb.infof307.g07.libs.Message;
 import be.ac.ulb.infof307.g07.libs.Database;
@@ -24,7 +23,7 @@ import be.ac.ulb.infof307.g07.libs.Error;
  * @param <T> The model instance to create the API endpoint on.
  */
 public abstract class ListView<T> {
-    static protected Gson gson = CustomGson.get();
+    static protected Gson gson = new Gson();
 
     /**
      * Utilisé pour définir la route.
