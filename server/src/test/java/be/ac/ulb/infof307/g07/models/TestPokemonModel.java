@@ -15,8 +15,9 @@ import java.util.List;
 
 import be.ac.ulb.infof307.g07.models.PokemonModel;
 import be.ac.ulb.infof307.g07.libs.Database;
-import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
-import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
+
+import org.mongodb.morphia.query.UpdateException;
+import com.google.gson.JsonSyntaxException;
 
 public class TestPokemonModel {
     private static final Gson gson = new Gson();
@@ -31,11 +32,19 @@ public class TestPokemonModel {
     public void testCorrectCreation () throws Exception {
         String json = "{\"id\": 3, \"name\": \"test\"}";
 
+        PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
+        Database.get().save(pokemon);
+    }
+
+    @Test
+    public void testCreationFromNothing () throws Exception {
+        String json = "";
+
         try {
             PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
             Database.get().save(pokemon);
-        } catch (Exception e) {
-            Assert.fail("Database test failed: " + e.getMessage());
+            Assert.fail("Database test should throw exception");
+        } catch (UpdateException e) {
         }
     }
 
@@ -59,7 +68,7 @@ public class TestPokemonModel {
             PokemonModel pokemon = gson.fromJson(json, PokemonModel.class);
             Database.get().save(pokemon);
             Assert.fail("Database test failed: It did not raised an exception");
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
         }
     }
 

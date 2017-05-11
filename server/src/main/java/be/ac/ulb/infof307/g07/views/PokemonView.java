@@ -7,7 +7,6 @@ import org.mongodb.morphia.query.Query;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.lang.NumberFormatException;
-import be.ac.ulb.infof307.g07.libs.CustomGson;
 import be.ac.ulb.infof307.g07.models.PokemonModel;
 import be.ac.ulb.infof307.g07.libs.Database;
 import be.ac.ulb.infof307.g07.libs.ListView;
@@ -44,7 +43,7 @@ public final class PokemonView extends ListView<PokemonModel> {
      */
     protected final Query<PokemonModel> filter(Query<PokemonModel> current, String param, String query) {
         if (param == "types") {
-            Gson gson = CustomGson.get();
+            Gson gson = this.gson;
             try {
                 String[] queries = gson.fromJson(query, String[].class);
                 List qlist = Arrays.asList(queries);
