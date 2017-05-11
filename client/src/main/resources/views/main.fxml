@@ -29,34 +29,12 @@
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512, 0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="721.0" prefWidth="197.0">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="721.0" prefWidth="220.0">
           <children>
-                  <SplitPane dividerPositions="0.5" layoutX="19.0" layoutY="207.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.3996655518394649" layoutX="19.0" layoutY="207.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="215.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                        <Label alignment="CENTER" layoutX="47.0" layoutY="3.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Geolocation" textAlignment="CENTER" wrapText="false">
-                          <font>
-                            <Font size="18.0" fx:id="x1" />
-                          </font>
-                          <textFill>
-                            <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-                          </textFill>
-                        </Label>
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <Label alignment="CENTER" layoutX="63.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Filtering" textAlignment="CENTER" wrapText="false">
-                                 <font>
-                                    <Font size="18.0" fx:id="x11" />
-                                 </font>
-                                 <textFill>
-                                    <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
-                                 </textFill>
-                              </Label>
-                           </children>
-                        </AnchorPane>
+                        <fx:include source="geolocation.fxml" />
+                        <fx:include source="filtering.fxml" />
                     </items>
                   </SplitPane>
           </children>
