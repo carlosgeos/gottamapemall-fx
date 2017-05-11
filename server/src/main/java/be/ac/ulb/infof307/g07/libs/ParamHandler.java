@@ -1,14 +1,17 @@
 package be.ac.ulb.infof307.g07.libs;
 
+import java.lang.IllegalArgumentException;
+
 @FunctionalInterface
 public interface ParamHandler {
-
     /**
-     * Used to change the form of a value from a HTTP request e.g parse as an int.
+     * Utilisé pour changé la forme des valeurs des requètes HTTP (ex. parser en 
+     * tant qu'entier).
      *
-     * @param param The value retrieved from the HTTP request.
-     * @return The modified version.
-     * @throws java.lang.Exception implementation can choose to throw exception
+     * @param param La valeur récupérer de la requète HTTP.
+     * @return La version modifiée
+     * @throws java.lang.IllegalArgumentException L'implémentation choist 
+     *      l'exception qui va être renvoyé.
      */
-    public Object handle(String param) throws Exception;
+    public Object handle(String param) throws IllegalArgumentException;
 }
