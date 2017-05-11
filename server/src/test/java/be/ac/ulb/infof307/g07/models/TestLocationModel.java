@@ -16,6 +16,10 @@ import java.util.List;
 import be.ac.ulb.infof307.g07.models.LocationModel;
 import be.ac.ulb.infof307.g07.libs.Database;
 
+import org.mongodb.morphia.query.UpdateException;
+import com.google.gson.JsonSyntaxException;
+
+
 public class TestLocationModel {
     private static final Gson gson = new Gson();
 
@@ -29,25 +33,47 @@ public class TestLocationModel {
     public void testCorrectCreation () throws Exception {
         String json = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
 
+        LocationModel location = gson.fromJson(json, LocationModel.class);
+        Database.get().save(location);
+    }
+
+    @Test
+    public void testCreationFromNothing () throws Exception {
+        String json = "";
+
         try {
             LocationModel location = gson.fromJson(json, LocationModel.class);
             Database.get().save(location);
-        } catch (Exception e) {
-            Assert.fail("Database test failed: " + e.getMessage());
+            Assert.fail("Database test should throw exception");
+        } catch (UpdateException e) {
         }
     }
 
     @Test
-    public void testWrongTypeCreation () throws Exception {
+    public void testWrongFloatTypeCreation () throws Exception {
         String json = "{\"lat\": \"feowijfew\", \"lon\": 50.0, \"pokemon\":{\"id\": 3, \"name\": \"test\"}}";
 
         try {
             LocationModel location = gson.fromJson(json, LocationModel.class);
             Database.get().save(location);
             Assert.fail("Database test failed: It did not raised an exception");
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
         }
     }
+
+    @Test
+    public void testWrongTypeCreation () throws Exception {
+        String json = "{\"lat\": 50.0, \"lon\": 50.0, \"pokemon\":\"fjeiwofijew\"}";
+
+        try {
+            LocationModel location = gson.fromJson(json, LocationModel.class);
+            Database.get().save(location);
+            Assert.fail("Database test failed: It did not raised an exception");
+        } catch (JsonSyntaxException e) {
+        }
+    }
+
+
 
     @Test
     public void testNonUnique () throws Exception {
