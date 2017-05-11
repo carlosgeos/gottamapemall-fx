@@ -13,8 +13,17 @@ public class Error {
      * Stocke le message d'erreur affiché aux utilisateurs de l'API.
      */
     String error;
+    /**
+     * Stocke les détails éventuels à propos de l'erreur.
+     */
+    String detail;
 
     public Error (String error) {
         this.error = error;
+    }
+
+    public Error (String error, String detail) {
+        this.error = error;
+        this.detail = detail;
     }
 }
