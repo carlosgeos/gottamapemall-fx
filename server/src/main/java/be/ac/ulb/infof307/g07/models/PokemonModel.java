@@ -6,11 +6,7 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.IndexOptions;
 
-import java.util.Map;
 import java.util.List;
-
-import be.ac.ulb.infof307.g07.libs.errors.RequiredFieldException;
-import be.ac.ulb.infof307.g07.libs.errors.WrongTypeFieldException;
 
 /**
  * Model pour sauvegarder les pokémons et leurs caractéristiques.
