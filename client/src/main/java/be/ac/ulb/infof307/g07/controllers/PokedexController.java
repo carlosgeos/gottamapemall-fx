@@ -65,17 +65,17 @@ public class PokedexController implements Initializable {
         ImageView pokemonImageView = new ImageView(pokemonImage);
 
         pokemonGridPane.add(pokemonImageView, 0, 0);
-	String pokemonName = pokemon.getName();
-	Label pokemonLabel = new Label(pokemonName.substring(0, 1).toUpperCase() + pokemonName.substring(1));
-	// pokemonLabel.setAlignment(Pos.CENTER_RIGHT);
-	pokemonGridPane.setFillWidth(pokemonLabel, true);
-	pokemonLabel.setMaxWidth(Double.MAX_VALUE);
-	pokemonGridPane.setHalignment(pokemonLabel, HPos.RIGHT);
+        String pokemonName = pokemon.getName();
+        Label pokemonLabel = new Label(pokemonName.substring(0, 1).toUpperCase() + pokemonName.substring(1));
+        // pokemonLabel.setAlignment(Pos.CENTER_RIGHT);
+        pokemonGridPane.setFillWidth(pokemonLabel, true);
+        pokemonLabel.setMaxWidth(Double.MAX_VALUE);
+        pokemonGridPane.setHalignment(pokemonLabel, HPos.RIGHT);
         pokemonGridPane.add(pokemonLabel, 1, 0);
 
         // pokemonGridPane.setOnMouseClicked(this);
         // pokemonGridPane.setOnMouseEntered(mouseEvent -> {
-    	// 	this.holdGridStyle = this.pokemonGridPane.getStyle();
+        //      this.holdGridStyle = this.pokemonGridPane.getStyle();
         //     this.pokemonGridPane.setStyle(this.hoverGridStyle); });
         // this.pokemonGridPane.setOnMouseExited(mouseEvent -> { this.pokemonGridPane.setStyle(this.holdGridStyle); });
 
@@ -83,30 +83,30 @@ public class PokedexController implements Initializable {
     }
 
     private void fillPokedex() {
-	this.pokemonInPokedex = FXCollections.observableArrayList();
+        this.pokemonInPokedex = FXCollections.observableArrayList();
 
         String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
         Gson gson = new Gson();
         Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
 
         for (int i = 0; i < pokemons.length; ++i) {
-	    Pokemon j = new Pokemon(pokemons[i]);
+            Pokemon j = new Pokemon(pokemons[i]);
             pokemonInPokedex.add(j);
-	    pokedexList.getItems().add(createView(j));
+            pokedexList.getItems().add(createView(j));
         }
 
-	// pokedexList.setItems(pokemonInPokedex);
-	//pokedexList.getItems().add("asdf");
-	//pokemonText.setText(pokemonInPokedex.get(1).getName());
-	// items.add("asdf");
-	// items.add("324f");
+        // pokedexList.setItems(pokemonInPokedex);
+        //pokedexList.getItems().add("asdf");
+        //pokemonText.setText(pokemonInPokedex.get(1).getName());
+        // items.add("asdf");
+        // items.add("324f");
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //googleMapView.addMapInializedListener(() -> configureMap());
-	fillPokedex();
+        fillPokedex();
 	// pokemonText.setText("JOder uqe pasa");
     }
 

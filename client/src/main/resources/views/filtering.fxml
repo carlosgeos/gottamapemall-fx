@@ -23,7 +23,7 @@
       <JFXTextField fx:id="searchPokemonHeight" layoutX="35.0" layoutY="177.0" promptText="Hauteur" />
       <JFXTextField fx:id="searchPokemonWeight" layoutX="35.0" layoutY="219.0" promptText="Poids" />
       <JFXTextField fx:id="searchPokemonExperience" layoutX="35.0" layoutY="262.0" promptText="Experience" />
-      <JFXButton fx:id="searchButton" layoutX="14.0" layoutY="311.0" style="-fx-background-color: #3F51B5;" text="Recherche" textFill="WHITE" AnchorPane.leftAnchor="10.0" />
-      <JFXButton fx:id="saveButton" layoutX="111.0" layoutY="311.0" style="-fx-background-color: #4CAF50;" text="Sauvegarder" textFill="WHITE" AnchorPane.rightAnchor="10.0" />
+      <JFXButton fx:id="searchButton" layoutX="14.0" layoutY="311.0" onAction="#handleSearchAction" style="-fx-background-color: #3F51B5;" text="Recherche" textFill="WHITE" AnchorPane.leftAnchor="10.0" />
+      <JFXButton fx:id="saveButton" layoutX="111.0" layoutY="311.0" onAction="#handleSaveAction" style="-fx-background-color: #4CAF50;" text="Sauvegarder" textFill="WHITE" AnchorPane.rightAnchor="10.0" />
    </children>
 </AnchorPane>
