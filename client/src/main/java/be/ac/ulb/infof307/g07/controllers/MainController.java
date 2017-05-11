@@ -21,21 +21,10 @@ import javafx.scene.control.TextField;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.Marker;
 
-import com.jfoenix.controls.JFXListCell;
-
-
 import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class MainController extends ClusteredMainApp implements Initializable {
 
-    // @FXML
-    // private Label latitudeLabel;
-
-    // @FXML
-    // private Label longitudeLabel;
-
-    // @FXML
-    // private JFXButton pokedexButton;
     @FXML
     private JFXDrawer pokedex;
     @FXML
@@ -45,11 +34,14 @@ public class MainController extends ClusteredMainApp implements Initializable {
 
     private DecimalFormat formatter = new DecimalFormat("###.00000");
 
+    // Add doc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         googleMapView.addMapInializedListener(() -> configureMap());
     }
 
+    // Add doc
+    // MOVE TO SEPARATE STATIC MAP CONTROLLER
     protected void configureMap() {
         MapOptions mapOptions = new MapOptions();
 
@@ -58,20 +50,12 @@ public class MainController extends ClusteredMainApp implements Initializable {
             .zoom(9);
         map = googleMapView.createMap(mapOptions, false);
 
-        // Pokedex button event
-        // pokedex.setSidePane(new TextField("Holaa"));
-        // pokedexButton.addEventHandler(MOUSE_PRESSED, e -> {
-        //      pokedex.open();
-        //     });
-
         // Map double click event
         map.addMouseEventHandler(UIEventType.dblclick, (GMapMouseEvent event) -> {
                 // add to map
                 map.setZoom(map.getZoom() - 1); // Compensate zoom
                 LatLong latLong = event.getLatLong();
                 map.addClusterableMarker(new Marker(new MarkerOptions().position(latLong)));
-                // add to database
-                // TODO
             });
     }
 }

@@ -63,6 +63,7 @@ public class GeolocationController implements Initializable {
 
     }
 
+    // Add doc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 	// TODO
