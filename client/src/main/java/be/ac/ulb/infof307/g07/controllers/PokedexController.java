@@ -31,7 +31,7 @@ import javafx.scene.layout.GridPane;
 
 import be.ac.ulb.infof307.g07.views.PokeCell;
 
-
+import java.util.Collection;
 import com.google.gson.Gson;
 import net.dongliu.requests.Requests;
 import javafx.collections.FXCollections;
@@ -40,6 +40,7 @@ import com.jfoenix.controls.JFXListView;
 
 
 import be.ac.ulb.infof307.g07.models.Pokemon;
+import be.ac.ulb.infof307.g07.models.PokemonList;
 
 import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
@@ -112,16 +113,11 @@ public class PokedexController implements Initializable {
 
     // Add doc
     private void fillPokedex() {
-        this.pokemonInPokedex = FXCollections.observableArrayList();
+        PokemonList.fill();
+        Collection<Pokemon> pokemons = PokemonList.get();
 
-        String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
-        Gson gson = new Gson();
-        Pokemon[] pokemons = gson.fromJson(response, Pokemon[].class);
-
-        for (int i = 0; i < pokemons.length; ++i) {
-            Pokemon j = new Pokemon(pokemons[i]);
-            pokemonInPokedex.add(j);
-            pokedexList.getItems().add(pokemonCellView(j));
+        for (Pokemon poke : pokemons) {
+            pokedexList.getItems().add(pokemonCellView(poke));
         }
     }
 
