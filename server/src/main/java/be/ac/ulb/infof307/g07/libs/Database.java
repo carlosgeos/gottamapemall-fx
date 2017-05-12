@@ -7,9 +7,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
 /**
- * La classe permet une fois qu'elle est instancié de pouvoir acceder 
- * globalement à depuis partout dans le programme à la base de donnée, 
- * ce qui évite de devoir établir une nouvelle connexions à celle-ci 
+ * La classe permet une fois qu'elle est instancié de pouvoir acceder
+ * globalement à depuis partout dans le programme à la base de donnée,
+ * ce qui évite de devoir établir une nouvelle connexions à celle-ci
  * pour y acceder.
  *
  * @see org.mongodb.morphia.Datastore
@@ -44,8 +44,8 @@ public class Database {
         try {
             // connect to the database on mLab
             String db_uri = (db.equals("gmta-test")) ? test_db : prod_db;
-            // datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(db_uri)), db);
-            datastore = morphia.createDatastore(new MongoClient(), db);
+            datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(db_uri)), db);
+            // datastore = morphia.createDatastore(new MongoClient(), db);
             datastore.ensureIndexes();
         } catch (MongoException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

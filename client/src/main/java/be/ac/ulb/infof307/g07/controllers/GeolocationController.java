@@ -69,6 +69,7 @@ public class GeolocationController implements Initializable {
         geoLoc.setCenter(coord);
     }
 
+    // Add doc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

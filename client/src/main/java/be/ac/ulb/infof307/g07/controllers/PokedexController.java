@@ -46,14 +46,14 @@ import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 public class PokedexController implements Initializable {
 
     @FXML
-    private TextArea pokemonText;
-
-    @FXML
     private JFXListView pokedexList;
+    @FXML
+    private JFXDrawer pokemonDetailView;
 
     private ObservableList<Pokemon> pokemonInPokedex;
 
-    public GridPane createView(Pokemon pokemon) {
+    // Add doc
+    private GridPane pokemonCellView(Pokemon pokemon) {
         GridPane pokemonGridPane = new GridPane();
         pokemonGridPane.setPrefWidth(160);
         pokemonGridPane.setPrefHeight(50);
@@ -67,21 +67,27 @@ public class PokedexController implements Initializable {
         pokemonGridPane.add(pokemonImageView, 0, 0);
         String pokemonName = pokemon.getName();
         Label pokemonLabel = new Label(pokemonName.substring(0, 1).toUpperCase() + pokemonName.substring(1));
-        // pokemonLabel.setAlignment(Pos.CENTER_RIGHT);
-        pokemonGridPane.setFillWidth(pokemonLabel, true);
-        pokemonLabel.setMaxWidth(Double.MAX_VALUE);
-        pokemonGridPane.setHalignment(pokemonLabel, HPos.RIGHT);
+
         pokemonGridPane.add(pokemonLabel, 1, 0);
 
-        // pokemonGridPane.setOnMouseClicked(this);
-        // pokemonGridPane.setOnMouseEntered(mouseEvent -> {
-        //      this.holdGridStyle = this.pokemonGridPane.getStyle();
-        //     this.pokemonGridPane.setStyle(this.hoverGridStyle); });
-        // this.pokemonGridPane.setOnMouseExited(mouseEvent -> { this.pokemonGridPane.setStyle(this.holdGridStyle); });
+        pokemonGridPane.setOnMouseClicked(mouseEvent -> {
+		pokemonDetailView.setSidePane(fillPokemonDetailView());
+		pokemonDetailView.open();
+	    });
 
         return pokemonGridPane;
     }
 
+    // Add doc
+    private GridPane fillPokemonDetailView() {
+	// Add close button (calling this.pokemonDetailView.close() to close drawer)
+
+	// Add pokemon details
+	// How to get pokemon from click ?
+	return new GridPane();
+    }
+
+    // Add doc
     private void fillPokedex() {
         this.pokemonInPokedex = FXCollections.observableArrayList();
 
@@ -92,46 +98,14 @@ public class PokedexController implements Initializable {
         for (int i = 0; i < pokemons.length; ++i) {
             Pokemon j = new Pokemon(pokemons[i]);
             pokemonInPokedex.add(j);
-            pokedexList.getItems().add(createView(j));
+            pokedexList.getItems().add(pokemonCellView(j));
         }
-
-        // pokedexList.setItems(pokemonInPokedex);
-        //pokedexList.getItems().add("asdf");
-        //pokemonText.setText(pokemonInPokedex.get(1).getName());
-        // items.add("asdf");
-        // items.add("324f");
     }
 
 
+    // Add doc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //googleMapView.addMapInializedListener(() -> configureMap());
         fillPokedex();
-	// pokemonText.setText("JOder uqe pasa");
     }
-
-    // protected void configureMap() {
-    //     MapOptions mapOptions = new MapOptions();
-
-    //     mapOptions.center(new LatLong(47.6097, -122.3331))
-    // 	    .mapType(MapTypeIdEnum.ROADMAP)
-    // 	    .zoom(9);
-    //     map = googleMapView.createMap(mapOptions, false);
-
-    // 	// Pokedex button event
-    // 	pokedex.setSidePane(new TextField("Holaa"));
-    // 	pokedexButton.addEventHandler(MOUSE_PRESSED, e -> {
-    // 		pokedex.open();
-    // 	    });
-
-    // 	// Map double click event
-    //     map.addMouseEventHandler(UIEventType.dblclick, (GMapMouseEvent event) -> {
-    // 		// add to map
-    // 		map.setZoom(map.getZoom() - 1); // Compensate zoom
-    // 		LatLong latLong = event.getLatLong();
-    // 		map.addClusterableMarker(new Marker(new MarkerOptions().position(latLong)));
-    // 		// add to database
-    // 		// TODO
-    // 	    });
-    // }
 }
