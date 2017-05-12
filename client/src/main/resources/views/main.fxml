@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import com.lynden.gmapsfx.ClusteredGoogleMapView?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -12,63 +18,91 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
-  <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Extra">
-          <items>
-            <MenuItem fx:id="playMusic" mnemonicParsing="false" text="Music" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-    <SplitPane dividerPositions="0.2505567928730512, 0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <items>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="721.0" prefWidth="220.0">
-          <children>
-                  <SplitPane dividerPositions="0.3996655518394649" layoutX="19.0" layoutY="207.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="215.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                        <fx:include source="geolocation.fxml" />
-                        <fx:include source="filtering.fxml" />
-                    </items>
-                  </SplitPane>
-          </children>
-        </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-          <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="600.0" prefWidth="608.0">
-              <children>
-                        <ClusteredGoogleMapView fx:id="googleMapView" layoutX="135.0" layoutY="179.0" prefHeight="419.0" prefWidth="516.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-              </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
-            <fx:include source="pokedex.fxml" />
-      </items>
-    </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
-      <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="PokéMap v0.1" HBox.hgrow="ALWAYS">
-          <font>
-            <Font size="11.0" fx:id="x3" />
-          </font>
-          <textFill>
-            <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
-          </textFill>
-        </Label>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-      </children>
-      <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-      </padding>
-    </HBox>
-  </children>
-  <stylesheets>
-    <URL value="@ComplexApplication_css/ComplexApplication.css" />
-  </stylesheets>
-</VBox>
+
+<StackPane fx:id="rootStackPane" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+   <children>
+      <JFXDialog fx:id="addPokemonPopup" overlayClose="false">
+         <children>
+            <JFXDialogLayout fx:id="addPokemonPopupContent" maxHeight="350.0" maxWidth="550.0" style="-fx-background-color: white;">
+               <children>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="550.0">
+                     <children>
+                        <JFXListView fx:id="choosePokemonList" layoutX="310.0" prefHeight="350.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXDatePicker fx:id="pokemonDate" layoutX="60.0" layoutY="90.0" promptText="Date" />
+                        <JFXTimePicker fx:id="pokemonTime" layoutX="60.0" layoutY="161.0" promptText="Heure" />
+                        <Label layoutX="40.0" layoutY="24.0" prefHeight="44.0" prefWidth="242.0" text="Ajouter un pokémon a la carte" textAlignment="CENTER" textFill="#757575" wrapText="true">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <JFXButton cancelButton="true" layoutX="185.0" layoutY="271.0" onMouseClicked="#handleCancelPokemonButton" prefHeight="44.0" prefWidth="97.0" style="-fx-background-color: #F44336;" text="Annuler" textFill="WHITE" />
+                        <JFXButton fx:id="addPokemonButton" layoutX="40.0" layoutY="271.0" onMouseClicked="#handleAddPokemonButton" prefHeight="44.0" prefWidth="97.0" style="-fx-background-color: #8BC34A;" text="Ajouter" textFill="WHITE" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </JFXDialogLayout>
+         </children>
+      </JFXDialog>
+      <VBox prefHeight="600.0" prefWidth="1100.0">
+        <children>
+          <MenuBar VBox.vgrow="NEVER">
+            <menus>
+              <Menu mnemonicParsing="false" text="Extra">
+                <items>
+                  <MenuItem fx:id="playMusic" mnemonicParsing="false" text="Music" />
+                </items>
+              </Menu>
+            </menus>
+          </MenuBar>
+          <SplitPane dividerPositions="0.2505567928730512, 0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <items>
+              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="721.0" prefWidth="220.0">
+                <children>
+                        <SplitPane dividerPositions="0.3996655518394649" layoutX="19.0" layoutY="207.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="215.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                              <fx:include source="geolocation.fxml" />
+                              <fx:include source="filtering.fxml" />
+                          </items>
+                        </SplitPane>
+                </children>
+              </AnchorPane>
+              <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                <content>
+                  <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="600.0" prefWidth="608.0">
+                    <children>
+                              <ClusteredGoogleMapView fx:id="googleMapView" layoutX="135.0" layoutY="179.0" prefHeight="419.0" prefWidth="516.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                  </AnchorPane>
+                </content>
+              </ScrollPane>
+                  <fx:include source="pokedex.fxml" />
+            </items>
+          </SplitPane>
+          <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+            <children>
+              <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="PokéMap v0.1" HBox.hgrow="ALWAYS">
+                <font>
+                  <Font size="11.0" fx:id="x3" />
+                </font>
+                <textFill>
+                  <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+                </textFill>
+              </Label>
+              <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            </children>
+            <padding>
+              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </padding>
+          </HBox>
+        </children>
+        <stylesheets>
+          <URL value="@ComplexApplication_css/ComplexApplication.css" />
+        </stylesheets>
+      </VBox>
+   </children>
+</StackPane>

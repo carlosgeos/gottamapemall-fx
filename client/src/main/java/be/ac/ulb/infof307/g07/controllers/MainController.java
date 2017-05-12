@@ -20,13 +20,36 @@ import com.jfoenix.controls.JFXDrawer;
 import javafx.scene.control.TextField;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.Marker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTimePicker;
+
+import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class MainController extends ClusteredMainApp implements Initializable {
 
     @FXML
+    private StackPane rootStackPane;
+    @FXML
     private JFXDrawer pokedex;
+    @FXML
+    private JFXDialog addPokemonPopup;
+    @FXML
+    private JFXDialogLayout addPokemonPopupContent;
+    @FXML
+    private JFXDatePicker pokemonDate;
+    @FXML
+    private JFXTimePicker pokemonTime;
+
+    private LatLong clickCoordinates;
+
     @FXML
     private ClusteredGoogleMapView googleMapView;
 
@@ -40,6 +63,21 @@ public class MainController extends ClusteredMainApp implements Initializable {
         googleMapView.addMapInializedListener(() -> configureMap());
     }
 
+    @FXML
+    private void handleAddPokemonButton(MouseEvent e) {
+	System.out.println(pokemonTime.getValue());
+
+	map.addClusterableMarker(new Marker(new MarkerOptions().position(clickCoordinates)));
+
+    }
+
+    @FXML
+    private void handleCancelPokemonButton(MouseEvent e) {
+	clickCoordinates = null;
+	addPokemonPopup.close();
+    }
+
+
     // Add doc
     // MOVE TO SEPARATE STATIC MAP CONTROLLER
     protected void configureMap() {
@@ -50,12 +88,15 @@ public class MainController extends ClusteredMainApp implements Initializable {
             .zoom(9);
         map = googleMapView.createMap(mapOptions, false);
 
+	addPokemonPopup.setDialogContainer(rootStackPane);
+
+
         // Map double click event
         map.addMouseEventHandler(UIEventType.dblclick, (GMapMouseEvent event) -> {
-                // add to map
-                map.setZoom(map.getZoom() - 1); // Compensate zoom
-                LatLong latLong = event.getLatLong();
-                map.addClusterableMarker(new Marker(new MarkerOptions().position(latLong)));
+		map.setZoom(map.getZoom() - 1); // Compensate zoom
+		// Save coordinates in class attribute
+		clickCoordinates = event.getLatLong();
+		addPokemonPopup.show();
             });
     }
 }

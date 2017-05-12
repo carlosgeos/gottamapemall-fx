@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
@@ -17,7 +18,11 @@
             <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
          </textFill>
       </Label>
-      <JFXButton fx:id="geoCancel" layoutX="51.0" layoutY="173.0" onAction="#handleCancelAction" prefHeight="37.0" prefWidth="118.0" style="-fx-background-color: #3F51B5;" text="Annuler" textFill="WHITE" />
+      <JFXButton fx:id="geoCancel" layoutX="51.0" layoutY="173.0" onAction="#handleCancelAction" prefHeight="37.0" prefWidth="118.0" style="-fx-background-color: #3F51B5;" text="Annuler" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
       <Label layoutX="23.0" layoutY="37.0" prefHeight="66.0" prefWidth="175.0" text="Glissez ce slider pour ajuster le rayon de la géolocalisation" textAlignment="CENTER" wrapText="true" />
       <JFXSlider fx:id="geoSlider" blockIncrement="100.0" layoutX="40.0" layoutY="118.0" majorTickUnit="100.0" max="500.0" min="100.0" minorTickCount="0" onDragDone="#handleSliderAction" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-skin: #3F51B5;" value="100.0" />
    </children>
