@@ -3,25 +3,34 @@ package be.ac.ulb.infof307.g07.models;
 import java.net.ConnectException;
 import java.util.HashMap;
 
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 
 
 /**
  * Map est le modele qui stocke l ensemble de modeles (ex: PokerMarker) se trouvant sur la map.
  *
  */
-public class Map extends GoogleMap{
+public class Map{
 
+	public static final Double[] defaultLocation = {47.6097, -122.3331};
+	public static final boolean defaultValue = false;
+	public static final int defaultZoom = 11;
+	public static final String defaultApiKey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	
 	private static Map instance = null;
+	private ClusteredGoogleMap googleMap;
 	private HashMap<Integer, PokeMarker> pokeMarkers;
-	private Gson gson;
 	
 	/**
 	 * Construit un objet du type Map
 	 */
-	public Map(){
+	public Map( ClusteredGoogleMap newGoogleMap ){
+		googleMap = newGoogleMap;
 		pokeMarkers = new HashMap<Integer, PokeMarker>();
-		gson = CustomGson.get();
+		instance = this;
 	}
 	
 	/**
@@ -30,7 +39,8 @@ public class Map extends GoogleMap{
 	 */
 	public static Map getInstance(){
 		if (instance == null){
-			instance = new Map();
+			
+			instance = new Map(null);
 			
 		}
 		return instance;
@@ -47,7 +57,7 @@ public class Map extends GoogleMap{
 	 */
 	public PokeMarker addPokeMarker(Pokemon pokemon, double lat, double lon, String dateTime){
 		
-		PokeMarker pokeMarker;
+		PokeMarker pokeMarker = null;
 		
 		try{
 			pokeMarker = new PokeMarker(pokemon, lat, lon, dateTime);
@@ -58,11 +68,9 @@ public class Map extends GoogleMap{
 			pokeMarker = null;
 			throw error;
 						
-		}finally{
-			return pokeMarker;
-			
 		}
 		
+		return pokeMarker;
 	}
 
 	/**
@@ -70,11 +78,13 @@ public class Map extends GoogleMap{
 	 * @param pokeMarker Pokemon que l on souhaite sauvegarder
 	 */
 	private void savePokeMarkerOnServer(PokeMarker pokeMarker){
+		
 		try{
-			String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(pokeMarker)).send().readToText();
+			//String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(pokeMarker)).send().readToText();
 			//PokeMarker created = gson.fromJson(response, PokeMarker.class);
+			throw new ConnectException();
 		} catch (ConnectException error){
-			throw error;
+			//throw error;
 		}
 		
 	}
@@ -102,6 +112,21 @@ public class Map extends GoogleMap{
 	 */
 	public void removePokeMarker(PokeMarker pokeMarker){
 		pokeMarkers.remove(pokeMarker.getId());
-		
+	}
+	
+	public static MapOptions createDefaultOptions(){
+		MapOptions defaultMapOptions = new MapOptions();
+        LatLong defaultMapCenterPosition = new LatLong(defaultLocation[0], defaultLocation[1]);
+        defaultMapOptions.center(defaultMapCenterPosition)
+                .mapType(MapTypeIdEnum.ROADMAP)
+                .mapTypeControl(defaultValue)
+                .overviewMapControl(defaultValue)
+                .panControl(defaultValue)
+                .rotateControl(defaultValue)
+                .scaleControl(defaultValue)
+                .streetViewControl(defaultValue)
+                .zoomControl(defaultValue)
+                .zoom(defaultZoom);
+        return defaultMapOptions;
 	}
 }

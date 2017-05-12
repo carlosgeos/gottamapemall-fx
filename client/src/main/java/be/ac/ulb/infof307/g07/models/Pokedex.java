@@ -6,6 +6,12 @@ public class Pokedex {
 
 	private HashMap<Integer, Pokemon> pokemons = new HashMap<Integer, Pokemon>();
 	private static Pokedex instance = null;
+	
+	public Pokedex(){
+		
+		init();
+	}
+	
 	public static Pokedex getInstance (){
 		if (instance == null){
 			instance = new Pokedex();
@@ -16,6 +22,9 @@ public class Pokedex {
 	public void init(){
 		
 		// todo ask server to load all pokemon
+		
+		String[] type = {"Grass"};
+		pokemons.put(1, new Pokemon(1, "Bulbasaur", 0.2, 0.2, type));
 		
 	}
 	
@@ -40,5 +49,21 @@ public class Pokedex {
 			throw error;
 		}
 		return res;
+	}
+	
+	public final Integer[] getPokemonsId(){
+		
+		Integer[] res = new Integer[pokemons.size()];
+		int index = 0;
+		
+		for( int id:pokemons.keySet()){
+			res[index] = id;
+			++index;
+		}
+		return res;
+	}
+	
+	public final HashMap<Integer, Pokemon> getPokemons(){
+		return pokemons;
 	}
 }
