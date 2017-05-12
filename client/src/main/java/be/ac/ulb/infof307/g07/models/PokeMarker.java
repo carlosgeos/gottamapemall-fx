@@ -6,6 +6,8 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import be.ac.ulb.infof307.g07.models.Pokemon;
 
+import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
+
 /**
  *
  * Cette classe contient les donnees relatives a une epingle pokemon, a savoir son identifiant unique et sa position sur la carte.
@@ -82,8 +84,7 @@ public class PokeMarker extends Marker {
         return this.coord;
     }
 
-    @Override
-    public String getTitle() {
+    public String getString() {
         String res = "<div><table>"
                 + "<tr><td colspane=2 align=\"center\"><img src=\""+pokemon.getImagePath()+"\" alt=\""+pokemon.getName()+"\" style=\"\"></td></tr>"
                 + "<tr><td>Id : </td><td>"+pokemon.getId()+"</td></tr>"

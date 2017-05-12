@@ -8,6 +8,8 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.ClusteredMainApp;
 import com.lynden.gmapsfx.ClusteredGoogleMapView;
 import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -36,6 +38,7 @@ import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
+import netscape.javascript.JSObject;
 import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class MainController extends ClusteredMainApp implements Initializable {
@@ -77,7 +80,15 @@ public class MainController extends ClusteredMainApp implements Initializable {
         String time = pokemonTime.getValue().toString();
         String date = pokemonDate.getValue().toString();
 
-        map.addClusterableMarker(new PokeMarker(new MarkerOptions().position(clickCoordinates), pokemon, date, time));
+        PokeMarker newPokeMarker = new PokeMarker(new MarkerOptions().position(clickCoordinates), pokemon, date, time);
+        map.addClusterableMarker(newPokeMarker);
+        map.addUIEventHandler(newPokeMarker, UIEventType.click, (JSObject event) -> {
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content(newPokeMarker.getString());
+                
+            InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
+            pokeMarkerInfoWindow.open(map, newPokeMarker); 
+        });
     }
 
     @FXML
