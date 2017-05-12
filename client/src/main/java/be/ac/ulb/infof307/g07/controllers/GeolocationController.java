@@ -42,9 +42,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 
 
-import be.ac.ulb.infof307.g07.models.Pokemon;
-
-import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
+import be.ac.ulb.infof307.g07.models.GeolocationModel;
 
 public class GeolocationController implements Initializable {
 
@@ -53,6 +51,8 @@ public class GeolocationController implements Initializable {
     @FXML
     private JFXButton geoCancel;
 
+    private GeolocationModel geoLoc;
+
     @FXML
     private void handleCancelAction(ActionEvent e) {
 
@@ -60,11 +60,16 @@ public class GeolocationController implements Initializable {
 
     @FXML
     private void handleSliderAction(ActionEvent e) {
+        double value = geoSlider.getValue();
 
+        geoLoc.setRadius((int) value);
+    }
+
+    public void setCenter(LatLong coord) {
+        geoLoc.setCenter(coord);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-	// TODO
     }
 }
