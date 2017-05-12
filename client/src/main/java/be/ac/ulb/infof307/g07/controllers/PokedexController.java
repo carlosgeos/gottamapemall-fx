@@ -51,8 +51,6 @@ public class PokedexController implements Initializable {
     @FXML
     private JFXDrawer pokemonDetailView;
 
-    private ObservableList<Pokemon> pokemonInPokedex;
-
     // Add doc
     private GridPane pokemonCellView(Pokemon pokemon) {
         GridPane pokemonGridPane = new GridPane();
@@ -120,7 +118,6 @@ public class PokedexController implements Initializable {
             pokedexList.getItems().add(pokemonCellView(poke));
         }
     }
-
 
     // Add doc
     @Override

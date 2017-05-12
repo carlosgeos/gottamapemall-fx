@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g07.models;
 
 import org.bson.types.ObjectId;
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import be.ac.ulb.infof307.g07.models.Pokemon;
@@ -28,6 +29,7 @@ public class PokeMarker extends Marker {
      * Identifiant unique du PokeMarker.
      */
     private ObjectId id;
+    private LatLong coord;
 
     /**
      * Réfèrence vers le pokémon sauvegardé.
@@ -51,17 +53,9 @@ public class PokeMarker extends Marker {
      * @param pokemon Pokemon réfèrencé par le marker sur la carte.
      * @param date Date où le pokémon a été repéré.
      * @param time Heures à laquelle le pokemon a été repéré.
-     *
-     * @see be.ac.ulb.infof307.g07.models.Map
-     * @see be.ac.ulb.infof307.g07.models.Map#addPokeMarker(double, double, Pokemon, String, String)
-     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler
-     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
-     * @see be.ac.ulb.infof307.g07.models.Coordinate
-     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
-     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerRemoveFromMapHandler
      */
     public PokeMarker(MarkerOptions markerOptions, Pokemon pokemon, String date, String time) {
-	super(markerOptions);
+        super(markerOptions);
         this.date = date;
         this.time = time;
         this.pokemon = pokemon;
@@ -84,11 +78,12 @@ public class PokeMarker extends Marker {
      * @see be.ac.ulb.infof307.g07.models.Coordinate
      *
      */
-    // public LatLong getOnMapPosition() {
-    //     return new Coordinate(this.lat, this.lon);
-    // }
+    public LatLong getPosition() {
+        return this.coord;
+    }
 
-    public String getString() {
+    @Override
+    public String getTitle() {
         String res = "<div><table>"
                 + "<tr><td colspane=2 align=\"center\"><img src=\""+pokemon.getImagePath()+"\" alt=\""+pokemon.getName()+"\" style=\"\"></td></tr>"
                 + "<tr><td>Id : </td><td>"+pokemon.getId()+"</td></tr>"
@@ -116,7 +111,6 @@ public class PokeMarker extends Marker {
         return this.pokemon.getId();
     }
 
-
     /**
      * Renvoie la date à laquelle le pokémon reférencé par le marker a été aperçu.
      *
@@ -133,24 +127,6 @@ public class PokeMarker extends Marker {
      */
     public String getTime() {
         return this.time;
-    }
-
-    /**
-     * Modifie la date où le pokémon a été aperçu.
-     *
-     * @param newDate La nouvelle date.
-     */
-    public void setDate(String newDate) {
-        this.date = newDate;
-    }
-
-    /**
-     * Modifie l'heure où le pokémon a été aperçu.
-     *
-     * @param newTime La nouvelle heure.
-     */
-    public void setTime(String newTime) {
-        this.time = newTime;
     }
 
     /**

@@ -29,6 +29,11 @@ import javafx.scene.text.Text;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 
+import be.ac.ulb.infof307.g07.models.PokemonList;
+import be.ac.ulb.infof307.g07.models.Pokemon;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
@@ -65,16 +70,20 @@ public class MainController extends ClusteredMainApp implements Initializable {
 
     @FXML
     private void handleAddPokemonButton(MouseEvent e) {
-	System.out.println(pokemonTime.getValue());
+        List<Pokemon> pokemons = PokemonList.get();
+        Pokemon pokemon = pokemons.get(0);
+        System.out.println(pokemonTime.getValue());
 
-	map.addClusterableMarker(new Marker(new MarkerOptions().position(clickCoordinates)));
+        String time = pokemonTime.getValue().toString();
+        String date = pokemonDate.getValue().toString();
 
+        map.addClusterableMarker(new PokeMarker(new MarkerOptions().position(clickCoordinates), pokemon, date, time));
     }
 
     @FXML
     private void handleCancelPokemonButton(MouseEvent e) {
-	clickCoordinates = null;
-	addPokemonPopup.close();
+        clickCoordinates = null;
+        addPokemonPopup.close();
     }
 
 
@@ -88,15 +97,14 @@ public class MainController extends ClusteredMainApp implements Initializable {
             .zoom(9);
         map = googleMapView.createMap(mapOptions, false);
 
-	addPokemonPopup.setDialogContainer(rootStackPane);
-
+        addPokemonPopup.setDialogContainer(rootStackPane);
 
         // Map double click event
         map.addMouseEventHandler(UIEventType.dblclick, (GMapMouseEvent event) -> {
-		map.setZoom(map.getZoom() - 1); // Compensate zoom
-		// Save coordinates in class attribute
-		clickCoordinates = event.getLatLong();
-		addPokemonPopup.show();
-            });
+            map.setZoom(map.getZoom() - 1); // Compensate zoom
+            // Save coordinates in class attribute
+            clickCoordinates = event.getLatLong();
+            addPokemonPopup.show();
+        });
     }
 }
