@@ -80,7 +80,7 @@ public class MainController extends ClusteredMainApp implements Initializable {
         String time = pokemonTime.getValue().toString();
         String date = pokemonDate.getValue().toString();
 
-        PokeMarker newPokeMarker = new PokeMarker(new MarkerOptions().position(clickCoordinates), pokemon, date, time);
+        PokeMarker newPokeMarker = new PokeMarker(clickCoordinates, pokemon, date, time);
         map.addClusterableMarker(newPokeMarker);
         map.addUIEventHandler(newPokeMarker, UIEventType.click, (JSObject event) -> {
             InfoWindowOptions infoWindowOptions = new InfoWindowOptions();

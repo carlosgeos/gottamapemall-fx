@@ -11,6 +11,7 @@ public class Pokemon {
     private final int height;
     private final int weight;
     private final String[] types;
+    private final String imagePath = "";
 
     /**
      * Constructeur
@@ -132,9 +133,16 @@ public class Pokemon {
     }
 
     /**
-     * Renvoie le chemin de l'image du pokémon.
+     * Renvoie l'url de l'image du pokémon.
      */
     public String getImagePath() {
+        return this.imagePath;
+    }
+
+    /**
+     * Renvoie le chemin de l'image du pokémon.
+     */
+    public String getIcon() {
         return new String("pokemon_gifs/" + this.getIdAsString() + ".gif");
     }
 

@@ -17,22 +17,14 @@ import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
  * <p>
  *
  * @version 1.0
- *
- * @see be.ac.ulb.infof307.g07.models.Map
- * @see be.ac.ulb.infof307.g07.models.Map#addPokeMarker(double, double, Pokemon, String, String)
- * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
- * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerRemoveFromMapHandler
- * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler
- * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler#PokeMarkerMouseClickHandler(Marker, PokeMarker, GoogleMap)
- * @see be.ac.ulb.infof307.g07.models.Coordinate
  */
 public class PokeMarker extends Marker {
     /**
      * Identifiant unique du PokeMarker.
      */
     private ObjectId id;
-    private LatLong coord;
-
+    private double lat;
+    private double lon;
     /**
      * Réfèrence vers le pokémon sauvegardé.
      */
@@ -47,20 +39,18 @@ public class PokeMarker extends Marker {
     private String time;
 
     /**
-     * Le constructeur de PokeMarker.
-     * Il est appele par les classes Map, PokeMarkerMouseDblClickHandler, PokeMarkerMouseClickHandler et PokeMarkerRemoveFromMapHandler.
-     *
-     * @param lat Latitude de l'épingle pokemon sur la carte.
-     * @param lon Longitude de l'épingle pokemon sur la carte.
-     * @param pokemon Pokemon réfèrencé par le marker sur la carte.
-     * @param date Date où le pokémon a été repéré.
-     * @param time Heures à laquelle le pokemon a été repéré.
+     * Constructeur de copie.
      */
-    public PokeMarker(MarkerOptions markerOptions, Pokemon pokemon, String date, String time) {
-        super(markerOptions);
-        this.date = date;
-        this.time = time;
-        this.pokemon = pokemon;
+    public PokeMarker(PokeMarker other) {
+        super(new MarkerOptions());
+        this.date = other.getDate();
+        this.time = other.getTime();
+        this.pokemon = other.getPokemon();
+        LatLong pos = other.getPosition();
+        this.lat = pos.getLatitude();
+        this.lon = pos.getLongitude();
+
+        this.setOptions(new MarkerOptions().position(pos));
     }
 
     /**
@@ -81,7 +71,17 @@ public class PokeMarker extends Marker {
      *
      */
     public LatLong getPosition() {
-        return this.coord;
+        return new LatLong(this.lat, this.lon);
+    }
+
+    /**
+     */
+    @Override
+    public void setPosition(LatLong pos) {
+        super.setPosition(pos);
+
+        this.lat = pos.getLatitude();
+        this.lon = pos.getLongitude();
     }
 
     public String getString() {
@@ -95,21 +95,12 @@ public class PokeMarker extends Marker {
     }
 
     /**
-     * Renvoie l'icone du pokémon reférencé par le marker.
+     * Renvoie le pokémon reférencé par le marker.
      *
-     * @return Chemin pour récupérer l'icone.
+     * @return Le pokemon reférencé.
      */
-    // public String getIcon() {
-    //     return this.icon();
-    // }
-
-    /**
-     * Renvoie l'id du pokémon reférencé par le marker.
-     *
-     * @return L'id du pokemon reférencé.
-     */
-    public int getPokemonId() {
-        return this.pokemon.getId();
+    public Pokemon getPokemon() {
+        return this.pokemon;
     }
 
     /**
