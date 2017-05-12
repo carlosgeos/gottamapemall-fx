@@ -7,7 +7,6 @@ public class Pokemon {
     private transient int globalCounting = 0;
     private final int id;
     private final String name;
-    private final String imagePath;
     private final int base_experience;
     private final int height;
     private final int weight;
@@ -16,15 +15,13 @@ public class Pokemon {
     /**
      * Constructeur
      */
-    public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types) {
+    public Pokemon(int id, String name, int base_experience, int height, int weight, String[] types) {
         this.id = id;
         this.name = name;
-        this.imagePath = imagePath;
         this.base_experience = base_experience;
         this.height = height;
         this.weight = weight;
         this.types = types;
-
     }
 
     /**
@@ -33,7 +30,6 @@ public class Pokemon {
     public Pokemon(Pokemon pokemon){
         this.id = pokemon.id;
         this.name = pokemon.name;
-        this.imagePath = pokemon.imagePath;
         this.base_experience = pokemon.base_experience;
         this.height = pokemon.height;
         this.weight = pokemon.weight;
@@ -93,26 +89,25 @@ public class Pokemon {
 
     /**
      * Renvoie l'id du pokemon
-     *
      */
     public final int getId() {
         return this.id;
     }
 
     /**
-     * Renvoie le nom du pokemon
+     * Revoie l'id comme une chaine de charactère.
      *
+     * @return L'id sous forme de String.
      */
-    public final String getName() {
-        return this.name;
+    public final String getIdAsString() {
+        return Integer.toString(this.id);
     }
 
     /**
-     * Renvoie le lien vers l'icon du pokemon
-     *
+     * Renvoie le nom du pokemon
      */
-    public final String getImagePath() {
-        return this.imagePath;
+    public final String getName() {
+        return this.name;
     }
 
     /**
@@ -124,19 +119,57 @@ public class Pokemon {
     }
 
     /**
+     * Renvoie les types sous forme de chaine de charactère
+     */
+    public String getTypesAsString() {
+        String result = "";
+        for (int i = 0; i < this.types.length; ++i) {
+            result += this.types[i];
+            result += ",";
+        }
+
+        return result;
+    }
+
+    /**
+     * Renvoie le chemin de l'image du pokémon.
+     */
+    public String getImagePath() {
+        return new String("pokemon_gifs/" + this.getIdAsString() + ".gif");
+    }
+
+    /**
      * Renvoie la largeur du pokemon
      *
      */
-    public final int getWeight () {
+    public final int getWeight() {
         return this.weight;
+    }
+
+    /**
+     * Revoie le weight comme une chaine de charactère.
+     *
+     * @return Le weight sous forme de String.
+     */
+    public final String getWeightAsString() {
+        return Integer.toString(this.weight);
     }
 
     /**
      * Renvoie la hauteur du pokemon
      *
      */
-    public final int getHeight () {
+    public final int getHeight() {
         return this.height;
+    }
+
+    /**
+     * Revoie la height comme une chaine de charactère.
+     *
+     * @return La height sous forme de String.
+     */
+    public final String getHeightAsString() {
+        return Integer.toString(this.height);
     }
 
     /**
@@ -147,7 +180,6 @@ public class Pokemon {
         boolean res;
         res = this.id == otherPokemon.id &&
             this.name == otherPokemon.name &&
-            this.imagePath == otherPokemon.imagePath &&
             this.base_experience == otherPokemon.base_experience &&
             this.height == otherPokemon.height &&
             this.weight == otherPokemon.weight &&
