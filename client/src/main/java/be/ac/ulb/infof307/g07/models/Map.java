@@ -11,7 +11,10 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.util.MarkerImageFactory;
 
+import be.ac.ulb.infof307.g07.controllers.MapDblClickHandler;
+import be.ac.ulb.infof307.g07.controllers.MapRightClickHandler;
 import be.ac.ulb.infof307.g07.controllers.PokeMarkerLeftClickHandler;
+import be.ac.ulb.infof307.g07.controllers.PokeMarkerRightClickHandler;
 
 
 /**
@@ -36,6 +39,8 @@ public class Map{
 	 */
 	public Map( ClusteredGoogleMap newGoogleMap ){
 		googleMap = newGoogleMap;
+		newGoogleMap.addMouseEventHandler(UIEventType.dblclick, new MapDblClickHandler());
+		newGoogleMap.addMouseEventHandler(UIEventType.rightclick, new MapRightClickHandler());
 		pokeMarkers = new HashMap<Integer, PokeMarker>();
 		instance = this;
 	}
@@ -44,13 +49,17 @@ public class Map{
 	 * Methode singleton qui renvoie une instance de cette classe
 	 * @return Objet Map
 	 */
-	public static Map getInstance(){
+	public static Map getInstance( ClusteredGoogleMap newGoogleMap ){
 		if (instance == null){
-			
-			instance = new Map(null);
-			
+			instance = new Map(newGoogleMap);
 		}
 		return instance;
+	}
+	
+	public static Map getInstance(){
+		
+		return instance;
+		
 	}
 	
 	public ClusteredGoogleMap getGoogleMap(){
@@ -77,6 +86,7 @@ public class Map{
 			pokeMarkers.put(pokeMarker.getId(),pokeMarker);
 			googleMap.addClusterableMarker(pokeMarker);
 			googleMap.addUIEventHandler(pokeMarker, UIEventType.click, new PokeMarkerLeftClickHandler(pokeMarker));
+			googleMap.addUIEventHandler(pokeMarker, UIEventType.rightclick, new PokeMarkerRightClickHandler(pokeMarker));
 		}catch( Exception error ){
 			
 			pokeMarker = null;
@@ -91,7 +101,7 @@ public class Map{
 		
 		MarkerOptions newMarkerOptions = new MarkerOptions();
 		newMarkerOptions.position(new LatLong(lat, lon))
-		.icon(MarkerImageFactory.createMarkerImage("file:src/main/resources/pokedex_icon.png", "png"));
+		.icon(MarkerImageFactory.createMarkerImage("file:src/main/resources/"+Integer.toString(pokemon.getId())+".png", "png"));
 		
 		return newMarkerOptions;
 	}

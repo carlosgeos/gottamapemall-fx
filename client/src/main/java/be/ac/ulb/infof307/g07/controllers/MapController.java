@@ -1,5 +1,8 @@
 package be.ac.ulb.infof307.g07.controllers;
 
-public class MapController {
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
+public class MapController{
 
 }

@@ -7,7 +7,8 @@ public class MapRightClickHandler implements MouseEventHandler {
 
 	@Override
 	public void handle(GMapMouseEvent event) {
-		// TODO Auto-generated method stub
+	
+		
 		
 	}
 

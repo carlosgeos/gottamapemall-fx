@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g07;
 
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+
+import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;
 import be.ac.ulb.infof307.g07.views.PokemonSelectionView;
@@ -42,7 +44,7 @@ public class Main extends Application implements MapComponentInitializedListener
 	@Override
 	public void mapInitialized() {
 		
-		mapView.initMap();
+		Map.getInstance(mapView.createMap());
 		PokedexView pV = PokedexView.getInstance();
 		pV.loadView();
 		mainPane.getChildren().add(pV.getView());

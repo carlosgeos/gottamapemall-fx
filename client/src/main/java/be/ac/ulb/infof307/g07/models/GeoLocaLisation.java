@@ -63,11 +63,13 @@ public class GeoLocaLisation {
 		HashMap<ObjectId, Integer> tempMarkerList = new HashMap<ObjectId, Integer>();
 		int count = 0;
 		for (int i = 0; i < markers.length; ++i) {
+			/*
 			double distanceBetweenTwoPointsTemp = distanceBetweenTwoPoints(userLat, userLon, markers[i].getOnMapPosition().getX(), markers[i].getOnMapPosition().getY());
 			if (distanceBetweenTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre)){
 				tempMarkerList.put(markers[i].getId(), count);
 				++count;
 			}
+			*/
 		}
 		return tempMarkerList;
 	}
