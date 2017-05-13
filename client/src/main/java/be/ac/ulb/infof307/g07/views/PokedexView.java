@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import be.ac.ulb.infof307.g07.Main;
-import be.ac.ulb.infof307.g07.controllers.PokedexController;
 import be.ac.ulb.infof307.g07.models.Pokedex;
 import be.ac.ulb.infof307.g07.models.Pokemon;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public class PokedexView {
@@ -58,11 +56,24 @@ public class PokedexView {
 		searchField = newSearchField;
 	}
 	
+	public void toggleMode( Integer[] list, AnchorPane container ){
+		
+		if( container == null){
+			// pokedex mode
+			toggleToPokedexView();
+			
+		}else{
+			// selection mode
+			toggleToDetailView();
+		}
+		
+		displayPokemon(list, container );
+	}
+	
 	public void displayPokemon(Integer[] newPokemonIdList, AnchorPane newContainer){
 		System.out.println("Displaying pokemon....");
 		AnchorPane container;
 		Integer[] pokemonIdList;
-		GridPane element;
 		
 		if( newContainer != null ){
 			System.out.println("setting new container..");
@@ -84,8 +95,7 @@ public class PokedexView {
 			pokemonIdList = newPokemonIdList;
 		}
 		for(Integer id: pokemonIdList){
-			element = pokemonView.get(id).getView();
-			container.getChildren().add(element);
+			container.getChildren().add(pokemonView.get(id).getView());
 		}
 		filledIn = container;
 		System.out.println("Finish displaying pokemon....");
@@ -125,23 +135,25 @@ public class PokedexView {
 	}
 	
 	public void toggleToPokedexView(){
-		toggleVisibility();
-		pokemonDetailContainer.toBack();
-		pokemonViewContainer.toFront();
+		if(!pokemonViewContainer.isVisible()){
+			toggleVisibility();
+			pokemonDetailContainer.toBack();
+			pokemonViewContainer.toFront();
+		}
 	}
 	
 	public void toggleToDetailView(){
-		if( pokemonDetailContainer==null ){
-			
-			System.out.println("PokedexView pokemonDetailContainer is null");
-			
-		}else{
-			
-			System.out.println("PokedexView pokemonDetailContainer is not null");
+
+		if(!pokemonDetailContainer.isVisible()){
+			toggleVisibility();
+			pokemonDetailContainer.toFront();
+			pokemonViewContainer.toBack();
 		}
-		toggleVisibility();
-		pokemonDetailContainer.toFront();
-		pokemonViewContainer.toBack();
+	}
+	
+	
+	public void hideAll(boolean visible){
+		mainPane.setVisible(!visible);
 	}
 	
 	public void displayPokemonInDetail(int pokemonId){

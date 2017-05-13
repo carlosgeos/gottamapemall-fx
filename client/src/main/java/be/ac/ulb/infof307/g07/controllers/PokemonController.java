@@ -21,26 +21,19 @@ public class PokemonController implements Initializable{
 	private PokemonView pokemonView;
 	
 	public PokemonController(PokemonView newPokemonView){
-		System.out.println("Creating PokemonController...");
 		pokemonView = newPokemonView;
-		System.out.println("Finish creating PokemonController...");
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("Assigning PokemonController...");
 		pokemonView.setFieldImage(pokemonImage);
 		pokemonView.setFieldName(pokemonName);
-		System.out.println("Finish Assigning PokemonController...");
 	}
 	
 	@FXML	
 	private void onLeftClick(MouseEvent event){
-		
 		if( event.getClickCount() == 1 ){
 			PokedexController.getInstance().onLeftClickPokemonView(pokemonView.getPokemon().getId());
-		}else if( event.getClickCount() == 2 ){
-			 
 		}
 	}
 }

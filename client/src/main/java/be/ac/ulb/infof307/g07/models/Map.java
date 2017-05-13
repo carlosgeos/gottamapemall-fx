@@ -3,10 +3,14 @@ package be.ac.ulb.infof307.g07.models;
 import java.net.ConnectException;
 import java.util.HashMap;
 
+import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+
+import be.ac.ulb.infof307.g07.controllers.PokeMarkerLeftClickHandler;
 
 
 /**
@@ -19,6 +23,8 @@ public class Map{
 	public static final boolean defaultValue = false;
 	public static final int defaultZoom = 11;
 	public static final String defaultApiKey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	public static double lat;
+	public static double lon;
 	
 	private static Map instance = null;
 	private ClusteredGoogleMap googleMap;
@@ -45,6 +51,10 @@ public class Map{
 		}
 		return instance;
 	}
+	
+	public ClusteredGoogleMap getGoogleMap(){
+		return googleMap;
+	}
 
 	/**
 	 * Cette methode ajoute un PokerMarker dans le hashmap pokemarkers et il l envoie au serveur.
@@ -55,14 +65,17 @@ public class Map{
 	 * @param dateTime Timestamp
 	 * @return Renvoie un objet PokeMarker si tout est sauvegarde correctement, null sinon.
 	 */
-	public PokeMarker addPokeMarker(Pokemon pokemon, double lat, double lon, String dateTime){
+	public PokeMarker addPokeMarker(Pokemon pokemon, String date, String time){
 		
 		PokeMarker pokeMarker = null;
 		
 		try{
-			pokeMarker = new PokeMarker(pokemon, lat, lon, dateTime);
+			
+			pokeMarker = new PokeMarker(createMarkerOption(pokemon), pokemon, lat, lon, date, time);
 			savePokeMarkerOnServer(pokeMarker);
 			pokeMarkers.put(pokeMarker.getId(),pokeMarker);
+			googleMap.addClusterableMarker(pokeMarker);
+			googleMap.addUIEventHandler(pokeMarker, UIEventType.click, new PokeMarkerLeftClickHandler(pokeMarker));
 		}catch( Exception error ){
 			
 			pokeMarker = null;
@@ -71,6 +84,14 @@ public class Map{
 		}
 		
 		return pokeMarker;
+	}
+	
+	public static MarkerOptions createMarkerOption( Pokemon pokemon ){
+		
+		MarkerOptions newMarkerOptions = new MarkerOptions();
+		newMarkerOptions.position(new LatLong(lat, lon));
+		
+		return newMarkerOptions;
 	}
 
 	/**
@@ -112,6 +133,15 @@ public class Map{
 	 */
 	public void removePokeMarker(PokeMarker pokeMarker){
 		pokeMarkers.remove(pokeMarker.getId());
+	}
+	
+	public static void setLatitude( double newLat ){
+		lat = newLat;
+	}
+	
+	public static void setLongitude( double newLon ){
+		lon = newLon;
+		
 	}
 	
 	public static MapOptions createDefaultOptions(){

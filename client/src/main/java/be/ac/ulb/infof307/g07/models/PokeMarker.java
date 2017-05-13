@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g07.models;
 
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
@@ -16,7 +17,8 @@ public class PokeMarker extends Marker{
 	private final double lat;
 	private final double lon;
 	private final Pokemon assignedPokemon;
-	private final String discoveredTime;
+	private String discoveredDate;
+	private String discoveredTime;
 	private InfoWindow infoWindow;
 	
 	/**
@@ -27,26 +29,16 @@ public class PokeMarker extends Marker{
 	 * @param newLon Longitude du Marker sur le Map
 	 * @param newDiscoveredTime le timestamp de l ajout du Marker dans le Map
 	 */
-	public PokeMarker(Pokemon newAssignedPokemon, double newLat, double newLon, String newDiscoveredTime) {
-		super(null);
+	public PokeMarker(MarkerOptions options, Pokemon newAssignedPokemon, double newLat, double newLon, String newDiscoveredDate, String newDiscoveredTime) {
+		super(options);
 		id = idCounter;
 		++idCounter;
 		lat = newLat;
 		lon = newLon;
 		assignedPokemon = newAssignedPokemon;
 		discoveredTime = newDiscoveredTime;
-		setOptions(createDefaultOption());
+		discoveredDate = newDiscoveredDate;
 		createInfoWindow();
-	}
-	
-	/**
-	 * Creation d un MarkerOption par default.
-	 * 
-	 * @return le MarkerOption par default
-	 */
-	public MarkerOptions createDefaultOption(){
-		MarkerOptions newMarkerOptions = new MarkerOptions();
-		return newMarkerOptions;
 	}
 	
 	/**
@@ -100,7 +92,7 @@ public class PokeMarker extends Marker{
 	}
 	
 	public void openWindow(){
-		infoWindow.open(Map.getInstance(), this);
+		infoWindow.open(Map.getInstance().getGoogleMap(), this);
 	}
 	
 	public void closeWindow(){

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class PokedexController implements Initializable{
 
@@ -20,6 +21,8 @@ public class PokedexController implements Initializable{
 	private AnchorPane pokemonViewContainer;
 	@FXML
 	private AnchorPane pokemonDetailContainer;
+	@FXML
+	private Pane mainPokedexPane;
 	@FXML
 	private ImageView detailImage;
 	@FXML
