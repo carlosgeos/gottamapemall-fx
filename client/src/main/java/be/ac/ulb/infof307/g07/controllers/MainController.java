@@ -76,7 +76,7 @@ public class MainController extends ClusteredMainApp implements Initializable {
         String date = pokemonDate.getValue().toString();
 
         PokeMarker newPokeMarker = new PokeMarker(clickCoordinates, pokemon, date, time);
-        PokeMarkerList.add(newPokeMarker);
+        PokeMarkerList.save(newPokeMarker);
     }
 
     @FXML
@@ -110,24 +110,26 @@ public class MainController extends ClusteredMainApp implements Initializable {
     // Add doc
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        googleMapView.addMapInializedListener(() -> configureMap());
-
-        PokeMarkerList.init((ListChangeListener.Change<? extends PokeMarker> c) -> {
-            while (c.next()) {
-                for (PokeMarker remitem : c.getRemoved()) {
-                    map.removeClusterableMarker(remitem);
+        googleMapView.addMapInializedListener(() -> {
+            configureMap();
+        
+            PokeMarkerList.init((ListChangeListener.Change<? extends PokeMarker> c) -> {
+                while (c.next()) {
+                    for (PokeMarker remitem : c.getRemoved()) {
+                        map.removeClusterableMarker(remitem);
+                    }
+                    for (PokeMarker additem : c.getAddedSubList()) {
+                        map.addClusterableMarker(additem);
+                        map.addUIEventHandler(additem, UIEventType.click, (JSObject event) -> {
+                            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                            infoWindowOptions.content(additem.getString());
+                                
+                            InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
+                            pokeMarkerInfoWindow.open(map, additem); 
+                        });
+                    }
                 }
-                for (PokeMarker additem : c.getAddedSubList()) {
-                    map.addClusterableMarker(additem);
-                    map.addUIEventHandler(additem, UIEventType.click, (JSObject event) -> {
-                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content(additem.getString());
-                            
-                        InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
-                        pokeMarkerInfoWindow.open(map, additem); 
-                    });
-                }
-            }
+            });
         });
     }
 }

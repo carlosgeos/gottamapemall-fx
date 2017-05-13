@@ -61,15 +61,13 @@ public class PokeMarker extends Marker {
      * Constructeur de copie.
      */
     public PokeMarker(PokeMarker other) {
-        super(new MarkerOptions());
+        super(new MarkerOptions().position(other.getPosition()));
         this.date = other.getDate();
         this.time = other.getTime();
         this.pokemon = other.getPokemon();
         LatLong pos = other.getPosition();
         this.lat = pos.getLatitude();
         this.lon = pos.getLongitude();
-
-        this.setOptions(new MarkerOptions().position(pos));
     }
 
     /**
