@@ -39,6 +39,25 @@ public class PokeMarker extends Marker {
     private String time;
 
     /**
+     * Le constructeur de PokeMarker.
+     *
+     * @param pos Position du marker.
+     * @param pokemon Pokemon réfèrencé par le marker sur la carte.
+     * @param date Date où le pokémon a été repéré.
+     * @param time Heures à laquelle le pokemon a été repéré.
+     */
+    public PokeMarker(LatLong pos, Pokemon pokemon, String date, String time) {
+        super(new MarkerOptions());
+        this.date = date;
+        this.time = time;
+        this.pokemon = pokemon;
+        this.lat = pos.getLatitude();
+        this.lon = pos.getLongitude();
+
+        this.setOptions(new MarkerOptions().position(pos));
+    }
+
+    /**
      * Constructeur de copie.
      */
     public PokeMarker(PokeMarker other) {

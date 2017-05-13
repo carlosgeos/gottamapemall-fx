@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebView;
+import javafx.collections.ListChangeListener;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import javafx.scene.control.TextField;
@@ -34,6 +35,7 @@ import com.jfoenix.controls.JFXTimePicker;
 import be.ac.ulb.infof307.g07.models.PokemonList;
 import be.ac.ulb.infof307.g07.models.Pokemon;
 import be.ac.ulb.infof307.g07.models.PokeMarker;
+import be.ac.ulb.infof307.g07.models.PokeMarkerList;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -65,12 +67,6 @@ public class MainController extends ClusteredMainApp implements Initializable {
 
     private DecimalFormat formatter = new DecimalFormat("###.00000");
 
-    // Add doc
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        googleMapView.addMapInializedListener(() -> configureMap());
-    }
-
     @FXML
     private void handleAddPokemonButton(MouseEvent e) {
         List<Pokemon> pokemons = PokemonList.get();
@@ -81,7 +77,7 @@ public class MainController extends ClusteredMainApp implements Initializable {
         String date = pokemonDate.getValue().toString();
 
         PokeMarker newPokeMarker = new PokeMarker(clickCoordinates, pokemon, date, time);
-        map.addClusterableMarker(newPokeMarker);
+        PokeMarkerList.add(newPokeMarker);
         map.addUIEventHandler(newPokeMarker, UIEventType.click, (JSObject event) -> {
             InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
             infoWindowOptions.content(newPokeMarker.getString());
@@ -116,6 +112,25 @@ public class MainController extends ClusteredMainApp implements Initializable {
             // Save coordinates in class attribute
             clickCoordinates = event.getLatLong();
             addPokemonPopup.show();
+        });
+    }
+
+    // Add doc
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        googleMapView.addMapInializedListener(() -> configureMap());
+
+        PokeMarkerList.init((ListChangeListener.Change<? extends PokeMarker> c) -> {
+            while (c.next()) {
+                for (PokeMarker remitem : c.getRemoved()) {
+                    map.removeClusterableMarker(remitem);
+                    // remitem.remove();
+                }
+                for (PokeMarker additem : c.getAddedSubList()) {
+                    map.addClusterableMarker(additem);
+                    // additem.add();
+                }
+            }
         });
     }
 }
