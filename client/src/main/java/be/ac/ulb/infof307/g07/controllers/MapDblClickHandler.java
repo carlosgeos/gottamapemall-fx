@@ -11,7 +11,6 @@ public class MapDblClickHandler implements MouseEventHandler{
 	@Override
 	public void handle(GMapMouseEvent mapMouseEvent) {
 		
-		System.out.println("Double clicked");
 		PokemonSelectionView view = PokemonSelectionView.getInstance();
 		view.setVisible(true);
 	}

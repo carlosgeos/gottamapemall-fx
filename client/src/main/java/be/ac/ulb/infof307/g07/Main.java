@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -27,7 +28,6 @@ public class Main extends Application implements MapComponentInitializedListener
 			primaryStage.setScene(mainScene);
 			mapView = new MapView(this);
 			mainPane.getChildren().add(mapView.getView());
-			
 		}catch (Exception error){
 			
 			
@@ -47,10 +47,10 @@ public class Main extends Application implements MapComponentInitializedListener
 		mainPane.getChildren().add(pV.getView());
 		StackPane.setAlignment(pV.getView(), Pos.TOP_RIGHT);
 		pV.init();
-		
-		
-		//PokemonSelectionView pSView = new PokemonSelectionView();
-		//mainPane.getChildren().add(pSView.getView());
+		PokemonSelectionView pSView = PokemonSelectionView.getInstance();
+		pSView.loadView();
+		mainPane.getChildren().add(pSView.getView());
+		pSView.fillPokemonList();
 		
 		mainStage.show();
 	}	

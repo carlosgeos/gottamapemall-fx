@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="pokemonPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onDblClick" prefHeight="59.0" prefWidth="270.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="pokemonPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onLeftClick" prefHeight="59.0" prefWidth="285.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="0.0" prefWidth="60.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="210.0" />
@@ -15,7 +15,7 @@
       <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fx:id="pokemonImage" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#onDblClick" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="pokemonImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
       <Label id="pokemonName" fx:id="pokemonName" prefHeight="35.0" prefWidth="110.0" GridPane.columnIndex="1" />
    </children>
 </GridPane>

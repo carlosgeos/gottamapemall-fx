@@ -35,7 +35,12 @@ public class PokemonController implements Initializable{
 	}
 	
 	@FXML	
-	private void onDblClick(MouseEvent event){
-		PokedexController.getInstance().onDblClickPokemonView(pokemonView.getPokemon().getId());
+	private void onLeftClick(MouseEvent event){
+		
+		if( event.getClickCount() == 1 ){
+			PokedexController.getInstance().onLeftClickPokemonView(pokemonView.getPokemon().getId());
+		}else if( event.getClickCount() == 2 ){
+			 
+		}
 	}
 }

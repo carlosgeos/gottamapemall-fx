@@ -6,6 +6,7 @@ public class Pokedex {
 
 	private HashMap<Integer, Pokemon> pokemons = new HashMap<Integer, Pokemon>();
 	private static Pokedex instance = null;
+	private int selectedPokemon = 0;
 	
 	public Pokedex(){
 		
@@ -61,6 +62,14 @@ public class Pokedex {
 			++index;
 		}
 		return res;
+	}
+	
+	public void setSelectedPokemon(int pokemonId){
+		selectedPokemon = pokemonId;
+	}
+	
+	public Pokemon getSelectedPokemon(){
+		return getPokemon(selectedPokemon);
 	}
 	
 	public final HashMap<Integer, Pokemon> getPokemons(){

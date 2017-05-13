@@ -9,6 +9,9 @@ import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import be.ac.ulb.infof307.g07.controllers.MapDblClickHandler;
 import be.ac.ulb.infof307.g07.controllers.MapRightClickHandler;
 import be.ac.ulb.infof307.g07.models.Map;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class MapView{
 	
@@ -20,6 +23,15 @@ public class MapView{
 		
 		googleMapView = new ClusteredGoogleMapView(null, Map.defaultApiKey);
 		googleMapView.addMapInializedListener(mapInitialized);
+		googleMapView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+
+	            public void handle(MouseEvent e) {
+	                 
+	            	System.out.println(e.getX());
+	            	System.out.println(e.getY());
+
+	             }
+		});
 	}
 	
 	public GoogleMapView getView(){

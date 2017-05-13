@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g07.controllers.PokedexController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g07.controllers.PokedexController">
    <children>
       <ScrollPane layoutX="5.0" layoutY="49.0" prefHeight="549.0" prefWidth="290.0">
          <content>
@@ -21,14 +21,14 @@
       </ScrollPane>
       <Button layoutX="210.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchPokedex" prefHeight="25.0" prefWidth="75.0" text="Search" />
       <TextField fx:id="searchField" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="190.0" text="Helllo" />
-      <AnchorPane fx:id="pokemonDetailContainer" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #E6E6E6;">
+      <AnchorPane fx:id="pokemonDetailContainer" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #E6E6E6;" visible="false">
          <children>
-            <Button fx:id="DetailBackButton" layoutX="103.0" layoutY="546.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" text="Back">
+            <Button fx:id="detailBackButton" layoutX="103.0" layoutY="546.0" mnemonicParsing="false" onAction="#closePokemonDetailView" prefHeight="40.0" prefWidth="95.0" text="Back">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <ImageView fx:id="DetailImage" fitHeight="120.0" fitWidth="150.0" layoutX="75.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="detailImage" fitHeight="120.0" fitWidth="150.0" layoutX="75.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
             <GridPane layoutX="37.0" layoutY="179.0" prefHeight="128.0" prefWidth="229.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="77.0" />
@@ -67,27 +67,27 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="DetailId" prefHeight="20.0" prefWidth="122.0" GridPane.columnIndex="1">
+                  <Label fx:id="detailId" prefHeight="20.0" prefWidth="122.0" GridPane.columnIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="DetailName" layoutX="67.0" layoutY="15.0" prefHeight="16.0" prefWidth="117.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="detailName" layoutX="67.0" layoutY="15.0" prefHeight="16.0" prefWidth="117.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="DetailTypes" layoutX="67.0" layoutY="40.0" prefHeight="16.0" prefWidth="118.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="detailTypes" layoutX="67.0" layoutY="40.0" prefHeight="16.0" prefWidth="118.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="DetailWeight" layoutX="67.0" layoutY="40.0" prefHeight="16.0" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="detailWeight" layoutX="67.0" layoutY="40.0" prefHeight="16.0" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="DetailHeight" layoutX="77.0" layoutY="92.0" prefHeight="16.0" prefWidth="119.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="detailHeight" layoutX="77.0" layoutY="92.0" prefHeight="16.0" prefWidth="119.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="15.0" />
                      </font>
