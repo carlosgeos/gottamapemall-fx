@@ -71,20 +71,12 @@ public class MainController extends ClusteredMainApp implements Initializable {
     private void handleAddPokemonButton(MouseEvent e) {
         List<Pokemon> pokemons = PokemonList.get();
         Pokemon pokemon = pokemons.get(0);
-        System.out.println(pokemonTime.getValue());
 
         String time = pokemonTime.getValue().toString();
         String date = pokemonDate.getValue().toString();
 
         PokeMarker newPokeMarker = new PokeMarker(clickCoordinates, pokemon, date, time);
         PokeMarkerList.add(newPokeMarker);
-        map.addUIEventHandler(newPokeMarker, UIEventType.click, (JSObject event) -> {
-            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-            infoWindowOptions.content(newPokeMarker.getString());
-                
-            InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
-            pokeMarkerInfoWindow.open(map, newPokeMarker); 
-        });
     }
 
     @FXML
@@ -124,11 +116,16 @@ public class MainController extends ClusteredMainApp implements Initializable {
             while (c.next()) {
                 for (PokeMarker remitem : c.getRemoved()) {
                     map.removeClusterableMarker(remitem);
-                    // remitem.remove();
                 }
                 for (PokeMarker additem : c.getAddedSubList()) {
                     map.addClusterableMarker(additem);
-                    // additem.add();
+                    map.addUIEventHandler(additem, UIEventType.click, (JSObject event) -> {
+                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                        infoWindowOptions.content(additem.getString());
+                            
+                        InfoWindow pokeMarkerInfoWindow = new InfoWindow(infoWindowOptions);
+                        pokeMarkerInfoWindow.open(map, additem); 
+                    });
                 }
             }
         });
