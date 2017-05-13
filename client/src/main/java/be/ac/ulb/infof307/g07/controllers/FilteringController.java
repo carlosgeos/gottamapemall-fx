@@ -34,6 +34,9 @@ import javafx.scene.layout.GridPane;
 
 import be.ac.ulb.infof307.g07.models.Pokemon;
 import be.ac.ulb.infof307.g07.models.FilterModel;
+import be.ac.ulb.infof307.g07.models.PokeMarkerList;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
+
 import be.ac.ulb.infof307.g07.views.PokeCell;
 
 import com.google.gson.Gson;
@@ -84,8 +87,10 @@ public class FilteringController implements Initializable {
 
     @FXML
     private void handleSearchAction(ActionEvent e) {
-        String response = Requests.get("http://127.0.0.1:4567/pokemons" + this.buildQuery()).send().readToText();
-        System.out.println(response);
+        String response = Requests.get("http://127.0.0.1:4567/locations" + this.buildQuery()).send().readToText();
+        Gson gson = new Gson();
+        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
+        PokeMarkerList.setAll(markers);
     }
 
     @FXML
@@ -99,6 +104,5 @@ public class FilteringController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
     }
 }

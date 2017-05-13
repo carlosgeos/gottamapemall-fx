@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g07.models;
 
 import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ListChangeListener;
@@ -20,6 +22,16 @@ public class PokeMarkerList {
 
     static public void add(PokeMarker marker) {
         markers.add(marker);
+    }
+
+    static public void setAll(PokeMarker[] set) {
+        Collection<PokeMarker> markersList = new ArrayList<PokeMarker>();
+
+        for (int i = 0; i < set.length; ++i) {
+            markersList.add(new PokeMarker(set[i]));
+        }
+
+        markers.setAll(markersList);
     }
 
     static public void save(PokeMarker marker) {
