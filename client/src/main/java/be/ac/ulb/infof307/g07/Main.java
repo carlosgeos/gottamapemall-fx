@@ -22,11 +22,13 @@ public class Main extends Application implements MapComponentInitializedListener
 		
 		try{
 			mainStage = primaryStage;
-			mainPane = FXMLLoader.load(Main.class.getResource("fxml/Main.fxml"));
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("fxml/Main.fxml"));
+			loader.setController(new MainController());
+			mainPane = loader.load();
 			Scene mainScene = new Scene(mainPane);
 			primaryStage.setScene(mainScene);
 			mapView = new MapView(this);
-			mainPane.getChildren().add(mapView.getView());
+			mainPane.getChildren().add(0, mapView.getView());
 		}catch (Exception error){
 			
 			

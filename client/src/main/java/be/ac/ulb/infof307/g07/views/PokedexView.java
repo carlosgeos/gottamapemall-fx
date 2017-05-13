@@ -19,6 +19,8 @@ public class PokedexView {
 	private final Pokedex pokedex;
 	private HashMap<Integer,PokemonView> pokemonView = new HashMap<Integer, PokemonView>();
 	private static PokedexView instance = null;
+	private boolean isMainHided;
+	private boolean isPokedexMode = true;
 	
 	private Pane mainPane;
 	private AnchorPane pokemonViewContainer;
@@ -60,11 +62,12 @@ public class PokedexView {
 		
 		if( container == null){
 			// pokedex mode
-			toggleToPokedexView();
-			
+			showPokedex(true);
+			isPokedexMode = true;
 		}else{
 			// selection mode
-			toggleToDetailView();
+			hideAll(true);
+			isPokedexMode = false;
 		}
 		
 		displayPokemon(list, container );
@@ -122,38 +125,39 @@ public class PokedexView {
 	}
 	
 	public void init(){
-		
 		initPokemonViews();
 		displayPokemon(pokedex.getPokemonsId(), null);
-		
 	}
 	
-	private void toggleVisibility(){
-		boolean tmp = pokemonViewContainer.isVisible();
-		pokemonViewContainer.setVisible(pokemonDetailContainer.isVisible());
-		pokemonDetailContainer.setVisible(tmp);
-	}
-	
-	public void toggleToPokedexView(){
-		if(!pokemonViewContainer.isVisible()){
-			toggleVisibility();
-			pokemonDetailContainer.toBack();
-			pokemonViewContainer.toFront();
+	public static void setPaneVisibility( Pane container, boolean isVisible ){
+		container.setVisible(isVisible);
+		if( isVisible ){
+			container.toFront();
+		}else{
+			container.toBack();
 		}
 	}
 	
-	public void toggleToDetailView(){
-
-		if(!pokemonDetailContainer.isVisible()){
-			toggleVisibility();
-			pokemonDetailContainer.toFront();
-			pokemonViewContainer.toBack();
+	public void hideAll(boolean hide){
+		showDetailView(!hide);
+		showPokedex(!hide);
+	}
+	
+	public void showPokedex(boolean show){
+		if( isPokedexMode ){
+			PokedexView.setPaneVisibility(pokemonViewContainer, show);
+			hideMain();
 		}
 	}
 	
+	public void showDetailView(boolean show){
+		PokedexView.setPaneVisibility(pokemonDetailContainer, show);
+		hideMain();
+	}
 	
-	public void hideAll(boolean visible){
-		mainPane.setVisible(!visible);
+	private void hideMain(){
+		isMainHided = (!pokemonViewContainer.isVisible() && !pokemonDetailContainer.isVisible());
+		mainPane.setVisible(!isMainHided);
 	}
 	
 	public void displayPokemonInDetail(int pokemonId){
@@ -171,7 +175,7 @@ public class PokedexView {
 		pokemonDetailLabels[3].setText(Double.toString(pokemon.getWeight()));
 		// set Height
 		pokemonDetailLabels[4].setText(Double.toString(pokemon.getHeight()));
-		toggleToDetailView();
+		showDetailView(true);
 	}
 	
 	public static String arrayToString( String[] string, String separator ){
@@ -189,6 +193,11 @@ public class PokedexView {
 	public void setDetailComponent(Label[] pokemonLabels, ImageView pokemonImage){
 		pokemonDetailLabels = pokemonLabels;
 		pokemonDetailImageView = pokemonImage;
+	}
+	
+	public boolean getIsMainHided(){
+		
+		return isMainHided;
 	}
 	
 	public Pane getView(){

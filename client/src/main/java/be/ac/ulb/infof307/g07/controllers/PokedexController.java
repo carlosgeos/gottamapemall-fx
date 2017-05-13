@@ -55,6 +55,16 @@ public class PokedexController implements Initializable{
 		return instance;
 	}
 	
+	public void toggleMainView(){
+		closePokemonDetailView();
+		PokedexView.getInstance().showPokedex(PokedexView.getInstance().getIsMainHided());
+	}
+	
+	public void toggleMode(Integer[] list, AnchorPane container){
+		PokedexView.getInstance().toggleMode(null, container);
+	}
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		PokedexView.getInstance().setSearchField(searchField);
@@ -76,6 +86,7 @@ public class PokedexController implements Initializable{
 	
 	@FXML
 	public void closePokemonDetailView(){
-		PokedexView.getInstance().toggleToPokedexView();
+		
+		PokedexView.getInstance().showDetailView(false);
 	}
 }

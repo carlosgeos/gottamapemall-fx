@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.models.Pokedex;
+import be.ac.ulb.infof307.g07.views.PokedexView;
 import be.ac.ulb.infof307.g07.views.PokemonSelectionView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +41,8 @@ public class PokemonSelectionController implements Initializable{
 	@FXML
     public void close(ActionEvent event)
     {
-		PokemonSelectionView.getInstance().setVisible(false);
+		PokemonSelectionView.getInstance().closeView();
+		PokedexController.getInstance().toggleMode(null, null);
     }
 	
 	@FXML
@@ -49,11 +51,13 @@ public class PokemonSelectionController implements Initializable{
 		String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		Map.getInstance().addPokeMarker(Pokedex.getInstance().getSelectedPokemon(), date, timePicker.getText());
 		close(null);
+		PokedexController.getInstance().toggleMode(null, null);
 		
 	}
 	
 	public void initSelection(){
 		PokemonSelectionView.getInstance().setVisible(true);
+		PokedexController.getInstance().toggleMode(null, selectPokemonContainer);
 	}
 
 	@Override

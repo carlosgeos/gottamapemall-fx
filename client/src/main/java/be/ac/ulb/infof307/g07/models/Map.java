@@ -9,6 +9,7 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.util.MarkerImageFactory;
 
 import be.ac.ulb.infof307.g07.controllers.PokeMarkerLeftClickHandler;
 
@@ -23,8 +24,8 @@ public class Map{
 	public static final boolean defaultValue = false;
 	public static final int defaultZoom = 11;
 	public static final String defaultApiKey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
-	public static double lat;
-	public static double lon;
+	private static double lat;
+	private static double lon;
 	
 	private static Map instance = null;
 	private ClusteredGoogleMap googleMap;
@@ -89,7 +90,8 @@ public class Map{
 	public static MarkerOptions createMarkerOption( Pokemon pokemon ){
 		
 		MarkerOptions newMarkerOptions = new MarkerOptions();
-		newMarkerOptions.position(new LatLong(lat, lon));
+		newMarkerOptions.position(new LatLong(lat, lon))
+		.icon(MarkerImageFactory.createMarkerImage("file:src/main/resources/pokedex_icon.png", "png"));
 		
 		return newMarkerOptions;
 	}

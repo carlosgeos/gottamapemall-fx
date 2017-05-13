@@ -66,13 +66,14 @@ public class PokemonSelectionView {
 		
 	}
 	
+	public void closeView(){
+		setVisible(false);
+	}
+	
 	public void setVisible(boolean visible){
 		mainPane.setVisible(visible);
 		if( visible ){
 			fillTimestamp();
-			PokedexView.getInstance().toggleMode(null, selectPokemonContainer);	
-		}else{
-			PokedexView.getInstance().toggleMode(null, null);
 		}
 	}
 }

@@ -4,14 +4,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="mainContainer" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane fx:id="menuContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="244.0" StackPane.alignment="BOTTOM_CENTER">
          <children>
             <Button layoutX="14.0" layoutY="19.0" mnemonicParsing="false" text="Filter" />
             <Button layoutX="96.0" layoutY="20.0" mnemonicParsing="false" text="Geo" />
-            <Button layoutX="169.0" layoutY="20.0" mnemonicParsing="false" onAction="#togglePokdex" text="Pokedex" />
+            <Button layoutX="169.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnPokedexMenu" text="Pokedex" />
          </children>
       </AnchorPane>
    </children>
