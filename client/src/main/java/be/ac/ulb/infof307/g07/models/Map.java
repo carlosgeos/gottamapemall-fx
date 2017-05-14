@@ -3,14 +3,20 @@ package be.ac.ulb.infof307.g07.models;
 import java.net.ConnectException;
 import java.util.HashMap;
 
+import com.lynden.gmapsfx.javascript.event.MapStateEventType;
+import com.lynden.gmapsfx.javascript.event.StateEventHandler;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.LatLongBounds;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.shapes.Circle;
+import com.lynden.gmapsfx.shapes.CircleOptions;
 import com.lynden.gmapsfx.util.MarkerImageFactory;
 
+import be.ac.ulb.infof307.g07.controllers.CloseMarkerOptionHandler;
 import be.ac.ulb.infof307.g07.controllers.MapDblClickHandler;
 import be.ac.ulb.infof307.g07.controllers.MapRightClickHandler;
 import be.ac.ulb.infof307.g07.controllers.PokeMarkerLeftClickHandler;
@@ -33,14 +39,34 @@ public class Map{
 	private static Map instance = null;
 	private ClusteredGoogleMap googleMap;
 	private HashMap<Integer, PokeMarker> pokeMarkers;
+	private Circle shapeOfGeoLoc = null;
+	private LatLong mapCenter;
+	private LatLongBounds mapBound;
 	
 	/**
 	 * Construit un objet du type Map
 	 */
 	public Map( ClusteredGoogleMap newGoogleMap ){
 		googleMap = newGoogleMap;
-		newGoogleMap.addMouseEventHandler(UIEventType.dblclick, new MapDblClickHandler());
-		newGoogleMap.addMouseEventHandler(UIEventType.rightclick, new MapRightClickHandler());
+		mapCenter = googleMap.getCenter();
+		googleMap.addMouseEventHandler(UIEventType.dblclick, new MapDblClickHandler(this));
+		googleMap.addMouseEventHandler(UIEventType.rightclick, new MapRightClickHandler(this));
+		googleMap.addStateEventHandler(MapStateEventType.zoom_changed, new CloseMarkerOptionHandler());
+		googleMap.addStateEventHandler(MapStateEventType.dragstart, new CloseMarkerOptionHandler());
+		googleMap.addStateEventHandler(MapStateEventType.dragend, new StateEventHandler(){
+
+			@Override
+			public void handle() {
+				mapCenter = googleMap.getCenter();
+				mapBound = googleMap.getBounds();
+				System.out.println(mapCenter);
+				System.out.println(googleMap.getBounds());
+				
+			}
+			
+			
+		});
+		
 		pokeMarkers = new HashMap<Integer, PokeMarker>();
 		instance = this;
 	}
@@ -157,6 +183,7 @@ public class Map{
 	}
 	
 	public static MapOptions createDefaultOptions(){
+
 		MapOptions defaultMapOptions = new MapOptions();
         LatLong defaultMapCenterPosition = new LatLong(defaultLocation[0], defaultLocation[1]);
         defaultMapOptions.center(defaultMapCenterPosition)
@@ -171,4 +198,54 @@ public class Map{
                 .zoom(defaultZoom);
         return defaultMapOptions;
 	}
+	
+	public void setVisiblePokeMakers( HashMap<Integer, Integer> pokeMarkersId){
+		
+		boolean show = true;
+		for(int key:pokeMarkers.keySet()){
+			if( pokeMarkersId.containsKey(key) ){
+				pokeMarkers.get(key).setVisible(show);
+			}else{
+				pokeMarkers.get(key).setVisible(!show);
+			}
+		}
+		refreshMap();
+	}
+	
+	
+	public void refreshMap() {
+		int current = googleMap.getZoom();
+		googleMap.setZoom(current-1);
+		googleMap.setZoom(current);
+	}
+	
+	public int getMapZoom(){
+		return googleMap.getZoom();
+	}
+	
+	public void setMapZoom(int newZoom){
+		googleMap.setZoom(newZoom);
+	}
+	
+	public void geoLocalisationSetShape(double centerX, double centerY, int radius) {
+		
+        if (shapeOfGeoLoc != null) {
+            this.googleMap.removeMapShape(shapeOfGeoLoc);
+        }
+        
+        CircleOptions newCircleOption = new CircleOptions();
+        newCircleOption.center(new LatLong(centerX, centerY))
+            .radius(radius)
+            .fillColor("#c9d4fc")
+            .fillOpacity(0.6)
+            .clickable(false)
+            .draggable(false)
+            .editable(false)
+            .strokeColor("#bccbff")
+            .strokeWeight(1)
+            .strokeOpacity(0.6);
+        
+        shapeOfGeoLoc = new Circle(newCircleOption);
+        this.googleMap.addMapShape(shapeOfGeoLoc);
+   }
 }

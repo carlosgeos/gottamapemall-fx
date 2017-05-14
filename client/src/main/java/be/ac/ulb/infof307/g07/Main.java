@@ -1,7 +1,9 @@
 package be.ac.ulb.infof307.g07;
 
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.MapStateEventType;
 
+import be.ac.ulb.infof307.g07.controllers.CloseMarkerOptionHandler;
 import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;

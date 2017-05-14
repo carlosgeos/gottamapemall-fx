@@ -2,10 +2,6 @@ package be.ac.ulb.infof307.g07.models;
 
 import java.util.HashMap;
 
-import org.bson.types.ObjectId;
-
-
-
 /**
  * Cette classe calcule la distance entre deux points en utilisant les coordonnees decimales (latitude, longitude)
  * ici la premiere position represente la position de l'utilisateur sur la carte et la deuxiemme represente une
@@ -58,18 +54,16 @@ public class GeoLocaLisation {
 	 * @param userLon
 	 * @return la liste des epingles pokemons
 	 */
-	public static HashMap<ObjectId, Integer> pokemonsAroundMe(PokeMarker[] markers, int distanceMetre, double userLat, double userLon){
+	public static HashMap<Integer, Integer> pokemonsAroundMe(HashMap<Integer, PokeMarker> markers, int distanceMetre, double userLat, double userLon){
 		
-		HashMap<ObjectId, Integer> tempMarkerList = new HashMap<ObjectId, Integer>();
-		int count = 0;
-		for (int i = 0; i < markers.length; ++i) {
-			/*
-			double distanceBetweenTwoPointsTemp = distanceBetweenTwoPoints(userLat, userLon, markers[i].getOnMapPosition().getX(), markers[i].getOnMapPosition().getY());
+		HashMap<Integer, Integer> tempMarkerList = new HashMap<Integer, Integer>();
+		int count = 1;
+		for (int key:markers.keySet()) {
+			double distanceBetweenTwoPointsTemp = distanceBetweenTwoPoints(userLat, userLon, markers.get(key).getLat(), markers.get(key).getLon());
 			if (distanceBetweenTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre)){
-				tempMarkerList.put(markers[i].getId(), count);
+				tempMarkerList.put(markers.get(key).getId(), count);
 				++count;
 			}
-			*/
 		}
 		return tempMarkerList;
 	}

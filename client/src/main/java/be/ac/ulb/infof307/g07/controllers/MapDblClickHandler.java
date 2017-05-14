@@ -8,12 +8,19 @@ import be.ac.ulb.infof307.g07.models.Map;
 
 public class MapDblClickHandler implements MouseEventHandler{
 	
+	private Map map;
+	
+	public MapDblClickHandler(Map newMap){
+		map = newMap;
+	}
+	
 	@Override
 	public void handle(GMapMouseEvent mapMouseEvent) {
-		
 		Map.setLatitude(mapMouseEvent.getLatLong().getLatitude());
 		Map.setLongitude(mapMouseEvent.getLatLong().getLongitude());
 		PokemonSelectionController.getInstance().initSelection();
+		int zoomValChange = -1;
+		map.setMapZoom(map.getMapZoom()-zoomValChange);
 	}
 
 }
