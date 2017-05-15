@@ -10,8 +10,9 @@
    <children>
       <ScrollPane fx:id="selectPokemonContainer" layoutX="14.0" layoutY="56.0" prefHeight="248.0" prefWidth="254.0" />
       <DatePicker fx:id="datePicker" layoutX="81.0" layoutY="20.0" prefHeight="26.0" prefWidth="186.0" />
-      <Button fx:id="btnCancel" layoutX="133.0" layoutY="317.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="65.0" text="Cancel" />
-      <Button fx:id="btnAdd" layoutX="212.0" layoutY="317.0" mnemonicParsing="false" onAction="#onClickBtnAdd" prefHeight="26.0" prefWidth="58.0" text="Add" />
+      <Button fx:id="btnCancel" layoutX="123.0" layoutY="317.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="65.0" text="Cancel" />
+      <Button fx:id="btnAdd" layoutX="201.0" layoutY="317.0" mnemonicParsing="false" onAction="#onClickBtnAdd" prefHeight="26.0" prefWidth="65.0" text="Add" />
       <TextField fx:id="timePicker" layoutX="14.0" layoutY="20.0" prefHeight="26.0" prefWidth="58.0" promptText="00:00" />
+      <Button fx:id="btnModify" layoutX="201.0" layoutY="317.0" mnemonicParsing="false" onAction="#onClickBtnModify" prefHeight="26.0" prefWidth="65.0" text="Modify" visible="false" />
    </children>
 </Pane>

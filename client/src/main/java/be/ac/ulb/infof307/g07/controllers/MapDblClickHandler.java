@@ -18,8 +18,9 @@ public class MapDblClickHandler implements MouseEventHandler{
 	public void handle(GMapMouseEvent mapMouseEvent) {
 		Map.setLatitude(mapMouseEvent.getLatLong().getLatitude());
 		Map.setLongitude(mapMouseEvent.getLatLong().getLongitude());
+		PokemonSelectionController.getInstance().switchToModifyMode(false);
 		PokemonSelectionController.getInstance().initSelection();
-		map.refreshMap();
+		map.refreshMap(+1);
 	}
 
 }

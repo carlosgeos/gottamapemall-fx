@@ -18,9 +18,10 @@ public class MapRightClickHandler implements MouseEventHandler {
 	
 	@Override
 	public void handle(GMapMouseEvent event) {
-		HashMap<Integer,Integer> pokemonTobeShown = GeoLocaLisation.pokemonsAroundMe(map.getPokeMarkers(), 100, event.getLatLong().getLatitude(), event.getLatLong().getLongitude());
+		HashMap<Integer,Integer> pokemonTobeShown = GeoLocaLisation.pokemonsAroundMe(map.getPokeMarkers(), GeoLocaLisation.radius, event.getLatLong().getLatitude(), event.getLatLong().getLongitude());
 		map.setVisiblePokeMakers(pokemonTobeShown);
-		map.geoLocalisationSetShape(event.getLatLong().getLatitude(), event.getLatLong().getLongitude(), 100);
+		map.geoLocalisationSetShape(event.getLatLong().getLatitude(), event.getLatLong().getLongitude(), GeoLocaLisation.radius);
+		map.refreshMap(1);
 	}
 
 	

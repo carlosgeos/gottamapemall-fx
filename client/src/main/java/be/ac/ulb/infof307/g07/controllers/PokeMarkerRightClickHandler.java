@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g07.controllers;
 
 import com.lynden.gmapsfx.javascript.event.UIEventHandler;
 
+import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.models.PokeMarker;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokeMarkerOptionsView;
@@ -40,5 +41,6 @@ public class PokeMarkerRightClickHandler implements UIEventHandler{
 		// it has user clicked on the Marker so that the correspondant class can know it
 		MapView.getInstance().setMarkerLayoutMouseX(1);
 		MapView.getInstance().setMarkerLayoutMouseY(1);
+		Map.getInstance().setSelectedPokeMarker(concernedPokeMarker);
 	}
 }

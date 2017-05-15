@@ -40,6 +40,7 @@ public class Map{
 	private HashMap<Integer, PokeMarker> pokeMarkers;
 	private Circle shapeOfGeoLoc = null;
 	private LatLong mapCenter;
+	private PokeMarker selectedMarker ;
 	
 	/**
 	 * Construit un objet du type Map
@@ -102,8 +103,13 @@ public class Map{
 			throw error;
 						
 		}
-		
 		return pokeMarker;
+	}
+	
+	public void modifyPokeMarker(String date, String time){
+		selectedMarker.setDate(date);
+		selectedMarker.setTime(time);
+		selectedMarker.createInfoWindow();
 	}
 	
 	public static MarkerOptions createMarkerOption( Pokemon pokemon ){
@@ -155,6 +161,7 @@ public class Map{
 	 */
 	public void removePokeMarker(PokeMarker pokeMarker){
 		Pokemon tmpPokemon = pokeMarker.getAssignedPokemon();
+		googleMap.removeClusterableMarker(pokeMarker);
 		pokeMarkers.remove(pokeMarker.getId());
 		tmpPokemon.decSignalCount();
 	}
@@ -194,11 +201,11 @@ public class Map{
 				pokeMarkers.get(key).setVisible(!show);
 			}
 		}
-		refreshMap();
+		refreshMap(-1);
 	}
 	
-	public void refreshMap() {
-		int current = googleMap.getZoom()-1;
+	public void refreshMap(int val) {
+		int current = googleMap.getZoom()+val;
 		googleMap.setZoom(current);
 		googleMap.setZoom(current);
 	}
@@ -232,4 +239,13 @@ public class Map{
         shapeOfGeoLoc = new Circle(newCircleOption);
         this.googleMap.addMapShape(shapeOfGeoLoc);
    }
+	
+	
+	public void setSelectedPokeMarker(PokeMarker pokeMarker){
+		selectedMarker = pokeMarker;
+	}
+	
+	public PokeMarker getSelectedPokeMarker(){
+		return selectedMarker;
+	}
 }

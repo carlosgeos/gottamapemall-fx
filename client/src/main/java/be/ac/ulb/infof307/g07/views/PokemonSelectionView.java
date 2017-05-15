@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 import be.ac.ulb.infof307.g07.controllers.PokemonSelectionController;
+import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.models.PokeMarker;
+import be.ac.ulb.infof307.g07.models.Pokedex;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -84,13 +87,23 @@ public class PokemonSelectionView {
 		}
 	}
 	
-	public void loadPokemonContainer(){
+	public void fillModifyDataInView(){
+		PokeMarker pM = Map.getInstance().getSelectedPokeMarker();
+		Integer[] tmpList = {pM.getAssignedPokemon().getId()};
+		selectPokemonContainer.setContent(getLoadPokemonView(tmpList));
+	}
+	
+	public VBox getLoadPokemonView(Integer[] list){
 		VBox newVBox = new VBox();
-		pokemonViews = PokedexView.getInstance().createPokemoViews(false, controller);
+		pokemonViews = PokedexView.getInstance().createPokemoViews(list,false, controller);
 		for( Integer id : pokemonViews.keySet() ){
 			pokemonViews.get(id).addListener(controller);
 			newVBox.getChildren().add(pokemonViews.get(id).getView());
 		}
-		selectPokemonContainer.setContent(newVBox);
+		return newVBox;
+	}
+	
+	public void loadPokemonContainer(){
+		selectPokemonContainer.setContent(getLoadPokemonView(Pokedex.getInstance().getPokemonsId()));
 	}
 }

@@ -80,7 +80,7 @@ public class PokedexView {
 	}
 	
 	private void showPokemonView(){
-		this.pokemonViews = createPokemoViews(true, controller);
+		this.pokemonViews = createPokemoViews(Pokedex.getInstance().getPokemonsId(),true, controller);
 		VBox newVBox = new VBox();
 		System.out.println(this.pokemonViews.size());
 		for( Integer id : this.pokemonViews.keySet() ){
@@ -90,12 +90,12 @@ public class PokedexView {
 		pokemonViewContainer.setContent(newVBox);
 	}
 	
-	public HashMap<Integer, PokemonView> createPokemoViews( boolean bindSignalListener, PokemonViewListener pokemonSelectionListener){
+	public HashMap<Integer, PokemonView> createPokemoViews( Integer[] listId, boolean bindSignalListener, PokemonViewListener pokemonSelectionListener){
 		
 		HashMap<Integer, Pokemon> pokemons = pokedex.getPokemons();
 		HashMap<Integer, PokemonView> list = new HashMap<Integer, PokemonView>();
 		
-		for( int id:pokemons.keySet() ){
+		for( int id: listId ){
 			PokemonView newPokemonView = new PokemonView(pokemons.get(id));
 			if(bindSignalListener){
 				pokemons.get(id).addListener(newPokemonView);

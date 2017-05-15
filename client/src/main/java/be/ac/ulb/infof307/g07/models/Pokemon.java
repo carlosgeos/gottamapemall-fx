@@ -172,7 +172,11 @@ public class Pokemon {
 			l.onChangeSignalisation();
 		}
 	}
-	
+	/**
+	* Renvoie le lien vers l icon
+	* 
+	* @return lien vers icon
+	*/
 	public String getImageLink(){
 		
 		return imageLink;

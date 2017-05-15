@@ -14,6 +14,7 @@ import be.ac.ulb.infof307.g07.views.PokemonSelectionView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane;
@@ -28,6 +29,10 @@ public class PokemonSelectionController implements Initializable, PokemonViewLis
 	private DatePicker datePicker;
 	@FXML
 	private TextField timePicker;
+	@FXML
+	private Button btnModify;
+	@FXML
+	private Button btnAdd;
 	
 	private Pokemon selectedPokemon;
 	
@@ -54,9 +59,18 @@ public class PokemonSelectionController implements Initializable, PokemonViewLis
 		PokedexController.getInstance().toggleMode(null, null);
 		
 	}
+	@FXML
+	public void onClickBtnModify(){
+		
+		String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		Map.getInstance().modifyPokeMarker( date, timePicker.getText());
+		close(null);
+		
+	}
 	
 	public void initSelection(){
 		PokemonSelectionView.getInstance().setVisible(true);
+		PokemonSelectionView.getInstance().loadPokemonContainer();
 		PokedexController.getInstance().toggleMode(null, selectPokemonContainer);
 	}
 
@@ -71,4 +85,11 @@ public class PokemonSelectionController implements Initializable, PokemonViewLis
 		selectedPokemon = pokemon;
 		PokedexView.getInstance().displayPokemonInDetail(pokemon.getId());
 	}
+	
+	public void switchToModifyMode(boolean isModify){
+		btnModify.setVisible(isModify);
+		btnAdd.setVisible(!isModify);
+	}
+	
+	
 }

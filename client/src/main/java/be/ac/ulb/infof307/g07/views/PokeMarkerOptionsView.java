@@ -2,16 +2,14 @@ package be.ac.ulb.infof307.g07.views;
 
 import java.io.IOException;
 
-import be.ac.ulb.infof307.g07.Main;
+import be.ac.ulb.infof307.g07.controllers.PokeMarkerOptionsController;
 import be.ac.ulb.infof307.g07.models.PokeMarker;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 
 public class PokeMarkerOptionsView {
 
 	private static PokeMarkerOptionsView instance = null;
-	private Pane mainPane;
 	private PokeMarker concernedPokeMarker = null;
 	private String[] buttonMenuFile = {"views/Edit.fxml","views/Delete.fxml","views/Facebook.fxml","views/Google.fxml","views/Twitter.fxml"};
 	private Button[] buttonMenuViews = new Button[buttonMenuFile.length];
@@ -31,14 +29,15 @@ public class PokeMarkerOptionsView {
 	
 	public void loadView(){
 		try {
+			PokeMarkerOptionsController controller = new PokeMarkerOptionsController();
 			for( int i = 0; i <buttonMenuFile.length; ++i ){
 				System.out.println("Loading :"+buttonMenuFile[i]);
 				FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(buttonMenuFile[i]));
+				loader.setController(controller);
 				buttonMenuViews[i] = loader.load();
 			}
 			
 		} catch (IOException except) {
-			
 			except.printStackTrace();
 		}
 	}

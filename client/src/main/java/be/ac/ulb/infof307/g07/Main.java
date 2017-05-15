@@ -6,6 +6,7 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 
 import be.ac.ulb.infof307.g07.controllers.PokedexController;
 import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.views.GeoLocalisationView;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;
 import be.ac.ulb.infof307.g07.views.PokemonSelectionView;
@@ -13,6 +14,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -64,6 +66,10 @@ public class Main extends Application implements MapComponentInitializedListener
 		pSView.loadView();
 		System.out.println("Finish loading Selection");
 		mainPane.getChildren().add(pSView.getView());
+		GeoLocalisationView geoView = new GeoLocalisationView();
+		Slider geoSlider = geoView.createView(200, 80);
+		mainPane.getChildren().add(geoSlider);
+		StackPane.setAlignment(geoSlider, Pos.TOP_CENTER);
 		System.out.println("Finish all");
 		mainStage.show();
 	}

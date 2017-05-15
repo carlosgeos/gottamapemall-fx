@@ -101,4 +101,11 @@ public class PokeMarker extends Marker{
 		return assignedPokemon;
 	}
 	
+	public void setDate(String newDate){
+		discoveredDate = newDate;
+	}
+	
+	public void setTime(String newTime){
+		discoveredTime = newTime;
+	}
 }

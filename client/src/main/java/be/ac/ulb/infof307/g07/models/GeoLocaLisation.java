@@ -59,11 +59,15 @@ public class GeoLocaLisation {
 		HashMap<Integer, Integer> tempMarkerList = new HashMap<Integer, Integer>();
 		int count = 1;
 		for (int key:markers.keySet()) {
-			double distanceBetweenTwoPointsTemp = distanceBetweenTwoPoints(userLat, userLon, markers.get(key).getLat(), markers.get(key).getLon());
-			if (distanceBetweenTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre)){
+			if( distanceMetre >0 ){
+				double distanceBetweenTwoPointsTemp = distanceBetweenTwoPoints(userLat, userLon, markers.get(key).getLat(), markers.get(key).getLon());
+				if (distanceBetweenTwoPointsTemp <= metersToDecimalsCoordinates(distanceMetre)){
+					tempMarkerList.put(markers.get(key).getId(), count);
+				}
+			}else{
 				tempMarkerList.put(markers.get(key).getId(), count);
-				++count;
 			}
+			++count;
 		}
 		return tempMarkerList;
 	}
