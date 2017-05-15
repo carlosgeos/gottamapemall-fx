@@ -12,15 +12,15 @@ import be.ac.ulb.infof307.g07.PokemonListener;
  */
 public class Pokemon {
 
-	public final static String imageType = ".png";
-	private int numberOfSignalisation = 0;
+	public transient final static String imageType = ".png";
+	private transient int numberOfSignalisation = 0;
 	private int id;
 	private String name;
 	private int base_experience;
 	private double weight;
 	private double height;
 	private String[] types;
-	private ArrayList<PokemonListener> listener = new ArrayList<PokemonListener>();
+	private transient ArrayList<PokemonListener> listener = new ArrayList<PokemonListener>();
 	
 	/**
 	 * Le constructeur de la classe Pokemon.
@@ -31,7 +31,6 @@ public class Pokemon {
 	 * @param newHeight 
 	 * @param newTypes 
 	 */
-	
 	public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types){
 		id = id;
 		name = name;

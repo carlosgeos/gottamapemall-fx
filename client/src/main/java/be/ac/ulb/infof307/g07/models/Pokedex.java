@@ -26,17 +26,15 @@ public class Pokedex {
 	} 
 	
 	public void init(){
-		/*
 		String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
 		System.out.println(response);
 		Gson gson = new Gson();
-	    Pokemon[] pokemonsFromServer = gson.fromJson(response, Pokemon[].class);
+		Pokemon[] pokemonsFromServer = gson.fromJson(response, Pokemon[].class);
 
-	    for (Pokemon pokemon:pokemonsFromServer) {
-	    	pokemons.put(pokemon.getId(), pokemon);
-	    }
-	    */
-		
+		for (int i = 0; i < pokemonsFromServer.length; ++i) {
+			Pokemon pokemon = pokemonsFromServer[i];
+			pokemons.put(pokemon.getId(), pokemon);
+		}
 	}
 	
 	public String toString(){
