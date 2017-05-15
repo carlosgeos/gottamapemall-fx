@@ -7,8 +7,11 @@ import org.mongodb.morphia.query.Query;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.lang.IllegalArgumentException;
+import java.lang.NumberFormatException;
+import org.mongodb.morphia.query.UpdateException;
+import com.google.gson.JsonSyntaxException;
 
-import be.ac.ulb.infof307.g07.libs.CustomGson;
 import be.ac.ulb.infof307.g07.libs.ParamHandler;
 import be.ac.ulb.infof307.g07.libs.Message;
 import be.ac.ulb.infof307.g07.libs.Database;
@@ -20,7 +23,7 @@ import be.ac.ulb.infof307.g07.libs.Error;
  * @param <T> The model instance to create the API endpoint on.
  */
 public abstract class ListView<T> {
-    static protected Gson gson = CustomGson.get();
+    static protected Gson gson = new Gson();
 
     /**
      * Utilisé pour définir la route.
@@ -67,15 +70,12 @@ public abstract class ListView<T> {
      * @param handler Fonction pour modifier la valeur du paramètre
      * @return La valeur du paramètre parśe.
      */
-    static protected Object getParam(Request req, String key, ParamHandler handler) {
+    static protected Object getParam(Request req, String key, ParamHandler handler) throws IllegalArgumentException {
         Object param = getParam(req, key);
-        // Just a string but parsed as an object to be returned.
 
-        try {
-            param = handler.handle((String) param);
-        } catch (Exception e) {
-            param = null;
-        }
+        // Juste une chaine de charactère mais retourné comme un "Object" pour
+        // prendre la forme voulu selon le cas.
+        param = handler.handle((String) param);
 
         return param;
     }
@@ -160,7 +160,7 @@ public abstract class ListView<T> {
      *
      * @return L'objet passé dans l'URL.
      */
-    protected Object getDetail (Request req) throws Exception {
+    protected Object getDetail (Request req) throws NumberFormatException {
         return getParam(req, ":detail", (val) -> {
             return Integer.parseInt(val);
         });
@@ -174,8 +174,8 @@ public abstract class ListView<T> {
             Object det = null;
             try {
                 det = getDetail(req);
-            } catch (Exception e) {
-                return new Error(e.getMessage());
+            } catch (IllegalArgumentException e) {
+                return new Error("Wrong detail formatting");
             }
 
             T m = Database.get().find(this.getModel()).field("id").equal(det).get();
@@ -200,9 +200,13 @@ public abstract class ListView<T> {
                 Database.get().save(creation);
                 res.status(201);
                 return creation;
-            } catch (Exception e) {
+            } catch (UpdateException e) {
                 res.status(400);
-                return new Error(e.getMessage());
+                return new Error("Can't create nothing", e.getMessage());
+            } catch (JsonSyntaxException |NumberFormatException e) {
+                // Les float ne renvoient pas une exception Json.
+                res.status(400);
+                return new Error("Syntax error", e.getMessage());
             }
         }, gson::toJson);
     }
@@ -212,7 +216,9 @@ public abstract class ListView<T> {
      */
     protected void deleteRoute () {
         delete(this.getRoute() + "/:detail", (req, res) -> {
-            final Query<T> d = Database.get().find(this.getModel()).field("id").equal(getDetail(req));
+            Object det = null;
+            det = getDetail(req);
+            final Query<T> d = Database.get().find(this.getModel()).field("id").equal(det);
             if (d == null) {
                 res.status(404);
                 return new Error("Not found");
@@ -239,3 +245,4 @@ public abstract class ListView<T> {
         });
     }
 }
+
