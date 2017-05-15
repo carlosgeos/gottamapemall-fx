@@ -8,7 +8,7 @@ apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
-mainClassName = "be.ac.ulb.infof307.g07.MainGUI"
+mainClassName = "be.ac.ulb.infof307.g07.Main"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Gotta Map Em All Application',
         'Implementation-Version': 1.0,
-        'Main-Class': 'be.ac.ulb.infof307.g07.MainGUI'
+        'Main-Class': 'be.ac.ulb.infof307.g07.Main'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
