@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import be.ac.ulb.infof307.g07.Main;
+import be.ac.ulb.infof307.g07.PokemonViewListener;
+import be.ac.ulb.infof307.g07.controllers.PokedexController;
 import be.ac.ulb.infof307.g07.models.Pokedex;
 import be.ac.ulb.infof307.g07.models.Pokemon;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,14 +24,17 @@ public class PokedexView {
 	private static PokedexView instance = null;
 	private boolean isMainHided;
 	private boolean isPokedexMode = true;
+	private double diffHeight = 0;
+	private PokedexController controller;
 	
 	private Pane mainPane;
 	private AnchorPane pokemonViewContainer;
 	private AnchorPane pokemonDetailContainer;
+	private ScrollPane pokemonScrollContainer;
 	private TextField searchField;
 	
 	private Label[] pokemonDetailLabels;
-	private ImageView pokemonDetailImageView;
+	private AnchorPane pokemonDetailImageView;
 	
 	private AnchorPane filledIn = null;
 	
@@ -45,7 +51,9 @@ public class PokedexView {
 	
 	public void loadView(){
 		try {
-			FXMLLoader loader = new FXMLLoader(Main.class.getResource("fxml/Pokedex.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/Pokedex.fxml"));
+			controller = PokedexController.getInstance();
+			loader.setController(controller);
 			mainPane = loader.load();
 		} catch (IOException except) {
 			
@@ -58,7 +66,7 @@ public class PokedexView {
 		searchField = newSearchField;
 	}
 	
-	public void toggleMode( Integer[] list, AnchorPane container ){
+	public void toggleMode( AnchorPane container ){
 		
 		if( container == null){
 			// pokedex mode
@@ -69,64 +77,44 @@ public class PokedexView {
 			hideAll(true);
 			isPokedexMode = false;
 		}
-		
-		displayPokemon(list, container );
 	}
 	
-	public void displayPokemon(Integer[] newPokemonIdList, AnchorPane newContainer){
-		System.out.println("Displaying pokemon....");
-		AnchorPane container;
-		Integer[] pokemonIdList;
-		
-		if( newContainer != null ){
-			System.out.println("setting new container..");
-			container = newContainer;
-		}else{
-			System.out.println("setting default container..");
-			container = pokemonViewContainer;
+	private void showPokemonView(){
+		pokemonView = createPokemoViews(true, controller);
+		for( Integer id : pokemonView.keySet() ){
+			pokemonViewContainer.getChildren().add(pokemonView.get(id).getView());
 		}
-		
-		if(filledIn != null){
-			System.out.println("Clearing pokedex...");
-			filledIn.getChildren().clear();
-			System.out.println("Finish clearing pokedex...");
-		}
-		
-		if( newPokemonIdList == null ){
-			pokemonIdList = Pokedex.getInstance().getPokemonsId();
-		}else{
-			pokemonIdList = newPokemonIdList;
-		}
-		for(Integer id: pokemonIdList){
-			container.getChildren().add(pokemonView.get(id).getView());
-		}
-		filledIn = container;
-		System.out.println("Finish displaying pokemon....");
 	}
 	
-	public void initPokemonViews(){
-		System.out.println("Initialiazing PokemonViews...");
+	public HashMap<Integer, PokemonView> createPokemoViews( boolean bindSignalListener, PokemonViewListener pokemonSelectionListener){
+		
 		HashMap<Integer, Pokemon> pokemons = pokedex.getPokemons();
+		HashMap<Integer, PokemonView> list = new HashMap<Integer, PokemonView>();
+		
 		for( int id:pokemons.keySet() ){
 			PokemonView newPokemonView = new PokemonView(pokemons.get(id));
+			if(bindSignalListener){
+				pokemons.get(id).addListener(newPokemonView);
+			}
+			if( pokemonSelectionListener != null ){
+				newPokemonView.addListener(pokemonSelectionListener);
+			}
 			newPokemonView.loadView();
 			newPokemonView.setPokemonDataInView();
-			pokemonView.put(id, newPokemonView);
+			list.put(id, newPokemonView);
 		}
-		System.out.println("Finish initialiazing PokemonViews...");
+		
+		return list;
 	}
 	
-	public void setPokemonContainer(AnchorPane pVContainer){
+	public void setContainers( AnchorPane pVContainer, AnchorPane pDContainer, ScrollPane pSContainer ){
+		
 		pokemonViewContainer = pVContainer;
-	}
-	
-	public void setPokemonDetailContainer(AnchorPane pDContainer ){
 		pokemonDetailContainer = pDContainer;
+		pokemonScrollContainer = pSContainer;
 	}
-	
 	public void init(){
-		initPokemonViews();
-		displayPokemon(pokedex.getPokemonsId(), null);
+		showPokemonView();
 	}
 	
 	public static void setPaneVisibility( Pane container, boolean isVisible ){
@@ -161,10 +149,10 @@ public class PokedexView {
 	}
 	
 	public void displayPokemonInDetail(int pokemonId){
-		
 		Pokemon pokemon = pokedex.getPokemon(pokemonId);
 		// set Image
-		pokemonDetailImageView.setImage(new Image("file:src/main/resources/"+Integer.toString(pokemon.getId())+".gif"));
+		Image pokemonImage = new Image(pokemon.getId() + ".gif", pokemonDetailImageView.getWidth(), pokemonDetailImageView.getHeight(), true, true);
+		pokemonDetailImageView.getChildren().add(new ImageView(pokemonImage));
 		// set Id
 		pokemonDetailLabels[0].setText(Integer.toString(pokemon.getId()));
 		// set Name
@@ -190,7 +178,7 @@ public class PokedexView {
 		return output;
 	}
 	
-	public void setDetailComponent(Label[] pokemonLabels, ImageView pokemonImage){
+	public void setDetailComponent(Label[] pokemonLabels, AnchorPane pokemonImage){
 		pokemonDetailLabels = pokemonLabels;
 		pokemonDetailImageView = pokemonImage;
 	}
@@ -202,5 +190,16 @@ public class PokedexView {
 	
 	public Pane getView(){
 		return mainPane;
+	}
+	
+	public void setHeight( double newHeight ){
+		double mainHeight = mainPane.getPrefHeight();
+		mainPane.setPrefHeight(newHeight);
+		if( diffHeight == 0 ){
+			diffHeight = mainHeight - pokemonScrollContainer.getPrefHeight()+35;
+		}
+		pokemonScrollContainer.setPrefHeight(newHeight-diffHeight);
+		pokemonDetailContainer.setPrefHeight(newHeight);
+		
 	}
 }

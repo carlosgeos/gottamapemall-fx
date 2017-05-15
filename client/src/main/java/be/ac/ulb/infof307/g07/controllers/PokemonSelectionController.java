@@ -5,8 +5,10 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import be.ac.ulb.infof307.g07.PokemonViewListener;
 import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.models.Pokedex;
+import be.ac.ulb.infof307.g07.models.Pokemon;
 import be.ac.ulb.infof307.g07.views.PokedexView;
 import be.ac.ulb.infof307.g07.views.PokemonSelectionView;
 import javafx.event.ActionEvent;
@@ -16,7 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class PokemonSelectionController implements Initializable{
+public class PokemonSelectionController implements Initializable, PokemonViewListener{
 	
 	private static PokemonSelectionController instance = null;
 	
@@ -27,9 +29,7 @@ public class PokemonSelectionController implements Initializable{
 	@FXML
 	private TextField timePicker;
 	
-	public PokemonSelectionController(){
-		instance = this;
-	}
+	private Pokemon selectedPokemon;
 	
 	public static PokemonSelectionController getInstance(){
 		if( instance == null ){
@@ -49,7 +49,7 @@ public class PokemonSelectionController implements Initializable{
 	public void onClickBtnAdd(){
 		
 		String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-		Map.getInstance().addPokeMarker(Pokedex.getInstance().getSelectedPokemon(), date, timePicker.getText());
+		Map.getInstance().addPokeMarker(selectedPokemon, date, timePicker.getText());
 		close(null);
 		PokedexController.getInstance().toggleMode(null, null);
 		
@@ -64,5 +64,11 @@ public class PokemonSelectionController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		PokemonSelectionView.getInstance().setTimeStampFields( datePicker, timePicker );
 		PokemonSelectionView.getInstance().setPokemonContainer(selectPokemonContainer);
+	}
+
+	@Override
+	public void onSelect(Pokemon pokemon) {
+		selectedPokemon = pokemon;
+		PokedexView.getInstance().displayPokemonInDetail(pokemon.getId());
 	}
 }

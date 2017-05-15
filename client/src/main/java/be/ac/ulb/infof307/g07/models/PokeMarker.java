@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g07.models;
 
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
-import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
@@ -48,10 +47,10 @@ public class PokeMarker extends Marker{
 	 */
 	public String getHTML(){
 		String output = "<div><table>"
-                + "<tr><td colspane=2 align=\"center\"><img src=\""+assignedPokemon.getImagePath()+"\" alt=\""+assignedPokemon.getName()+"\" style=\"\"></td></tr>"
+                + "<tr><td colspane=2 align=\"center\"><img src=\""+assignedPokemon.getId()+".gif\" alt=\""+assignedPokemon.getName()+"\" style=\"\"></td></tr>"
                 + "<tr><td>Id : </td><td>"+assignedPokemon.getId()+"</td></tr>"
                 + "<tr><td>Name : </td><td>"+assignedPokemon.getName()+"</td></tr>"
-                + "<tr><td>Creation : </td><td>"+discoveredTime+"h</td></tr>"
+                + "<tr><td>Creation : </td><td>"+discoveredDate+"</td><td>"+discoveredTime+"h</td></tr>"
                 + "</table></div>";
         return output;
 	}
@@ -62,9 +61,7 @@ public class PokeMarker extends Marker{
 	 * @return l id unique du Pokemon
 	 */
 	public final int getId(){
-		
 		return id;
-		
 	}
 	
 	/**
@@ -97,6 +94,10 @@ public class PokeMarker extends Marker{
 	
 	public void closeWindow(){
 		infoWindow.close();
+	}
+	
+	public Pokemon getAssignedPokemon(){
+		return assignedPokemon;
 	}
 	
 }

@@ -8,7 +8,6 @@ import com.lynden.gmapsfx.javascript.event.StateEventHandler;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.LatLongBounds;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
@@ -41,7 +40,6 @@ public class Map{
 	private HashMap<Integer, PokeMarker> pokeMarkers;
 	private Circle shapeOfGeoLoc = null;
 	private LatLong mapCenter;
-	private LatLongBounds mapBound;
 	
 	/**
 	 * Construit un objet du type Map
@@ -53,20 +51,6 @@ public class Map{
 		googleMap.addMouseEventHandler(UIEventType.rightclick, new MapRightClickHandler(this));
 		googleMap.addStateEventHandler(MapStateEventType.zoom_changed, new CloseMarkerOptionHandler());
 		googleMap.addStateEventHandler(MapStateEventType.dragstart, new CloseMarkerOptionHandler());
-		googleMap.addStateEventHandler(MapStateEventType.dragend, new StateEventHandler(){
-
-			@Override
-			public void handle() {
-				mapCenter = googleMap.getCenter();
-				mapBound = googleMap.getBounds();
-				System.out.println(mapCenter);
-				System.out.println(googleMap.getBounds());
-				
-			}
-			
-			
-		});
-		
 		pokeMarkers = new HashMap<Integer, PokeMarker>();
 		instance = this;
 	}
@@ -104,13 +88,12 @@ public class Map{
 	public PokeMarker addPokeMarker(Pokemon pokemon, String date, String time){
 		
 		PokeMarker pokeMarker = null;
-		
 		try{
-			
 			pokeMarker = new PokeMarker(createMarkerOption(pokemon), pokemon, lat, lon, date, time);
 			savePokeMarkerOnServer(pokeMarker);
 			pokeMarkers.put(pokeMarker.getId(),pokeMarker);
 			googleMap.addClusterableMarker(pokeMarker);
+			pokemon.incSignalCount();
 			googleMap.addUIEventHandler(pokeMarker, UIEventType.click, new PokeMarkerLeftClickHandler(pokeMarker));
 			googleMap.addUIEventHandler(pokeMarker, UIEventType.rightclick, new PokeMarkerRightClickHandler(pokeMarker));
 		}catch( Exception error ){
@@ -166,11 +149,13 @@ public class Map{
 	}
 	
 	/**
-	 * Supprime un PokeMarker du hashmap
+	 * Supprime un PokeMarker du Map
 	 * @param pokeMarker PokeMarker que l on souhaite supprimer
 	 */
 	public void removePokeMarker(PokeMarker pokeMarker){
+		Pokemon tmpPokemon = pokeMarker.getAssignedPokemon();
 		pokeMarkers.remove(pokeMarker.getId());
+		tmpPokemon.decSignalCount();
 	}
 	
 	public static void setLatitude( double newLat ){
@@ -178,8 +163,7 @@ public class Map{
 	}
 	
 	public static void setLongitude( double newLon ){
-		lon = newLon;
-		
+		lon = newLon;	
 	}
 	
 	public static MapOptions createDefaultOptions(){
@@ -212,10 +196,9 @@ public class Map{
 		refreshMap();
 	}
 	
-	
 	public void refreshMap() {
-		int current = googleMap.getZoom();
-		googleMap.setZoom(current-1);
+		int current = googleMap.getZoom()-1;
+		googleMap.setZoom(current);
 		googleMap.setZoom(current);
 	}
 	

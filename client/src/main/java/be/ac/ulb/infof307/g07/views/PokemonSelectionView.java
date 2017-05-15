@@ -5,8 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 
-import be.ac.ulb.infof307.g07.Main;
+import be.ac.ulb.infof307.g07.controllers.PokemonSelectionController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -20,6 +21,8 @@ public class PokemonSelectionView {
 	private AnchorPane selectPokemonContainer;
 	private DatePicker date;
 	private TextField time;
+	private PokemonSelectionController controller;
+	private HashMap<Integer, PokemonView> pokemonViews;
 	
 	public PokemonSelectionView(){
 		
@@ -29,8 +32,11 @@ public class PokemonSelectionView {
 	public void loadView(){
 		try {
 			
-			FXMLLoader loader = new FXMLLoader(Main.class.getResource("fxml/PokemonSelection.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/PokemonSelection.fxml"));
+			controller=PokemonSelectionController.getInstance();
+			loader.setController(controller);
 			mainPane = loader.load();
+			loadPokemonContainer();
 		} catch (IOException except) {
 			except.printStackTrace();
 		}
@@ -74,6 +80,14 @@ public class PokemonSelectionView {
 		mainPane.setVisible(visible);
 		if( visible ){
 			fillTimestamp();
+		}
+	}
+	
+	public void loadPokemonContainer(){
+		pokemonViews = PokedexView.getInstance().createPokemoViews(false, controller);
+		for( Integer id : pokemonViews.keySet() ){
+			pokemonViews.get(id).addListener(controller);
+			selectPokemonContainer.getChildren().add(pokemonViews.get(id).getView());
 		}
 	}
 }

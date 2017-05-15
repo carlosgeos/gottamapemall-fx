@@ -1,9 +1,10 @@
 package be.ac.ulb.infof307.g07;
 
-import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.event.MapStateEventType;
+import java.io.IOException;
 
-import be.ac.ulb.infof307.g07.controllers.CloseMarkerOptionHandler;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+
+import be.ac.ulb.infof307.g07.controllers.PokedexController;
 import be.ac.ulb.infof307.g07.models.Map;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;
@@ -26,7 +27,7 @@ public class Main extends Application implements MapComponentInitializedListener
 		
 		try{
 			mainStage = primaryStage;
-			FXMLLoader loader = new FXMLLoader(Main.class.getResource("fxml/Main.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/Main.fxml"));
 			loader.setController(new MainController());
 			mainPane = loader.load();
 			Scene mainScene = new Scene(mainPane);
@@ -49,12 +50,21 @@ public class Main extends Application implements MapComponentInitializedListener
 		Map.getInstance(mapView.createMap());
 		PokedexView pV = PokedexView.getInstance();
 		pV.loadView();
+		mainStage.heightProperty().addListener((obs, oldVal, newVal)->{
+			System.out.println("Resizing window");
+			pV.setHeight(newVal.doubleValue());
+		});
+		
 		mainPane.getChildren().add(pV.getView());
+		
 		StackPane.setAlignment(pV.getView(), Pos.TOP_RIGHT);
 		pV.init();
+		System.out.println("Finish loading PokedexView");
 		PokemonSelectionView pSView = PokemonSelectionView.getInstance();
 		pSView.loadView();
+		System.out.println("Finish loading Selection");
 		mainPane.getChildren().add(pSView.getView());
+		System.out.println("Finish all");
 		mainStage.show();
 	}
 	

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="pokemonPane" alignment="TOP_CENTER" hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onLeftClick" prefHeight="60.0" prefWidth="288.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="0.0" prefWidth="50.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="214.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Pane fx:id="pokemonImageContainer" prefHeight="50.0" prefWidth="50.0" />
+      <GridPane hgap="3.0" prefHeight="30.0" prefWidth="181.0" GridPane.columnIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="23.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="22.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="144.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="4.0" prefWidth="22.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="54.0" prefWidth="37.0" text="No.">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="pokemonId" prefHeight="50.0" prefWidth="28.0" text="000" GridPane.columnIndex="1">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="pokemonName" prefHeight="50.0" prefWidth="183.0" text="Pokemon Name" wrapText="true" GridPane.columnIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="pokemonSignalisation" prefHeight="50.0" prefWidth="28.0" text="999" textAlignment="CENTER" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

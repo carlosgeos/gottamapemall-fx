@@ -1,5 +1,8 @@
 package be.ac.ulb.infof307.g07.models;
 
+import java.util.ArrayList;
+
+import be.ac.ulb.infof307.g07.PokemonListener;
 
 /**
  * La classe pokemon stocke l information d'un pokemon. Par exemple le nom, le poids, la taille etc. 
@@ -13,9 +16,11 @@ public class Pokemon {
 	private int numberOfSignalisation = 0;
 	private int id;
 	private String name;
+	private int base_experience;
 	private double weight;
 	private double height;
 	private String[] types;
+	private ArrayList<PokemonListener> listener = new ArrayList<PokemonListener>();
 	
 	/**
 	 * Le constructeur de la classe Pokemon.
@@ -26,12 +31,14 @@ public class Pokemon {
 	 * @param newHeight 
 	 * @param newTypes 
 	 */
-	public Pokemon( int newId, String newName, double newWeight, double newHeight, String[] newTypes){
-		id = newId;
-		name = newName;
-		weight = newWeight;
-		height = newHeight;
-		types = newTypes;
+	
+	public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types){
+		id = id;
+		name = name;
+		base_experience=base_experience;
+		weight = weight;
+		height = height;
+		types = types;
 	}
 	
 	/**
@@ -99,9 +106,7 @@ public class Pokemon {
 	 * @return un Array de type
 	 */
 	public final String[] getType(){
-		
 		return types;
-		
 	}
 	
 	/**
@@ -110,9 +115,10 @@ public class Pokemon {
 	 * 
 	 */
 	public void incSignalCount(){
-		
+		System.out.println("Incrementing.....Old value : "+Integer.toString(numberOfSignalisation));
 		++numberOfSignalisation;
-		
+		System.out.println("Incrementing.....new value : "+Integer.toString(numberOfSignalisation));
+		callListener();
 	}
 	
 	/**
@@ -122,9 +128,8 @@ public class Pokemon {
 	 * 
 	 */
 	public void decSignalCount(){
-		
 		--numberOfSignalisation;
-		
+		callListener();
 	}
 	/**
 	 * Retourne le chemin de l image du Pokemon.
@@ -133,7 +138,20 @@ public class Pokemon {
 	 */
 	public final String getImagePath(){
 		return Integer.toString(id)+imageType;
-		
 	}
 	
+	public final int getSignalisationCount(){
+		return numberOfSignalisation;
+	}
+	
+	public void addListener( PokemonListener newListener ){
+		listener.add(newListener);
+	}
+	
+	private void callListener(){
+		System.out.println("Listener called...");
+		for( PokemonListener l:listener ){
+			l.onChangeSignalisation();
+		}
+	}
 }

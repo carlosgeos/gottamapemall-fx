@@ -2,6 +2,10 @@ package be.ac.ulb.infof307.g07.models;
 
 import java.util.HashMap;
 
+import com.google.gson.Gson;
+
+import net.dongliu.requests.Requests;
+
 public class Pokedex {
 
 	private HashMap<Integer, Pokemon> pokemons = new HashMap<Integer, Pokemon>();
@@ -9,8 +13,9 @@ public class Pokedex {
 	private int selectedPokemon = 0;
 	
 	public Pokedex(){
-		
+		System.out.println("Creating Pokedex....");
 		init();
+		System.out.println("Finish loading all pokemon....");
 	}
 	
 	public static Pokedex getInstance (){
@@ -21,11 +26,16 @@ public class Pokedex {
 	} 
 	
 	public void init(){
-		
-		// todo ask server to load all pokemon
-		
-		String[] type = {"Grass"};
-		pokemons.put(1, new Pokemon(1, "Bulbasaur", 0.2, 0.2, type));
+		/*
+		String response = Requests.get("http://127.0.0.1:4567/pokemons").send().readToText();
+		System.out.println(response);
+		Gson gson = new Gson();
+	    Pokemon[] pokemonsFromServer = gson.fromJson(response, Pokemon[].class);
+
+	    for (Pokemon pokemon:pokemonsFromServer) {
+	    	pokemons.put(pokemon.getId(), pokemon);
+	    }
+	    */
 		
 	}
 	
@@ -62,10 +72,6 @@ public class Pokedex {
 			++index;
 		}
 		return res;
-	}
-	
-	public void setSelectedPokemon(int pokemonId){
-		selectedPokemon = pokemonId;
 	}
 	
 	public Pokemon getSelectedPokemon(){

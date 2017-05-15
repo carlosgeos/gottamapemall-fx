@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g07.controllers;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,15 +7,19 @@ import be.ac.ulb.infof307.g07.views.PokemonView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 public class PokemonController implements Initializable{
 
 	@FXML
-	private ImageView pokemonImage;
+	private Pane pokemonImageContainer;
+	@FXML
+	private Label pokemonId;
 	@FXML
 	private Label pokemonName;
+	@FXML
+	private Label pokemonSignalisation;
 	
 	private PokemonView pokemonView;
 	
@@ -26,14 +29,14 @@ public class PokemonController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		pokemonView.setFieldImage(pokemonImage);
-		pokemonView.setFieldName(pokemonName);
+		pokemonView.setFields(pokemonImageContainer, pokemonName, pokemonId, pokemonSignalisation);
 	}
 	
 	@FXML	
 	private void onLeftClick(MouseEvent event){
 		if( event.getClickCount() == 1 ){
-			PokedexController.getInstance().onLeftClickPokemonView(pokemonView.getPokemon().getId());
+			pokemonView.onClickStyle(event);
+			pokemonView.onSelected();
 		}
 	}
 }

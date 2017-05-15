@@ -13,7 +13,7 @@ public class PokeMarkerOptionsView {
 	private static PokeMarkerOptionsView instance = null;
 	private Pane mainPane;
 	private PokeMarker concernedPokeMarker = null;
-	private String[] buttonMenuFile = {"fxml/Edit.fxml","fxml/Delete.fxml","fxml/Facebook.fxml","fxml/Google.fxml","fxml/Twitter.fxml"};
+	private String[] buttonMenuFile = {"views/Edit.fxml","views/Delete.fxml","views/Facebook.fxml","views/Google.fxml","views/Twitter.fxml"};
 	private Button[] buttonMenuViews = new Button[buttonMenuFile.length];
 	
 	public static PokeMarkerOptionsView getInstance(){
@@ -33,7 +33,7 @@ public class PokeMarkerOptionsView {
 		try {
 			for( int i = 0; i <buttonMenuFile.length; ++i ){
 				System.out.println("Loading :"+buttonMenuFile[i]);
-				FXMLLoader loader = new FXMLLoader(Main.class.getResource(buttonMenuFile[i]));
+				FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(buttonMenuFile[i]));
 				buttonMenuViews[i] = loader.load();
 			}
 			
