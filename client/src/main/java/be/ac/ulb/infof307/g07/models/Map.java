@@ -1,129 +1,251 @@
 package be.ac.ulb.infof307.g07.models;
 
-import be.ac.ulb.infof307.g07.models.Pokemon;
-import be.ac.ulb.infof307.g07.models.Pokedex;
-import net.dongliu.requests.Requests;
-import org.bson.types.ObjectId;
-import com.google.gson.Gson;
-import be.ac.ulb.infof307.g07.libs.CustomGson;
-import java.lang.NullPointerException;
-import java.util.logging.Logger;
-import java.util.ArrayList;
+import java.net.ConnectException;
 import java.util.HashMap;
 
+import com.lynden.gmapsfx.javascript.event.MapStateEventType;
+import com.lynden.gmapsfx.javascript.event.StateEventHandler;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
+import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.shapes.Circle;
+import com.lynden.gmapsfx.shapes.CircleOptions;
+import com.lynden.gmapsfx.util.MarkerImageFactory;
+
+import be.ac.ulb.infof307.g07.controllers.CloseMarkerOptionHandler;
+import be.ac.ulb.infof307.g07.controllers.MapDblClickHandler;
+import be.ac.ulb.infof307.g07.controllers.MapRightClickHandler;
+import be.ac.ulb.infof307.g07.controllers.PokeMarkerLeftClickHandler;
+import be.ac.ulb.infof307.g07.controllers.PokeMarkerRightClickHandler;
+
+
 /**
- * Cette classe represente le modele dans la structure MVC cad la classe contenant les donnees relatives a la carte.
- * Par exemple les epingles (markers) et les informations les concernant.
- * 
- * <p>
- * C est aussi ici qu on cree les objets PokeMarker et Coordinate.
- * Un objet de cette classe est cree par les classes suivantes: MapMouseDblClickHandler et MapController dans leurs constructeurs respectifs.
- * <p>
- * 
- * @version 1.2
- * @see be.ac.ulb.infof307.g07.models.PokeMarker
- * @see be.ac.ulb.infof307.g07.models.Coordinate
+ * Map est le modele qui stocke l ensemble de modeles (ex: PokerMarker) se trouvant sur la map.
  *
  */
-public class Map {
+public class Map{
+
+	public static final Double[] defaultLocation = {47.6097, -122.3331};
+	public static final boolean defaultValue = false;
+	public static final int defaultZoom = 11;
+	public static final String defaultApiKey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
+	private static double lat;
+	private static double lon;
 	
-    private final static Logger LOGGER = Logger.getLogger(Map.class.getName());
-    
-    private Pokedex pokedex;
+	private static Map instance = null;
+	private ClusteredGoogleMap googleMap;
+	private HashMap<Integer, PokeMarker> pokeMarkers;
+	private Circle shapeOfGeoLoc = null;
+	private LatLong mapCenter;
+	private PokeMarker selectedMarker ;
+	
+	/**
+	 * Construit un objet du type Map
+	 */
+	public Map( ClusteredGoogleMap newGoogleMap ){
+		googleMap = newGoogleMap;
+		mapCenter = googleMap.getCenter();
+		googleMap.addMouseEventHandler(UIEventType.dblclick, new MapDblClickHandler(this));
+		googleMap.addMouseEventHandler(UIEventType.rightclick, new MapRightClickHandler(this));
+		googleMap.addStateEventHandler(MapStateEventType.zoom_changed, new CloseMarkerOptionHandler());
+		googleMap.addStateEventHandler(MapStateEventType.dragstart, new CloseMarkerOptionHandler());
+		pokeMarkers = new HashMap<Integer, PokeMarker>();
+		instance = this;
+	}
+	
+	/**
+	 * Methode singleton qui renvoie une instance de cette classe
+	 * @return Objet Map
+	 */
+	public static Map getInstance( ClusteredGoogleMap newGoogleMap ){
+		if (instance == null){
+			instance = new Map(newGoogleMap);
+		}
+		return instance;
+	}
+	
+	public static Map getInstance(){
+		
+		return instance;
+		
+	}
+	
+	public ClusteredGoogleMap getGoogleMap(){
+		return googleMap;
+	}
 
-    
-    public Map () {}
+	/**
+	 * Cette methode ajoute un PokerMarker dans le hashmap pokemarkers et il l envoie au serveur.
+	 * 
+	 * @param pokemon Pokemon que l on souhaite ajouter
+	 * @param lat Latitude du marker
+	 * @param lon Longitude du marker
+	 * @param dateTime Timestamp
+	 * @return Renvoie un objet PokeMarker si tout est sauvegarde correctement, null sinon.
+	 */
+	public PokeMarker addPokeMarker(Pokemon pokemon, String date, String time){
+		
+		PokeMarker pokeMarker = null;
+		try{
+			pokeMarker = new PokeMarker(createMarkerOption(pokemon), pokemon, lat, lon, date, time);
+			savePokeMarkerOnServer(pokeMarker);
+			pokeMarkers.put(pokeMarker.getId(),pokeMarker);
+			googleMap.addClusterableMarker(pokeMarker);
+			pokemon.incSignalCount();
+			googleMap.addUIEventHandler(pokeMarker, UIEventType.click, new PokeMarkerLeftClickHandler(pokeMarker));
+			googleMap.addUIEventHandler(pokeMarker, UIEventType.rightclick, new PokeMarkerRightClickHandler(pokeMarker));
+		}catch( Exception error ){
+			
+			pokeMarker = null;
+			throw error;
+						
+		}
+		return pokeMarker;
+	}
+	
+	public void modifyPokeMarker(String date, String time){
+		selectedMarker.setDate(date);
+		selectedMarker.setTime(time);
+		selectedMarker.createInfoWindow();
+	}
+	
+	public static MarkerOptions createMarkerOption( Pokemon pokemon ){
+		
+		MarkerOptions newMarkerOptions = new MarkerOptions();
+		String iconPath = pokemon.getImageLink();
+		newMarkerOptions.position(new LatLong(lat, lon))
+		.icon(iconPath);
+	
+		return newMarkerOptions;
+	}
 
-    public Map (Pokedex pokedex) {
-        this.pokedex = pokedex;
-    }
+	/**
+	 * Sauvegarde un PokeMarker dans le serveur
+	 * @param pokeMarker Pokemon que l on souhaite sauvegarder
+	 */
+	private void savePokeMarkerOnServer(PokeMarker pokeMarker){
+		
+		try{
+			//String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(pokeMarker)).send().readToText();
+			//PokeMarker created = gson.fromJson(response, PokeMarker.class);
+			throw new ConnectException();
+		} catch (ConnectException error){
+			//throw error;
+		}
+		
+	}
+	
+	
+	/**
+	 * Renvoie le totalite de PokeMarkers se trouvant dans le hashmap
+	 * @return Hashmap avec PokeMarkers
+	 */
+	public final HashMap<Integer, PokeMarker> getPokeMarkers(){
+		return pokeMarkers;
+	}
+	
+	/**
+	 * Renvoie le nombre de PokeMarkers sauvegardes dans le
+	 * @return Taille du hashmap
+	 */
+	public int getNumberOfMarkers(){
+		return pokeMarkers.size();
+	}
+	
+	/**
+	 * Supprime un PokeMarker du Map
+	 * @param pokeMarker PokeMarker que l on souhaite supprimer
+	 */
+	public void removePokeMarker(PokeMarker pokeMarker){
+		Pokemon tmpPokemon = pokeMarker.getAssignedPokemon();
+		googleMap.removeClusterableMarker(pokeMarker);
+		pokeMarkers.remove(pokeMarker.getId());
+		tmpPokemon.decSignalCount();
+	}
+	
+	public static void setLatitude( double newLat ){
+		lat = newLat;
+	}
+	
+	public static void setLongitude( double newLon ){
+		lon = newLon;	
+	}
+	
+	public static MapOptions createDefaultOptions(){
 
-    /**
-     * Sauvegarde et crée un PokeMarker.
-     *
-     * @param lat La latitude de l'épingle pokemon sur la carte.
-     * @param lon La longitude de l'épingle pokemon sur la carte.
-     * @param pokemon le pokemon a indiquer sur la carte comme epingle (image et caracteristiques).
-     * @param date La date a laquelle le pokemon a ete vu.
-     * @param time L'heure a laquelle le pokemon a ete vu.
-     * @return une nouvelle epingle pokemon (avec un identifiant unique) sous la forme d un objet PokeMarker, contenant sa position sur la carte.
-     *
-     * @see be.ac.ulb.infof307.g07.models.PokeMarker
-     */
-    public PokeMarker addPokeMarker(double lat, double lon, Pokemon pokemon, String date, String time) {
-        PokeMarker marker = new PokeMarker(lat, lon, pokemon, date, time);
-        try {
-            addPokeMarker(marker);
-        } catch (NullPointerException e) {
-            LOGGER.info("Failed to save the pokemon.");
+		MapOptions defaultMapOptions = new MapOptions();
+        LatLong defaultMapCenterPosition = new LatLong(defaultLocation[0], defaultLocation[1]);
+        defaultMapOptions.center(defaultMapCenterPosition)
+                .mapType(MapTypeIdEnum.ROADMAP)
+                .mapTypeControl(defaultValue)
+                .overviewMapControl(defaultValue)
+                .panControl(defaultValue)
+                .rotateControl(defaultValue)
+                .scaleControl(defaultValue)
+                .streetViewControl(defaultValue)
+                .zoomControl(defaultValue)
+                .zoom(defaultZoom);
+        return defaultMapOptions;
+	}
+	
+	public void setVisiblePokeMakers( HashMap<Integer, Integer> pokeMarkersId){
+		
+		boolean show = true;
+		for(int key:pokeMarkers.keySet()){
+			if( pokeMarkersId.containsKey(key) ){
+				pokeMarkers.get(key).setVisible(show);
+			}else{
+				pokeMarkers.get(key).setVisible(!show);
+			}
+		}
+		refreshMap(-1);
+	}
+	
+	public void refreshMap(int val) {
+		int current = googleMap.getZoom()+val;
+		googleMap.setZoom(current);
+		googleMap.setZoom(current);
+	}
+	
+	public int getMapZoom(){
+		return googleMap.getZoom();
+	}
+	
+	public void setMapZoom(int newZoom){
+		googleMap.setZoom(newZoom);
+	}
+	
+	public void geoLocalisationSetShape(double centerX, double centerY, int radius) {
+		
+        if (shapeOfGeoLoc != null) {
+            this.googleMap.removeMapShape(shapeOfGeoLoc);
         }
-        return marker;
-    }
-
-    /**
-     * Sauvegarde une instance de PokeMarker.
-     * 
-     * @param marker Un PokeMarker qui doit être sauvegardé.
-     * 
-     * @see Map#addPokeMarker(double, double, Pokemon, String, String)
-     * @see be.ac.ulb.infof307.g07.models.PokeMarker
-     * @see be.ac.ulb.infof307.g07.models.PokeMarker#getId() 
-     * 
-     */
-    public PokeMarker addPokeMarker(PokeMarker marker) {
-        Pokemon pokemon = this.pokedex.getPokemonWithId(marker.getPokemon().getId());
-        pokemon.increaseGlobalCounting();
-        Gson gson = CustomGson.get();
-        String response = Requests.post("http://127.0.0.1:4567/locations").body(gson.toJson(marker)).send().readToText();
-        PokeMarker created = gson.fromJson(response, PokeMarker.class);
-        return created;
-    }
-    
-    /**
-     * Récupère les détails d'un PokeMarker en particulier.
-     *
-     * @param id Reference vers ce marker.
-     * @return Détail du PokeMarker.
-     */
-    public PokeMarker getPokeMarker(ObjectId id) {
-        String response = Requests.get("http://127.0.0.1:4567/locations/" + id.toHexString()).send().readToText();
-        Gson gson = CustomGson.get();
-        PokeMarker marker = gson.fromJson(response, PokeMarker.class);
-        return marker;
-    }
-
-    /**
-     * Récupère tout les PokeMarker.
-     *
-     * @return Tout les PokeMarkers.
-     */
-    public PokeMarker[] getPokeMarkers() {
-        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
-        Gson gson = CustomGson.get();
-        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
-        return markers;
-    }
-
-    /**
-     * Retourne le nombre de markers contenu sur la carte.
-     * 
-     * @return Nombew de markers sous forme d'un entier.
-     */
-    public int getNumberOfMarkers() {
-        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
-        Gson gson = CustomGson.get();
-        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
-        return markers.length;
-    }
-    
-    /**
-     * Retire une epingle pokemon: decremente son compteur de signalisations et fait appel a la methode remove de pokeMarker.
-     * 
-     * @param pokeMarker l epingle pokemon a supprimer
-     */
-    public void removePokeMarker(PokeMarker pokeMarker) {
-        Pokemon pokemon = this.pokedex.getPokemonWithId(pokeMarker.getPokemon().getId());
-        pokemon.decreaseGlobalCounting();
-        pokeMarker.remove(); 
-    }
+        
+        CircleOptions newCircleOption = new CircleOptions();
+        newCircleOption.center(new LatLong(centerX, centerY))
+            .radius(radius)
+            .fillColor("#c9d4fc")
+            .fillOpacity(0.6)
+            .clickable(false)
+            .draggable(false)
+            .editable(false)
+            .strokeColor("#bccbff")
+            .strokeWeight(1)
+            .strokeOpacity(0.6);
+        
+        shapeOfGeoLoc = new Circle(newCircleOption);
+        this.googleMap.addMapShape(shapeOfGeoLoc);
+   }
+	
+	
+	public void setSelectedPokeMarker(PokeMarker pokeMarker){
+		selectedMarker = pokeMarker;
+	}
+	
+	public PokeMarker getSelectedPokeMarker(){
+		return selectedMarker;
+	}
 }

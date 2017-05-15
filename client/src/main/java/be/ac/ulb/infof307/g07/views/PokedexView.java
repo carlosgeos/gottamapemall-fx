@@ -1,193 +1,218 @@
 package be.ac.ulb.infof307.g07.views;
 
-import be.ac.ulb.infof307.g07.controllers.PokemonViewListener;
-import be.ac.ulb.infof307.g07.controllers.Handlers.ClosePokemonDetailWindowHandler;
-import be.ac.ulb.infof307.g07.controllers.Handlers.PokemonViewDblClickHandler;
-import be.ac.ulb.infof307.g07.models.Pokemon;
-import be.ac.ulb.infof307.g07.models.Pokedex;
-import be.ac.ulb.infof307.g07.controllers.Handlers.onPokemonGlobalCountChangeHandler;
-import net.dongliu.requests.Requests;
-import com.google.gson.Gson;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 
-/**
- *
- * @author Fan et Renato
- *
- */
+import be.ac.ulb.infof307.g07.Main;
+import be.ac.ulb.infof307.g07.PokemonViewListener;
+import be.ac.ulb.infof307.g07.controllers.PokedexController;
+import be.ac.ulb.infof307.g07.models.Pokedex;
+import be.ac.ulb.infof307.g07.models.Pokemon;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+
 public class PokedexView {
-    // stock real pokemon
-    private ObservableList<PokemonView> pokemonViewInPokedex;
-    private Pokedex pokedex;
 
-    private double pokedexViewWidth = 0;
-
-    private double pokemonIconWidth = 45;
-    private double pokemonIconHeight = 45;
-
-
-    private BorderPane pokedexBorderPane;
-    private BorderPane pokemonDetailBorderPane;
-    private StackPane pokedexStackPane;
-    private ScrollPane pokedexScrollPane;
-
-
-    // used for detail info window
-    private TextField pokemonNameTextField;
-    private TextField pokemonTypeTextField;
-    private Label pokemonHeightField;
-    private Label pokemonWeightField;
-    private ImageView pokemonImageView;
-    private int pokemonImageWidth = 180;
-    private int pokemonImageHeight = 140;
-
-    public static HashMap<Integer, Integer> markedPokemonCounting = new HashMap<Integer, Integer>();
-
-    public PokedexView(double pokedexViewWidth, double pokedexViewHeight) {
-        this.pokedex = new Pokedex();
-
-        this.pokedexViewWidth = pokedexViewWidth;
-
-        pokedexBorderPane = new BorderPane();
-        pokemonDetailBorderPane = new BorderPane();
-        pokemonDetailBorderPane.setStyle("-fx-background-color: #FFFFFF");
-
-        // Adding TextField on Detail Info Window
-        GridPane newGrid = new GridPane();
-        this.pokemonNameTextField = new TextField("Blank");
-        this.pokemonTypeTextField = new TextField("Blank");
-        this.pokemonHeightField = new Label("Blank");
-        this.pokemonWeightField = new Label("Blak");
-        newGrid.add(new Label("Name: "), 0, 1);
-        newGrid.add(new Label("Type: "), 0, 2);
-        newGrid.add(new Label("Weight (kg): "), 0, 3);
-        newGrid.add(new Label("Height (m): "), 0, 4);
-        newGrid.add(this.pokemonNameTextField, 1, 1);
-        newGrid.add(this.pokemonTypeTextField, 1, 2);
-        newGrid.add(this.pokemonHeightField, 1, 3);
-        newGrid.add(this.pokemonWeightField, 1, 4);
-        // any image only for the purpose of instanciation
-        Image pokemonImage = new Image("http://www.solidbackgrounds.com/images/2560x1440/2560x1440-black-solid-color-background.jpg",this.pokemonImageWidth,this.pokemonImageHeight, true, true);
-        this.pokemonImageView = new ImageView(pokemonImage);
-        newGrid.add(this.pokemonImageView, 0,0);
-
-        Button newButton = new Button("Return");
-        newButton.setOnAction(new ClosePokemonDetailWindowHandler(this));
-        newButton.setPrefWidth(this.pokedexViewWidth-16);
-
-        this.pokemonDetailBorderPane.setTop(newButton);
-        BorderPane.setAlignment(newButton, Pos.CENTER_LEFT);
-        this.pokemonDetailBorderPane.setCenter(newGrid);
-        BorderPane.setAlignment(newGrid, Pos.CENTER);
-        this.pokemonDetailBorderPane.setStyle("-fx-background-color:#ffffff");
-
-        this.pokedexStackPane = new StackPane();
-
-        this.pokedexStackPane.setMaxSize(pokedexViewWidth, pokedexViewHeight-38);
-        this.pokedexStackPane.setMinSize(pokedexViewWidth, pokedexViewHeight-38);
-
-        pokedexStackPane.getChildren().addAll(pokemonDetailBorderPane, pokedexBorderPane);
-
-        this.pokemonViewInPokedex = FXCollections.observableArrayList();
-
-        // Vbox will be stocked in ScrollPane
-        pokedexScrollPane = new ScrollPane();
-
-        pokedexBorderPane.setCenter(pokedexScrollPane);
-
-        // it will add all pokemon in vbox
-        updatePokedex();
-    }
-
-    public void refreshCounts() {
-        for(int i = 0; i < this.pokemonViewInPokedex.size(); ++i) {
-            this.pokemonViewInPokedex.get(i).refreshCount();
-        }
-    } 
-
-    public void updatePokedex() {
-        pokedexScrollPane.setContent(getPokedexViewWithDefaultStyle());
-    }
-
-    public VBox getPokedexViewWithDefaultStyle() {
-        PokemonViewDblClickHandler newHandler = new PokemonViewDblClickHandler(this);
-        return getPokedexView( newHandler, this.pokedexViewWidth-15, 50, new Insets(5,5,5,5), this.pokemonIconWidth, this.pokemonIconHeight, 5, 10 );
-    }
-
-    public VBox getPokedexView(PokemonViewListener handler, double pokemonViewWidth, double pokemonViewHeight, Insets pokemonPadding, double iconWidth, double iconHeight, double VGap, double HGap) {
-        VBox newVBox = new VBox();
-
-        for(int i = 0; i < this.pokedex.getSize(); ++i) {
-            PokemonView newPokemonView = new PokemonView(this.pokedex.getPokemon(i), this);
-            onPokemonGlobalCountChangeHandler tmphandler = new onPokemonGlobalCountChangeHandler(newPokemonView);
-            this.pokedex.getPokemon(i).addListener(tmphandler);
-            this.pokemonViewInPokedex.add(newPokemonView); 
-
-            newPokemonView.registerListener(handler);
-
-            newVBox.getChildren().add(newPokemonView.createView( pokemonViewWidth, pokemonViewHeight, pokemonPadding, iconWidth, iconHeight, VGap, HGap ));
-        }
-
-        return newVBox;
-    }
-
-    public StackPane getView() {
-        return pokedexStackPane;
-    }
-
-    public void showPokemonDetail( Pokemon pokemon ) {
-        // prepare all info of this pokemon
-        this.pokemonNameTextField.setText(pokemon.getName());
-        String typesText = "";
-
-        if (pokemon.getTypes() != null) {
-            String[] types = pokemon.getTypes();
-            for (int i = 0; i < types.length; ++i) {
-                typesText += types[i] + ", ";
-            }
-        }
-
-        this.pokemonTypeTextField.setText(typesText);
-        this.pokemonHeightField.setText(Double.toString(pokemon.getHeight()));
-        this.pokemonWeightField.setText(Double.toString(pokemon.getWeight()));
-        Image pokemonImage = new Image(pokemon.getImagePath(), 100, 130, true, true);
-        this.pokemonImageView.setImage(pokemonImage);
-
-        // send the window of detail info to the front
-        // and others to the back
-        this.pokemonDetailBorderPane.toFront();
-        // set the visibility of them too
-        this.pokemonDetailBorderPane.setOpacity(1);
-        this.pokedexBorderPane.setOpacity(0);
-    }
-
-    public void closePokemonDetail() {
-        // just do the opposite of showPokemonDetail
-        this.pokedexBorderPane.toFront();
-        this.pokedexBorderPane.setOpacity(1);
-        this.pokemonDetailBorderPane.setOpacity(0);
-    }
-
-    public Pokemon getPokemonFromPokedex(int id) {
-        return this.pokedex.getPokemonWithId(id);
-    }
-
-    public Pokedex getPokedex() {
-        return this.pokedex;
-    } 
+	private final Pokedex pokedex;
+	private HashMap<Integer,PokemonView> pokemonViews = new HashMap<Integer, PokemonView>();
+	private static PokedexView instance = null;
+	private boolean isMainHided;
+	private boolean isPokedexMode = true;
+	private double diffHeight = 0;
+	private PokedexController controller;
+	
+	private Pane mainPane;
+	private AnchorPane pokemonDetailContainer;
+	private ScrollPane pokemonViewContainer;
+	private TextField searchField;
+	
+	private Label[] pokemonDetailLabels;
+	private AnchorPane pokemonDetailImageView;
+	
+	private AnchorPane filledIn = null;
+	
+	public static PokedexView getInstance(){
+		if( instance == null ){
+			instance = new PokedexView();
+		}
+		return instance;
+	}
+	
+	public PokedexView(){
+		pokedex = new Pokedex();
+	}
+	
+	public void loadView(){
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/Pokedex.fxml"));
+			controller = PokedexController.getInstance();
+			loader.setController(controller);
+			mainPane = loader.load();
+		} catch (IOException except) {
+			
+			except.printStackTrace();
+		}
+	}
+	
+	public void setSearchField(TextField newSearchField){
+		
+		searchField = newSearchField;
+	}
+	
+	public void toggleMode( ScrollPane toPokedex ){
+		
+		if( toPokedex==null ){
+			// pokedex mode
+			showPokedex(true);
+			isPokedexMode = true;
+		}else{
+			// selection mode
+			hideAll(true);
+			isPokedexMode = false;
+		}
+	}
+	
+	private void showPokemonView(){
+		this.pokemonViews = createPokemoViews(Pokedex.getInstance().getPokemonsId(),true, controller);
+		VBox newVBox = new VBox();
+		System.out.println(this.pokemonViews.size());
+		for( Integer id : this.pokemonViews.keySet() ){
+		
+			newVBox.getChildren().add(pokemonViews.get(id).getView());
+		}
+		pokemonViewContainer.setContent(newVBox);
+	}
+	
+	public HashMap<Integer, PokemonView> createPokemoViews( Integer[] listId, boolean bindSignalListener, PokemonViewListener pokemonSelectionListener){
+		
+		HashMap<Integer, Pokemon> pokemons = pokedex.getPokemons();
+		HashMap<Integer, PokemonView> list = new HashMap<Integer, PokemonView>();
+		
+		for( int id: listId ){
+			PokemonView newPokemonView = new PokemonView(pokemons.get(id));
+			if(bindSignalListener){
+				pokemons.get(id).addListener(newPokemonView);
+			}
+			if( pokemonSelectionListener != null ){
+				newPokemonView.addListener(pokemonSelectionListener);
+			}
+			newPokemonView.loadView();
+			newPokemonView.setPokemonDataInView();
+			list.put(id, newPokemonView);
+		}
+		
+		return list;
+	}
+	
+	public void setContainers( ScrollPane pVContainer, AnchorPane pDContainer ){
+		
+		pokemonViewContainer = pVContainer;
+		pokemonDetailContainer = pDContainer;
+	}
+	public void init(){
+		showPokemonView();
+	}
+	
+	public static void setPaneVisibility( Pane container, boolean isVisible ){
+		container.setVisible(isVisible);
+		if( isVisible ){
+			container.toFront();
+		}else{
+			container.toBack();
+		}
+	}
+	
+	public static void setPaneVisibility( ScrollPane container, boolean isVisible ){
+		container.setVisible(isVisible);
+		if( isVisible ){
+			container.toFront();
+		}else{
+			container.toBack();
+		}
+	}
+	
+	public void hideAll(boolean hide){
+		showDetailView(!hide);
+		showPokedex(!hide);
+	}
+	
+	public void showPokedex(boolean show){
+		if( isPokedexMode ){
+			PokedexView.setPaneVisibility(pokemonViewContainer, show);
+			hideMain();
+		}
+	}
+	
+	public void showDetailView(boolean show){
+		PokedexView.setPaneVisibility(pokemonDetailContainer, show);
+		hideMain();
+	}
+	
+	private void hideMain(){
+		isMainHided = (!pokemonViewContainer.isVisible() && !pokemonDetailContainer.isVisible());
+		mainPane.setVisible(!isMainHided);
+	}
+	
+	public void displayPokemonInDetail(int pokemonId){
+		Pokemon pokemon = pokedex.getPokemon(pokemonId);
+		// set Image
+		Image pokemonImage = new Image("gif_numeric/"+String.format("%03d", pokemon.getId())+ ".gif", pokemonDetailImageView.getWidth(), pokemonDetailImageView.getHeight(), true, true);
+		pokemonDetailImageView.getChildren().clear();
+		pokemonDetailImageView.getChildren().add(new ImageView(pokemonImage));
+		// set Id
+		pokemonDetailLabels[0].setText(Integer.toString(pokemon.getId()));
+		// set Name
+		pokemonDetailLabels[1].setText(pokemon.getName());
+		// set Types
+		pokemonDetailLabels[2].setText(arrayToString(pokemon.getType(),","));
+		// set Weight
+		pokemonDetailLabels[3].setText(Double.toString(pokemon.getWeight()));
+		// set Height
+		pokemonDetailLabels[4].setText(Double.toString(pokemon.getHeight()));
+		showDetailView(true);
+	}
+	
+	public static String arrayToString( String[] string, String separator ){
+		
+		String output = "";
+		for( String elem : string ){
+			
+			output += elem + separator;
+		}
+		
+		output = output.substring(0, output.length()-1);
+		return output;
+	}
+	
+	public void setDetailComponent(Label[] pokemonLabels, AnchorPane pokemonImage){
+		pokemonDetailLabels = pokemonLabels;
+		pokemonDetailImageView = pokemonImage;
+	}
+	
+	public boolean getIsMainHided(){
+		
+		return isMainHided;
+	}
+	
+	public Pane getView(){
+		return mainPane;
+	}
+	
+	public void setHeight( double newHeight ){
+		double mainHeight = mainPane.getPrefHeight();
+		mainPane.setPrefHeight(newHeight);
+		if( diffHeight == 0 ){
+			diffHeight = mainHeight - pokemonViewContainer.getPrefHeight()+35;
+		}
+		pokemonViewContainer.setPrefHeight(newHeight-diffHeight);
+		pokemonDetailContainer.setPrefHeight(newHeight);
+		
+	}
 }

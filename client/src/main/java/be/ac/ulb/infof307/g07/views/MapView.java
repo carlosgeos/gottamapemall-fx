@@ -1,262 +1,78 @@
 package be.ac.ulb.infof307.g07.views;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.bson.types.ObjectId;
-
-import be.ac.ulb.infof307.g07.libs.CustomGson;                                   
-import com.google.gson.Gson;
-import net.dongliu.requests.Requests;
-
 import com.lynden.gmapsfx.ClusteredGoogleMapView;
-import com.lynden.gmapsfx.ClusteredMainApp; 
+import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-import com.lynden.gmapsfx.shapes.Circle;
-import com.lynden.gmapsfx.shapes.CircleOptions; 
 
-import be.ac.ulb.infof307.g07.controllers.Handlers.OnMapRightClickHandler;
-import be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler;
-import be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler;
-import be.ac.ulb.infof307.g07.controllers.Handlers.onMapDblClickHandler;
-import be.ac.ulb.infof307.g07.models.Coordinate;
+import be.ac.ulb.infof307.g07.controllers.GoogleMapViewMouseClickHandler;
 import be.ac.ulb.infof307.g07.models.Map;
-import be.ac.ulb.infof307.g07.models.PokeMarker;
-import be.ac.ulb.infof307.g07.models.Pokemon;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
-/**
- * 
- * Cette classe represente la vue dans la structure MVC cad la classe s occupant de l affichage de la carte et de ses composantes graphiques.
- * 
- * <p>
- * Un objet de cette classe est cree par les classes suivantes: MapController, MapMouseDblClickHandler et MainGUI, dans leurs constructeurs respectifs et la methode mapInitialized() de MainGUI.
- * <p>
- * 
- * @version 1.0
- *
- * @see be.ac.ulb.infof307.g07.MainGUI
- * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseDblClickHandler
- * @see MapView#mapInitialized()
- *
- */
-public class MapView extends ClusteredMainApp { 
-    /**
-     * Une table de hachage contenant les markers (epingles) presents sur la carte et leurs identifiants (nombre entier servant de clef).
-     * 
-     * @see be.ac.ulb.infof307.g07.models.Map#pokeMarkers
-     * 
-     */
-    private HashMap<ObjectId, Marker> markersOnMap = new HashMap<ObjectId, Marker>();
-
-    private Circle centerOfGeoLoc = null;
-    private Circle roundOfGeoLoc = null; 
-    
-    /**
-     * Un objet GoogleMap pour afficher la carte google sur base de l'objet GoogleMapView.
-     * 
-     * @see MapView#getGoogleMap()
-     * @see MapView#MapView()
-     */
-    private static String apikey = "AIzaSyA38gCIADhL0JWZbNmPYtsTgGJJWIyXZNI";
-    public static Coordinate position;
-    
-    private ClusteredGoogleMap googleMap;
-    private ClusteredGoogleMapView googleMapView;
-    
-    private Map pokeMap;
-    private PokedexView pokedexView;
-    
-    private double mapWidth;
-    private double mapHeight;
-    
-    private BorderPane mapViewBorderPane;
-
-    private void fillPokeMap () {
-        String response = Requests.get("http://127.0.0.1:4567/locations").send().readToText();
-        Gson gson = CustomGson.get();
-        PokeMarker[] markers = gson.fromJson(response, PokeMarker[].class);
-
-        for (int i = 0; i < markers.length; ++i) {
-            Pokemon pokemon = pokedexView.getPokemonFromPokedex(markers[i].getPokemonId());
-            pokemon.increaseGlobalCounting();
-            this.addMarker(markers[i]);
-        }
-    }
-
-    /**
-     * Constructeur de l'objet MapView.
-     * <p>
-     * On cree on objet MapOptions avec certains parametres predefinis. 
-     * On cree une googleMapView (sur base de ce MapOptions) via la methode createMap et on l'assigne a notre objet googleMap.
-     * </p>
-     * 
-     *@param width
-     *                         la largeur de la carte a afficher.
-     *@param height
-     *                         la hauteur de la carte a afficher.
-     * 
-     *@see MapView#googleMap
-     * 
-     */
-    public MapView(double width, double height, PokedexView pokedexView) {
-        this.mapWidth = width;
-        this.mapHeight = height;
-
-        this.pokedexView = pokedexView;
-        this.pokeMap = new Map(pokedexView.getPokedex());
-        
-        this.googleMapView = new ClusteredGoogleMapView(null, apikey);
-        googleMapView.addMapInializedListener(this);
-        
-        this.mapViewBorderPane = new BorderPane();
-        this.mapViewBorderPane .setCenter(googleMapView);
-        this.mapViewBorderPane .setMinSize(this.mapWidth, this.mapHeight);
-        
-        this.mapViewBorderPane.setOpacity(0);
-    }
-    
-    public MapView() {
-        this.pokeMap = new Map(null);
-        this.googleMap = null;
-        this.googleMapView = null;
-    }
-    
-    /**
-     * Retourne l'objet de la carte google maps.
-     * 
-     * @return L'objet map de type GoogleMap.
-     */
-    public ClusteredGoogleMap getGoogleMap() {
-        return googleMap;
-    }
-    
-    public BorderPane getView() {
-        return this.mapViewBorderPane;
-    }
-    
-    public final int getNumberOfMarkerOnMap() {
-        return this.markersOnMap.size();
-    }
-    
-    public Map getMap() {
-        return this.pokeMap;
-    }
-    
-    /**
-     * 
-     * This method waits for the new created PokeMarker to create a Marker on Map.
-     * PokeMarker is different than Marker. PokeMarker is stored in Map and Marker is an object of the GoogleMap.
-     * PokeMarker is the model and Marker is the view.
-     *      
-     * @param pokeMarker
-     *                     the custom pokemon marker object.                    
-     * 
-     * @see be.ac.ulb.infof307.g07.controllers.Handlers.PokeMarkerMouseClickHandler
-     * @see MapView#googleMap
-     * 
-     */
-    public void addMarker(PokeMarker pokeMarker) {
-        MarkerOptions markerOption = new MarkerOptions();
-        markerOption.position(new LatLong(pokeMarker.getOnMapPosition().getX(), pokeMarker.getOnMapPosition().getY()));
-        markerOption.icon(pokeMarker.getIcon());
-
-        Marker newMarker = new Marker(markerOption);
-        
-        markersOnMap.put(pokeMarker.getId(), newMarker);
-        
-        // this if is only used for the test unit
-        if(googleMap != null){
-            googleMap.addClusterableMarker(newMarker);
-            googleMap.addUIEventHandler(newMarker, UIEventType.click, new PokeMarkerMouseClickHandler(newMarker, pokeMarker, googleMap));
-            googleMap.addUIEventHandler(newMarker, UIEventType.dblclick, new PokeMarkerMouseDblClickHandler(pokeMap, this, pokeMarker));
-        
-            refreshMap();
-        }
-    }
-    
-    /**
-     * refreshing the map by zooming in and zooming out by 1
-     * -1 of current is because, when double clicking on map it will automatically zoom by 1, so to keep the same zoom level
-     * -1 is necessary
-     * 
-     * @see MapView#googleMap
-     */
-    public void refreshMap() {
-        int current = googleMap.getZoom() - 1;
-        googleMap.setZoom(googleMap.getZoom() + 1);
-        googleMap.setZoom(current);
-    }
-    
-    /**
-     * Suppression d une epingle pokemon de la carte
-     * @param id l id de l objet a supprimer
-     */
-    public void removeMarker(ObjectId id) {
-        googleMap.removeMarker(markersOnMap.get(id));
-        markersOnMap.remove(id);
-    }
-
-    @Override
-    public void mapInitialized() {
-        MapOptions defaultMapOptions = new MapOptions();
-        // here we set the default location as 47.6097, -122.3331
-        LatLong defaultMapCenterPosition = new LatLong(47.6097, -122.3331);
-        
-        defaultMapOptions.center(defaultMapCenterPosition)
-                .mapType(MapTypeIdEnum.ROADMAP)
-                
-                .mapTypeControl(false)
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .streetViewControl(false)
-                .zoomControl(false)
-                .zoom(11);
-                
-        googleMap = this.googleMapView.createMap(defaultMapOptions);
-        googleMap.addMouseEventHandler(UIEventType.dblclick, new onMapDblClickHandler(this.pokeMap, this));
-        googleMap.addMouseEventHandler(UIEventType.rightclick, new OnMapRightClickHandler(this.pokeMap,this)); 
-        
-        this.mapViewBorderPane.setOpacity(1);
-        this.fillPokeMap();
-    }
-
-    public void geoLocalisationSetMarkers(HashMap<ObjectId, Integer> markerList) {
-        for (ObjectId key : this.markersOnMap.keySet()) {
-            if (markerList.containsKey(key)) {
-                this.markersOnMap.get(key).setVisible(true);
-            } else {
-                this.markersOnMap.get(key).setVisible(false);
-            }
-        }
-    }
-    
-    public void geoLocalisationSetShape(Coordinate center, int radius) {
-        if (this.centerOfGeoLoc != null) {
-            this.googleMap.removeMapShape(this.centerOfGeoLoc);
-        }
-        
-        CircleOptions newCircleOption = new CircleOptions();
-        newCircleOption.center(new LatLong(center.getX(), center.getY()))
-            .radius(radius)
-            .fillColor("#c9d4fc")
-            .fillOpacity(0.6)
-            .clickable(false)
-            .draggable(false)
-            .editable(false)
-            .strokeColor("#bccbff")
-            .strokeWeight(1)
-            .strokeOpacity(0.6);
-        
-        this.centerOfGeoLoc = new Circle(newCircleOption);
-        this.googleMap.addMapShape(centerOfGeoLoc);
-   }
+public class MapView{
+	
+	private ClusteredGoogleMapView googleMapView;
+	public static final double notSet = -1;
+	private static MapView instance = null;
+	private double onMarkerLayoutMouseX;
+	private double onMarkerLayoutMouseY;
+	private final double radius = 70;
+	
+	public MapView( MapComponentInitializedListener mapInitialized ){
+		
+		googleMapView = new ClusteredGoogleMapView(null, Map.defaultApiKey);
+		for(Button elem:PokeMarkerOptionsView.getInstance().getView()){
+			googleMapView.getChildren().add(elem);
+		}
+		googleMapView.addMapInializedListener(mapInitialized);
+		googleMapView.addEventHandler(MouseEvent.MOUSE_CLICKED, new GoogleMapViewMouseClickHandler(this));
+		
+		instance = this;
+	}
+	
+	public double[][] calcMenuPosition(int nbElement){
+		double[][] res = new double[nbElement][2];
+		double radians = Math.toRadians(360/nbElement);
+		for( int i = 0; i<nbElement;++i){
+			res[i][0] = onMarkerLayoutMouseX + radius * Math.cos(i*radians);
+			res[i][1] = onMarkerLayoutMouseY + radius * Math.sin(i*radians);
+		}
+		return res;
+	}
+	
+	public void fixeMarkerLayoutPosition(double newX, double newY  ){
+		onMarkerLayoutMouseX = newX;
+		onMarkerLayoutMouseY = newY;
+	}
+	
+	public static MapView getInstance(){
+		
+		return instance;
+	}
+	
+	public final double getMarkerLayoutMouseX(){
+		return onMarkerLayoutMouseX;
+	}
+	
+	public final double getMarkerLayoutMouseY(){
+		return onMarkerLayoutMouseY;
+	}
+	
+	public void setMarkerLayoutMouseX(double newVal){
+		onMarkerLayoutMouseX = newVal;
+	}
+	
+	public void setMarkerLayoutMouseY(double newVal){
+		onMarkerLayoutMouseY = newVal;
+	}
+	
+	public GoogleMapView getView(){
+		
+		return googleMapView;
+	}
+	
+	public ClusteredGoogleMap createMap(){
+		return googleMapView.createMap(Map.createDefaultOptions());
+	}
 }

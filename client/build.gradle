@@ -8,7 +8,7 @@ apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
-mainClassName = "be.ac.ulb.infof307.g07.MainGUI"
+mainClassName = "be.ac.ulb.infof307.g07.Main"
 
 repositories {
     mavenCentral()
@@ -27,14 +27,16 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Gotta Map Em All Application',
         'Implementation-Version': 1.0,
-        'Main-Class': 'be.ac.ulb.infof307.g07.MainGUI'
+        'Main-Class': 'be.ac.ulb.infof307.g07.Main'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 dependencies {
-    compile name: 'GMapsFX-2.11.0-SNAPSHOT'
+    compile name: 'GMapsFX-2.12.0'
+    compile name: 'slf4j-api-1.7.25'
+    compile name: 'slf4j-simple-1.7.25'
     compile 'net.dongliu:requests:4.8.3'
     compile 'org.mongodb.morphia:morphia:1.2.1'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'

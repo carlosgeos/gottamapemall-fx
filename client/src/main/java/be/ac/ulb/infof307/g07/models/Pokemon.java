@@ -1,159 +1,184 @@
 package be.ac.ulb.infof307.g07.models;
 
 import java.util.ArrayList;
-import be.ac.ulb.infof307.g07.controllers.PokemonListener;
 
+import be.ac.ulb.infof307.g07.PokemonListener;
+
+/**
+ * La classe pokemon stocke l information d'un pokemon. Par exemple le nom, le poids, la taille etc. 
+ * Chaque Pokemon sera cree et stocke dans la classe Pokedex. 
+ * 
+ *@see Pokedex
+ */
 public class Pokemon {
-    private transient ArrayList<PokemonListener> listeners = new ArrayList<PokemonListener>();
-    private transient int globalCounting = 0;
-    private final int id;
-    private final String name;
-    private final String imagePath;
-    private final int base_experience;
-    private final int height;
-    private final int weight;
-    private final String[] types;
-    
-    /**
-     * Constructeur
-     */ 
-    public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types) {
-        this.id = id;
-        this.name = name;
-        this.imagePath = imagePath;
-        this.base_experience = base_experience;
-        this.height = height;
-        this.weight = weight;
-        this.types = types;
-        
-    }
-    
-    /**
-     * constructeur de copie
-     */ 
-    public Pokemon(Pokemon pokemon){
-        this.id = pokemon.id;
-        this.name = pokemon.name;
-        this.imagePath = pokemon.imagePath;
-        this.base_experience = pokemon.base_experience;
-        this.height = pokemon.height;
-        this.weight = pokemon.weight;
-        this.types = pokemon.types;
-    }
-    
-    /**
-     * Incremente le nombre d efois que ce pokemon a ete ajoute
-     */ 
-    public void increaseGlobalCounting() {
-        this.globalCounting += 1;
-        for(PokemonListener listener : this.listeners){
-            listener.onChangeGlobalCount();
-        }
-    }
-    
-    /**
-     * Decremente le nombre d efois que ce pokemon a ete ajoute
-     */  
-    public void decreaseGlobalCounting(){
-        if (this.globalCounting > 0){
-            this.globalCounting -= 1;
-            for(PokemonListener listener : this.listeners){
-                listener.onChangeGlobalCount();
-            }
-        }
-    }
-    
-    /**
-     * Renvoie le numero de fois que ce pokemon a ete ajoute
-     */  
-    public final int getGlobalCounting(){
-        return this.globalCounting;
-    }
-    
-    /**
-     * Ajoute le listener pour ce pokemon
-     *
-     * @param newListener listener utilise pour mettre a jour le nombre de pokemons egaux qui se trouvent sur la map
-     */  
-    public void addListener(PokemonListener newListener) {
-        this.listeners.add(newListener);
-    }
-    
-    /**
-     * Renvoie la representation en string du pokemon
-     * 
-     */  
-    public String toString() {
-        String res = "";
-        res += this.id + ":" + this.name + ":" + this.base_experience + ":" + this.height + ":" + this.weight;
-        for (int i = 0 ; i<this.types.length ; ++i){
-            res += ":" + this.types[i];
-        }
-        return res;
-    }
-    
-    /**
-     * Renvoie l'id du pokemon
-     * 
-     */  
-    public final int getId() {
-        return this.id;
-    }
-    
-    /**
-     * Renvoie le nom du pokemon
-     * 
-     */  
-    public final String getName() {
-        return this.name;
-    }
-    
-    /**
-     * Renvoie le lien vers l'icon du pokemon
-     * 
-     */  
-    public final String getImagePath() {
-        return this.imagePath;
-    }
-    
-    /**
-     * Renvoie la liste de types du pokemon
-     * 
-     */  
-    public final String[] getTypes() {
-        return this.types;
-    }
 
-    /**
-     * Renvoie la largeur du pokemon
-     * 
-     */  
-    public final int getWeight () {
-        return this.weight;
-    }
+	public final static String imagePathLink ="https://www.pkparaiso.com/imagenes/shuffle/sprites/";
+	private final String imageLink;
+	public transient final static String imageType = ".png";
+	private transient int numberOfSignalisation = 0;
+	private int id;
+	private String name;
+	private int base_experience;
+	private double weight;
+	private double height;
+	private String[] types;
+	private transient ArrayList<PokemonListener> listener = new ArrayList<PokemonListener>();
+	
+	/**
+	 * Le constructeur de la classe Pokemon.
+	 * 
+	 * @param newId id du pokemon
+	 * @param newName nom du pokemon
+   * @param imagePath path vers l icon
+	 * @param newBase_experience experience du pokemon
+	 * @param newWeight poids du pokemon
+	 * @param newHeight taille du pokemon
+	 * @param newTypes types du pokemon
+	 */
+	public Pokemon(int newId, String newName, String imagePath, int newBase_experience, int newWeight, int newHeight, String[] newTypes){
+		id = newId;
+		name = newName;
+		base_experience=newBase_experience;
+		weight = newWeight;
+		height = newHeight;
+		types = newTypes;
+		imageLink = imagePathLink + String.format("%03d",id)+".png";
+	}
+	
+	/**
+	 * Cette methode sert a tester si deux pokemons sont egaux.
+	 * 
+	 * @param otherPokemon le pokemon a comparer
+	 * @return si ils sont egaux
+	 */
+	public boolean equals(Pokemon otherPokemon){
+		return id==otherPokemon.id && name == otherPokemon.name && weight == otherPokemon.weight && height == otherPokemon.height;
+	}
+	
+	/**
+	 * Cette methode prepare un output pour pouvoir imprimer les attributs.
+	 * 
+	 * @return un output de type String
+	 */
+	public String toString(){
+		String output = "";
+		output += Integer.toString(id);
+		output += " : "+name;
+		output += ", "+Double.toString(weight);
+		output += ", " + Double.toString(height);
+		return output;
+	}
+	/**
+	 * Renvoie l id unique du pokemon
+	 * 
+	 * @return un id unique constante
+	 */
+	public final int getId(){
+		return id;
+	}
+	
+	/**
+	 * Renvoie le nom du Pokemon
+	 * 
+	 * @return le nom du Pokemon
+	 */
+	public final String getName(){
+		return name;
+	}
+	
+	/**
+	 * Renvoie le poids du Pokemon
+	 * 
+	 * @return le poids du Pokemon
+	 */
+	public final double getWeight(){
+		return weight;
+	}
+	
+	/**
+	 * Renvoie la taille du Pokemon
+	 * 
+	 * @return la taille du Pokemon
+	 */
+	public final double getHeight(){
+		return height;
+	}
+	
+	/**
+	 * Renvoie un Array de type du Pokemon
+	 * 
+	 * @return un Array de type
+	 */
+	public final String[] getType(){
+		return types;
+	}
+	
+	/**
+	 * Increment le compteur de Signalisation du Pokemon sur le Map.
+	 * Cest un compteur globale qui compte le nombre de fois que le pokemon a ete signaler.
+	 * 
+	 */
+	public void incSignalCount(){
+		System.out.println("Incrementing.....Old value : "+Integer.toString(numberOfSignalisation));
+		++numberOfSignalisation;
+		System.out.println("Incrementing.....new value : "+Integer.toString(numberOfSignalisation));
+		callListener();
+	}
+	
+	/**
+	 * 
+	 * Decrement le compteur de Signalisation du Pokemon sur le Map.
+	 * Cest un compteur global qui compte le nombre de fois que le pokemon a ete signaler.
+	 * 
+	 */
+	public void decSignalCount(){
+		--numberOfSignalisation;
+		callListener();
+	}
+	/**
+	 * Renvoie le chemin de l image du Pokemon.
+	 * 
+	 * @return le chemin
+	 */
+	public final String getImagePath(){
+		return Integer.toString(id)+imageType;
+	}
+	
+	/**
+	 * Renvoie le nombre de fois qu un pokemon ait etet signale.
+	 * 
+	 * @return nombre de signalisations
+	 */
+	public final int getSignalisationCount(){
+		return numberOfSignalisation;
+	}
+	
+	/**
+	 * Assigne un listener de type PokemonListener a un pokemon
+	 * 
+	 */
+	public void addListener(PokemonListener newListener){
+		listener.add(newListener);
+	}
+	
 
-    /**
-     * Renvoie la hauteur du pokemon
-     * 
-     */    
-    public final int getHeight () {
-        return this.height;
-    }
-
-    /**
-     * Renvoie vrai si deux pokemon contiennent exactement les mêmes attributs
-     * @param otherPokemon Le pokemon avec lequel l'objet sera comparé
-     */    
-    public boolean equals (Pokemon otherPokemon) {
-        boolean res;
-        res = this.id == otherPokemon.id && 
-            this.name == otherPokemon.name && 
-            this.imagePath == otherPokemon.imagePath &&
-            this.base_experience == otherPokemon.base_experience &&
-            this.height == otherPokemon.height &&
-            this.weight == otherPokemon.weight &&
-            this.types == otherPokemon.types;
-        
-        return res;
-    }
+	/**
+	 * Apelle l ensemble de listeners stockes dans la liste listener.
+	 * 
+	 */
+	private void callListener(){
+		System.out.println("Listener called...");
+		for(PokemonListener l:listener){
+			l.onChangeSignalisation();
+		}
+	}
+	/**
+	* Renvoie le lien vers l icon
+	* 
+	* @return lien vers icon
+	*/
+	public String getImageLink(){
+		
+		return imageLink;
+	}
 }

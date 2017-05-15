@@ -22,7 +22,7 @@ public class TestDistanceBetnTwoPoints {
 
     @Test
     public void test() {
-        res = GeoLocaLisation.distanceBetnTwoPoints(lon1,lat1,lon2,lat2);
+        res = GeoLocaLisation.distanceBetweenTwoPoints(lon1,lat1,lon2,lat2);
         assertEquals(res, 0.0009, DELTA);
     }
 
