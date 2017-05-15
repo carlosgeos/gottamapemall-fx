@@ -4,16 +4,11 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="273.0" style="-fx-background-color: #ffffff;" visible="false" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="273.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane layoutX="14.0" layoutY="56.0" prefHeight="248.0" prefWidth="254.0">
-         <content>
-          <AnchorPane fx:id="selectPokemonContainer" minHeight="0.0" minWidth="0.0" prefHeight="62.0" prefWidth="251.0" />
-         </content>
-      </ScrollPane>
+      <ScrollPane fx:id="selectPokemonContainer" layoutX="14.0" layoutY="56.0" prefHeight="248.0" prefWidth="254.0" />
       <DatePicker fx:id="datePicker" layoutX="81.0" layoutY="20.0" prefHeight="26.0" prefWidth="186.0" />
       <Button fx:id="btnCancel" layoutX="133.0" layoutY="317.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="65.0" text="Cancel" />
       <Button fx:id="btnAdd" layoutX="212.0" layoutY="317.0" mnemonicParsing="false" onAction="#onClickBtnAdd" prefHeight="26.0" prefWidth="58.0" text="Add" />

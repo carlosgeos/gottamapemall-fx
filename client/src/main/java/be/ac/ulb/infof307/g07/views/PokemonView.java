@@ -27,8 +27,10 @@ public class PokemonView implements PokemonListener{
 	
 	public static PokemonView selectedPokemonView = null;
 	public final static String defaultGridStyle = "-fx-border: 1px;-fx-border-color:#EBEBEB; -fx-border-style:solid;";
-    public final static String hoverGridStyle = "-fx-border: 1px;-fx-border-color:#75B1FF; -fx-border-style:solid;";
-    public final static String selectGridStyle = "-fx-border: 1px;-fx-border-color:#00ff00; -fx-border-style:solid;";
+  public final static String hoverGridStyle = "-fx-border: 1px;-fx-border-color:#75B1FF; -fx-border-style:solid;";
+  public final static String selectGridStyle = "-fx-border: 1px;-fx-border-color:#00ff00; -fx-border-style:solid;";
+  public final double iconWidth = 50;
+  public final double iconHeight = 50;
 	
 	public PokemonView( Pokemon newPokemon ){
 		pokemon = newPokemon;	
@@ -48,9 +50,9 @@ public class PokemonView implements PokemonListener{
 	
 	public void onClickStyle(MouseEvent event){
 		if(PokemonView.selectedPokemonView != null){
-			mainPane.setStyle(defaultGridStyle);
+			PokemonView.selectedPokemonView.getView().setStyle(defaultGridStyle);
 		}
-
+		
 		mainPane.setStyle(selectGridStyle);
 		holdGridStyle = selectGridStyle;
 		PokemonView.selectedPokemonView = this;
@@ -75,11 +77,12 @@ public class PokemonView implements PokemonListener{
 	public void setPokemonDataInView(){
 		System.out.println("Setting pokemon data...");
 		pokemonName.setText(pokemon.getName());
-		Image pokemonImage = new Image(this.pokemon.getId() + ".gif", pokemonImagePane.getWidth(), pokemonImagePane.getHeight(), true, true);
-	    ImageView pokemonImageView = new ImageView(pokemonImage);
-	    pokemonImagePane.getChildren().add(pokemonImageView);
-	    pokemonId.setText(Integer.toString(pokemon.getId()));
-	    pokemonSignalisation.setText(Integer.toString(pokemon.getSignalisationCount()));
+		System.out.println("gif_numeric/"+String.format("%03d", pokemon.getId())+ ".gif");
+		Image pokemonImage = new Image("gif_numeric/"+String.format("%03d", pokemon.getId())+ ".gif", iconWidth, iconHeight, true, true);
+	  ImageView pokemonImageView = new ImageView(pokemonImage);
+	  pokemonImagePane.getChildren().add(pokemonImageView);
+		pokemonId.setText(Integer.toString(pokemon.getId()));
+	  pokemonSignalisation.setText(Integer.toString(pokemon.getSignalisationCount()));
 		System.out.println("Finish setting pokemon data...");
 	}
 	

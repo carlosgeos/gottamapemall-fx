@@ -31,13 +31,13 @@ public class Pokemon {
 	 * @param newHeight 
 	 * @param newTypes 
 	 */
-	public Pokemon(int id, String name, String imagePath, int base_experience, int height, int weight, String[] types){
-		id = id;
-		name = name;
-		base_experience=base_experience;
-		weight = weight;
-		height = height;
-		types = types;
+	public Pokemon(int newId, String newName, String imagePath, int newBase_experience, int newWeight, int newHeight, String[] newTypes){
+		id = newId;
+		name = newName;
+		base_experience=newBase_experience;
+		weight = newWeight;
+		height = newHeight;
+		types = newTypes;
 	}
 	
 	/**

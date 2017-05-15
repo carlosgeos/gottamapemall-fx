@@ -13,11 +13,7 @@
 
 <Pane fx:id="mainPokedexPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane fx:id="pokemonScrollContainer" layoutX="5.0" layoutY="49.0" prefHeight="547.0" prefWidth="290.0">
-         <content>
-            <AnchorPane id="pokemonViewContainer" fx:id="pokemonViewContainer" prefHeight="187.0" prefWidth="290.0" style="-fx-background-color: #E6E6E6;" />
-         </content>
-      </ScrollPane>
+      <ScrollPane fx:id="pokemonViewContainer" layoutX="5.0" layoutY="49.0" prefHeight="547.0" prefWidth="290.0" />
       <Button layoutX="210.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchPokedex" prefHeight="25.0" prefWidth="75.0" text="Search" />
       <TextField fx:id="searchField" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="190.0" />
       <AnchorPane fx:id="pokemonDetailContainer" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #E6E6E6;" visible="false">

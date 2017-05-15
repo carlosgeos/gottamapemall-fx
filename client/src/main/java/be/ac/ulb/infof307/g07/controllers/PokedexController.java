@@ -21,11 +21,9 @@ public class PokedexController implements Initializable, PokemonViewListener{
 	@FXML
 	private TextField searchField;
 	@FXML
-	private AnchorPane pokemonViewContainer;
-	@FXML
 	private AnchorPane pokemonDetailContainer;
 	@FXML
-	private ScrollPane pokemonScrollContainer;
+	private ScrollPane pokemonViewContainer;
 	@FXML
 	private Pane mainPokedexPane;
 	@FXML
@@ -59,7 +57,7 @@ public class PokedexController implements Initializable, PokemonViewListener{
 		PokedexView.getInstance().showPokedex(PokedexView.getInstance().getIsMainHided());
 	}
 	
-	public void toggleMode(Integer[] list, AnchorPane container){
+	public void toggleMode(Integer[] list, ScrollPane container){
 		PokedexView.getInstance().toggleMode(container);
 	}
 	
@@ -67,7 +65,7 @@ public class PokedexController implements Initializable, PokemonViewListener{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		PokedexView.getInstance().setSearchField(searchField);
-		PokedexView.getInstance().setContainers(pokemonViewContainer, pokemonDetailContainer, pokemonScrollContainer);
+		PokedexView.getInstance().setContainers(pokemonViewContainer, pokemonDetailContainer);
 		Label[] tmpLabel = {detailId, detailName, detailTypes, detailWeight, detailHeight};
 		PokedexView.getInstance().setDetailComponent( tmpLabel, detailImageContainer);
 	}

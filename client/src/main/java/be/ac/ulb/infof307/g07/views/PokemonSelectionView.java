@@ -11,14 +11,15 @@ import be.ac.ulb.infof307.g07.controllers.PokemonSelectionController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class PokemonSelectionView {
 	
 	private static PokemonSelectionView instance = null;
 	private Pane mainPane;
-	private AnchorPane selectPokemonContainer;
+	private ScrollPane selectPokemonContainer;
 	private DatePicker date;
 	private TextField time;
 	private PokemonSelectionController controller;
@@ -50,7 +51,7 @@ public class PokemonSelectionView {
 		return instance;
 	}
 	
-	public void setPokemonContainer(AnchorPane newContainer){
+	public void setPokemonContainer(ScrollPane newContainer){
 		selectPokemonContainer = newContainer;
 	}
 	
@@ -84,10 +85,12 @@ public class PokemonSelectionView {
 	}
 	
 	public void loadPokemonContainer(){
+		VBox newVBox = new VBox();
 		pokemonViews = PokedexView.getInstance().createPokemoViews(false, controller);
 		for( Integer id : pokemonViews.keySet() ){
 			pokemonViews.get(id).addListener(controller);
-			selectPokemonContainer.getChildren().add(pokemonViews.get(id).getView());
+			newVBox.getChildren().add(pokemonViews.get(id).getView());
 		}
+		selectPokemonContainer.setContent(newVBox);
 	}
 }

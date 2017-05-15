@@ -109,9 +109,11 @@ public class Map{
 	public static MarkerOptions createMarkerOption( Pokemon pokemon ){
 		
 		MarkerOptions newMarkerOptions = new MarkerOptions();
+		String iconPath = "file:/Users/Chen/git/gottamapemall-fx/client/src/main/resources/png_numeric/"+String.format("%03d", pokemon.getId())+".png";
 		newMarkerOptions.position(new LatLong(lat, lon))
-		.icon(MarkerImageFactory.createMarkerImage("file:src/main/resources/"+Integer.toString(pokemon.getId())+".png", "png"));
 		
+		.icon(MarkerImageFactory.createMarkerImage(iconPath,"png"));
+	
 		return newMarkerOptions;
 	}
 
