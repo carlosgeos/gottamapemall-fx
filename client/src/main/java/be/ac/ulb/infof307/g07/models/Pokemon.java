@@ -12,6 +12,8 @@ import be.ac.ulb.infof307.g07.PokemonListener;
  */
 public class Pokemon {
 
+	public final static String imagePathLink ="https://www.pkparaiso.com/imagenes/shuffle/sprites/";
+	private final String imageLink;
 	public transient final static String imageType = ".png";
 	private transient int numberOfSignalisation = 0;
 	private int id;
@@ -38,6 +40,7 @@ public class Pokemon {
 		weight = newWeight;
 		height = newHeight;
 		types = newTypes;
+		imageLink = imagePathLink + String.format("%03d",id)+".png";
 	}
 	
 	/**
@@ -152,5 +155,10 @@ public class Pokemon {
 		for( PokemonListener l:listener ){
 			l.onChangeSignalisation();
 		}
+	}
+	
+	public String getImageLink(){
+		
+		return imageLink;
 	}
 }
