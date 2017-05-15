@@ -6,6 +6,7 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 
 import be.ac.ulb.infof307.g07.controllers.PokedexController;
 import be.ac.ulb.infof307.g07.models.Map;
+import be.ac.ulb.infof307.g07.views.Filter;
 import be.ac.ulb.infof307.g07.views.GeoLocalisationView;
 import be.ac.ulb.infof307.g07.views.MapView;
 import be.ac.ulb.infof307.g07.views.PokedexView;
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -53,7 +55,6 @@ public class Main extends Application implements MapComponentInitializedListener
 		PokedexView pV = PokedexView.getInstance();
 		pV.loadView();
 		mainStage.heightProperty().addListener((obs, oldVal, newVal)->{
-			System.out.println("Resizing window");
 			pV.setHeight(newVal.doubleValue());
 		});
 		
@@ -61,16 +62,20 @@ public class Main extends Application implements MapComponentInitializedListener
 		
 		StackPane.setAlignment(pV.getView(), Pos.TOP_RIGHT);
 		pV.init();
-		System.out.println("Finish loading PokedexView");
 		PokemonSelectionView pSView = PokemonSelectionView.getInstance();
 		pSView.loadView();
-		System.out.println("Finish loading Selection");
 		mainPane.getChildren().add(pSView.getView());
 		GeoLocalisationView geoView = new GeoLocalisationView();
 		Slider geoSlider = geoView.createView(200, 80);
 		mainPane.getChildren().add(geoSlider);
 		StackPane.setAlignment(geoSlider, Pos.TOP_CENTER);
-		System.out.println("Finish all");
+		
+		Filter filter = new Filter();
+		filter.loadView();
+		Pane filterPane = filter.getView();
+		filterPane.setPrefHeight(mainPane.getPrefHeight());
+		mainPane.getChildren().add(filterPane);
+		StackPane.setAlignment(filterPane, Pos.TOP_LEFT);
 		mainStage.show();
 	}
 	
