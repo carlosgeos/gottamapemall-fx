@@ -8,9 +8,9 @@
    <children>
       <AnchorPane fx:id="menuContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="244.0" StackPane.alignment="BOTTOM_CENTER">
          <children>
-            <Button layoutX="14.0" layoutY="19.0" mnemonicParsing="false" text="Filter" />
-            <Button layoutX="96.0" layoutY="20.0" mnemonicParsing="false" text="Geo" />
-            <Button layoutX="169.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnPokedexMenu" text="Pokedex" />
+            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" text="Filter" />
+            <Button layoutX="96.0" layoutY="11.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" text="Geo" />
+            <Button layoutX="173.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnPokedexMenu" prefHeight="34.0" prefWidth="71.0" text="Pokedex" />
          </children>
       </AnchorPane>
    </children>

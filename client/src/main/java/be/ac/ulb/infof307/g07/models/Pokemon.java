@@ -12,6 +12,8 @@ import be.ac.ulb.infof307.g07.PokemonListener;
  */
 public class Pokemon {
 
+	public final static String imagePathLink ="https://www.pkparaiso.com/imagenes/shuffle/sprites/";
+	private final String imageLink;
 	public transient final static String imageType = ".png";
 	private transient int numberOfSignalisation = 0;
 	private int id;
@@ -25,11 +27,13 @@ public class Pokemon {
 	/**
 	 * Le constructeur de la classe Pokemon.
 	 * 
-	 * @param newId 
-	 * @param newName 
-	 * @param newWeight 
-	 * @param newHeight 
-	 * @param newTypes 
+	 * @param newId id du pokemon
+	 * @param newName nom du pokemon
+   * @param imagePath path vers l icon
+	 * @param newBase_experience experience du pokemon
+	 * @param newWeight poids du pokemon
+	 * @param newHeight taille du pokemon
+	 * @param newTypes types du pokemon
 	 */
 	public Pokemon(int newId, String newName, String imagePath, int newBase_experience, int newWeight, int newHeight, String[] newTypes){
 		id = newId;
@@ -38,15 +42,16 @@ public class Pokemon {
 		weight = newWeight;
 		height = newHeight;
 		types = newTypes;
+		imageLink = imagePathLink + String.format("%03d",id)+".png";
 	}
 	
 	/**
 	 * Cette methode sert a tester si deux pokemons sont egaux.
 	 * 
 	 * @param otherPokemon le pokemon a comparer
-	 * @return si c est egaux
+	 * @return si ils sont egaux
 	 */
-	public boolean equals( Pokemon otherPokemon){
+	public boolean equals(Pokemon otherPokemon){
 		return id==otherPokemon.id && name == otherPokemon.name && weight == otherPokemon.weight && height == otherPokemon.height;
 	}
 	
@@ -64,7 +69,7 @@ public class Pokemon {
 		return output;
 	}
 	/**
-	 * Retourne l unique id du pokemon
+	 * Renvoie l id unique du pokemon
 	 * 
 	 * @return un id unique constante
 	 */
@@ -73,7 +78,7 @@ public class Pokemon {
 	}
 	
 	/**
-	 * Retourne le nom du Pokemon
+	 * Renvoie le nom du Pokemon
 	 * 
 	 * @return le nom du Pokemon
 	 */
@@ -82,7 +87,7 @@ public class Pokemon {
 	}
 	
 	/**
-	 * Retourne le poids du Pokemon
+	 * Renvoie le poids du Pokemon
 	 * 
 	 * @return le poids du Pokemon
 	 */
@@ -91,7 +96,7 @@ public class Pokemon {
 	}
 	
 	/**
-	 * Retourne la taille du Pokemon
+	 * Renvoie la taille du Pokemon
 	 * 
 	 * @return la taille du Pokemon
 	 */
@@ -100,7 +105,7 @@ public class Pokemon {
 	}
 	
 	/**
-	 * Retourne un Array de type du Pokemon
+	 * Renvoie un Array de type du Pokemon
 	 * 
 	 * @return un Array de type
 	 */
@@ -131,7 +136,7 @@ public class Pokemon {
 		callListener();
 	}
 	/**
-	 * Retourne le chemin de l image du Pokemon.
+	 * Renvoie le chemin de l image du Pokemon.
 	 * 
 	 * @return le chemin
 	 */
@@ -139,18 +144,37 @@ public class Pokemon {
 		return Integer.toString(id)+imageType;
 	}
 	
+	/**
+	 * Renvoie le nombre de fois qu un pokemon ait etet signale.
+	 * 
+	 * @return nombre de signalisations
+	 */
 	public final int getSignalisationCount(){
 		return numberOfSignalisation;
 	}
 	
-	public void addListener( PokemonListener newListener ){
+	/**
+	 * Assigne un listener de type PokemonListener a un pokemon
+	 * 
+	 */
+	public void addListener(PokemonListener newListener){
 		listener.add(newListener);
 	}
 	
+
+	/**
+	 * Apelle l ensemble de listeners stockes dans la liste listener.
+	 * 
+	 */
 	private void callListener(){
 		System.out.println("Listener called...");
-		for( PokemonListener l:listener ){
+		for(PokemonListener l:listener){
 			l.onChangeSignalisation();
 		}
+	}
+	
+	public String getImageLink(){
+		
+		return imageLink;
 	}
 }

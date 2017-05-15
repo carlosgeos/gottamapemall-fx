@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="273.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="273.0" style="-fx-background-color: #ffffff;" visible="false" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane fx:id="selectPokemonContainer" layoutX="14.0" layoutY="56.0" prefHeight="248.0" prefWidth="254.0" />
       <DatePicker fx:id="datePicker" layoutX="81.0" layoutY="20.0" prefHeight="26.0" prefWidth="186.0" />

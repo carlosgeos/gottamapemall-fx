@@ -3,4 +3,4 @@
 <?import javafx.scene.control.Button?>
 
 
-<Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #00ff00;" text="Goog" visible="false" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" />
+<Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Goog" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" />

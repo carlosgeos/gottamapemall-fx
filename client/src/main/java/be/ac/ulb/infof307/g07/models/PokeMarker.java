@@ -48,7 +48,7 @@ public class PokeMarker extends Marker{
 	public String getHTML(){
 		
 		String output = "<div><table>"
-                + "<tr><td colspane=2 align=\"center\"><img src=\""+"gif_numeric/"+String.format("%03d", assignedPokemon.getId())+".png\" alt=\""+assignedPokemon.getName()+"\" style=\"\"></td></tr>"
+                + "<tr><td colspane=2 align=\"center\"><img src=\""+assignedPokemon.getImageLink()+"\" alt=\""+assignedPokemon.getName()+"\" style=\"\"></td></tr>"
                 + "<tr><td>Id : </td><td>"+assignedPokemon.getId()+"</td></tr>"
                 + "<tr><td>Name : </td><td>"+assignedPokemon.getName()+"</td></tr>"
                 + "<tr><td>Creation : </td><td>"+discoveredDate+"</td><td>"+discoveredTime+"h</td></tr>"
